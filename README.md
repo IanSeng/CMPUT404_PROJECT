@@ -9,6 +9,7 @@ See project.org (plain-text/org-mode) for a description of the project.
 
 ## Running the server
 Note: Make sure to have python 3.6 or newer installed
+
 Go into a terminal window in the root directory of this repository and run  
 ```
 cd server
