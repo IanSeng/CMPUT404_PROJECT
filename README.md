@@ -105,3 +105,8 @@ Adding secrets to env file
 * From [StackOverflow](https://stackoverflow.com/a/61437799)
 * From [Zack Plauché](https://stackoverflow.com/users/10415970/zack-plauch%c3%a9)
 * Accessed Feb 9 2021
+
+Adding PostgreSQL to GitHub Actions Job
+* From [HackSoft](https://hacksoft.io/github-actions-in-action-setting-up-django-and-postgres/)
+* From [Radoslav Georgiev](https://hacksoft.io/author/radoslav-georgiev/)
+* Accessed Feb 9 2021
