@@ -28,6 +28,7 @@ If PostgreSQL is running,
 
 To create an admin user: `python3 manage.py createsuperuser`. 
 
+Saving new python dependencies: `pip freeze > requirements.txt`.
 
 ## Installing DB
 Make sure you have install the required Python packages first above.
