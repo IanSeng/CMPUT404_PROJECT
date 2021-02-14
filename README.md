@@ -110,3 +110,7 @@ Adding PostgreSQL to GitHub Actions Job
 * From [HackSoft](https://hacksoft.io/github-actions-in-action-setting-up-django-and-postgres/)
 * From [Radoslav Georgiev](https://hacksoft.io/author/radoslav-georgiev/)
 * Accessed Feb 9 2021
+
+UUID Django Model Field Type
+* From [Django Docs](https://docs.djangoproject.com/en/3.1/ref/models/fields/#uuidfield)
+* Accessed Feb 13 2021
