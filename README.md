@@ -114,3 +114,15 @@ Adding PostgreSQL to GitHub Actions Job
 UUID Django Model Field Type
 * From [Django Docs](https://docs.djangoproject.com/en/3.1/ref/models/fields/#uuidfield)
 * Accessed Feb 13 2021
+
+Choices Django Model Field Option
+* From [Django Docs](https://docs.djangoproject.com/en/3.1/ref/models/fields/#choices)
+* Accessed Feb 14 2021
+
+Django Settings
+* From [Django Docs](https://docs.djangoproject.com/en/3.1/topics/settings/)
+* Accessed Feb 14 2021
+
+AssertRegex
+* From [StackOverflow](https://stackoverflow.com/a/64192098)
+* Accessed Feb 14 2021
