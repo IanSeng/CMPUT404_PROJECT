@@ -44,6 +44,7 @@ class Author(AbstractBaseUser, PermissionsMixin):
 
     username = models.CharField(max_length=25, unique=True)
     is_staff = models.BooleanField(default=False)
+    is_active= models.BooleanField(default=True)
     objects = UserManager()
 
     USERNAME_FIELD = 'username'
