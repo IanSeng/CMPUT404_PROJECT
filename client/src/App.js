@@ -1,7 +1,25 @@
-import React from "react";
+import React, { useState, useContext } from "react";
+import { Route, withRouter, Switch, Redirect } from "react-router-dom";
+import LoginPage from "./components/SignupLogin/LoginPage";
+import SignupPage from "./components/SignupLogin/SignupPage";
+import MyFeedPage from "./components/MyFeed/MyFeedPage";
+import { Context } from "./Context";
 
-function App() {
-  return <div>Hello World!</div>;
-}
+const App = (props) => {
+  const context = useContext(Context);
 
-export default App;
+  return (
+    <div className="App">
+      <Route exact path="/">
+        {context.user ? <Redirect to="/myfeed" /> : <Redirect to="/login" />}
+      </Route>
+      <Switch key={props.location.key}>
+        <Route path="/login" component={LoginPage} />
+        <Route path="/signup" component={SignupPage} />
+        <Route path="/myfeed" component={MyFeedPage} />
+      </Switch>
+    </div>
+  );
+};
+
+export default withRouter(App);
