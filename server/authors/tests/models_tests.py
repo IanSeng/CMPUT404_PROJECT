@@ -1,5 +1,5 @@
 from django.test import TestCase
-from konnection.authors.models import Author
+from authors.models import Author
 from django.contrib.auth.models import User
 
 
