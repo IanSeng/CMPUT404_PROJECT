@@ -126,3 +126,12 @@ Django Settings
 AssertRegex
 * From [StackOverflow](https://stackoverflow.com/a/64192098)
 * Accessed Feb 14 2021
+
+Ensuring each follow is unique
+* From [Django Docs](https://docs.djangoproject.com/en/dev/ref/models/constraints/#uniqueconstraint)
+* Accessed Feb 15 2021
+
+Enforcing 2 unique DB columns
+* From [StackOverflow](https://stackoverflow.com/a/64376614)
+* From [Ali Shekari](https://stackoverflow.com/users/7978891/ali-shekari)]
+* Accessed Feb 15 2021

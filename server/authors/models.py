@@ -37,3 +37,40 @@ class Author(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+class Follow(models.Model):
+    '''
+    TODO make a controller class that queries for 
+    - list of authors following you
+    - list of authors you are following
+    - list of friends (they follow you AND you follow them)
+    '''
+    follower = models.ForeignKey(
+        Author, on_delete=models.CASCADE, related_name="follower")
+    followed = models.ForeignKey(
+        Author, on_delete=models.CASCADE, related_name="followed")
+
+    def get_follower(self):
+        return self.follower
+
+    def get_followed(self):
+        return self.followed
+
+    class Meta:
+        constraints = [
+            # Ensuring each follow is unique
+            # From Django Docs
+            # https://docs.djangoproject.com/en/dev/ref/models/constraints/#uniqueconstraint
+            models.UniqueConstraint(
+                fields=["follower", "followed"], name="unique_follow"),
+
+            # Enforcing 2 unique DB columns
+            # From StackOverflow https://stackoverflow.com/a/64376614
+            # From Ali Shekari https://stackoverflow.com/users/7978891/ali-shekari
+            models.CheckConstraint(check=~models.Q(follower=models.F(
+                'followed')), name='follower_not_equal_to_followed')
+        ]
+
+    def __str__(self):
+        return f"{self.follower.user.username} follows {self.followed.user.username}"
