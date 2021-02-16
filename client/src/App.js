@@ -4,6 +4,7 @@ import LoginPage from "./components/SignupLogin/LoginPage";
 import SignupPage from "./components/SignupLogin/SignupPage";
 import MyFeedPage from "./components/MyFeed/MyFeedPage";
 import { Context } from "./Context";
+import "./App.scss";
 
 const App = (props) => {
   const context = useContext(Context);
