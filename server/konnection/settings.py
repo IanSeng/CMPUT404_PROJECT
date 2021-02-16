@@ -34,8 +34,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    # 'authors',
-    # 'posts',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,6 +44,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'main',
     'authors',
+    'posts',
 ]
 
 MIDDLEWARE = [

@@ -2,7 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.utils.timezone import now
 
-from authors.models import Author
+from main import models as mainModels
 import uuid
 
 
@@ -43,7 +43,7 @@ class Post(models.Model):
     )
 
     content = models.TextField(blank=True, null=True)
-    author = models.ForeignKey(Author, on_delete=models.PROTECT)
+    author = models.ForeignKey(mainModels.Author, on_delete=models.PROTECT)
 
     # TODO: create categories
     # categories = models.CharField(blank=True, max_length=250) # e.g. ["web","tutorial"]
