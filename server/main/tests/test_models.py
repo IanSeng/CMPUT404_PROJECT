@@ -1,10 +1,9 @@
 from django.test import TestCase
 from django.contrib.auth import get_user_model
-from django.core.validators import MaxValueValidator
 
 # Create your models here.
 class ModelTests(TestCase):
-    def test_sigup_user_with_username(self):
+    def test_create_user_with_username(self):
         username='test001'
         password='testpwd'
         author = get_user_model().objects.create_author(
@@ -17,7 +16,7 @@ class ModelTests(TestCase):
         self.assertTrue(author.check_password(password))
         self.assertTrue(author.id)
 
-    def test_sigup_username_stripping_to_alphanumeric(self):
+    def test_username_stripping_to_alphanumeric(self):
         
         username='test 001---- 🎉'
         password='testpwd'
@@ -28,7 +27,7 @@ class ModelTests(TestCase):
 
         self.assertEqual(author.username, "test001")
 
-    def test_signup_displayName(self):
+    def test_author_displayName(self):
         username='test001'
         password='testpwd'
         displayName="🎉John 123"
@@ -40,7 +39,7 @@ class ModelTests(TestCase):
 
         self.assertEqual(author.displayName, displayName)
 
-    def test_signup_with_github(self):
+    def test_author_github(self):
         username='test001'
         password='testpwd'
         github="http://github.com/IanSeng"
@@ -52,7 +51,7 @@ class ModelTests(TestCase):
 
         self.assertEqual(author.github, github)
 
-    def test_signup_url(self):
+    def test_author_url(self):
         username='test001'
         password='testpwd'
         url=""
@@ -63,7 +62,7 @@ class ModelTests(TestCase):
 
         self.assertEqual(author.url, url)
 
-    def test_signup_host(self):
+    def test_author_host(self):
         username='test001'
         password='testpwd'
         author = get_user_model().objects.create_author(
@@ -73,7 +72,7 @@ class ModelTests(TestCase):
 
         self.assertEqual(author.host, '')
 
-    def test_singup_superuser(self):
+    def test_author_superuser(self):
         username='testsuper001'
         password='testpwd'
         user = get_user_model().objects.create_superuser(

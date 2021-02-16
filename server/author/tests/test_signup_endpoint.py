@@ -5,14 +5,14 @@ from django.urls import reverse
 from rest_framework.test import APIClient
 from rest_framework import status
 
-SIGNUP_USER_URL = reverse('authors:create')
+SIGNUP_USER_URL = reverse('author:create')
 
 
 class TestSignupEndpoint(TestCase):
     def setUp(self):
         self.client = APIClient()
 
-    def test_signup_user(self):
+    def test_create_user_endpoint(self):
         payload={
             'username':'abc001',
             'password':'abcpwd',
@@ -21,7 +21,7 @@ class TestSignupEndpoint(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
 
-    def test_signup_respond_obj(self):
+    def test_create_user_endpoint_return_obj(self):
         payload={
             'username':'abc001',
             'password':'abcpwd',
@@ -35,7 +35,7 @@ class TestSignupEndpoint(TestCase):
         self.assertIn('url', res.data)
         self.assertIn('github', res.data)
 
-    def test_signup_existed_username(self):
+    def test_create_user_with_existed_username(self):
         payload={
             'username':'abc001',
             'password':'abcpwd',
@@ -46,7 +46,7 @@ class TestSignupEndpoint(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_signup_username_too_short(self):
+    def test_create_user_with_username_too_short(self):
         payload={
             'username':'a',
             'password':'abc',
@@ -56,7 +56,7 @@ class TestSignupEndpoint(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
     
-    def test_signup_password_too_short(self):
+    def test_create_user_with_password_too_short(self):
         payload={
             'username':'a',
             'password':'abc',
