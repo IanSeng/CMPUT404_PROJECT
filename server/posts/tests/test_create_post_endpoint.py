@@ -1,10 +1,11 @@
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+from main import models as mainModels
 from django.test import TestCase
 from django.urls import reverse
 
 from rest_framework.test import APIClient
 from rest_framework import status
-from authors.models import Author
+# from main.models import Author
 
 POST_URL = reverse('posts:posts')
 
@@ -22,13 +23,17 @@ class TestPostEndpoint(TestCase):
             "unlisted": False
         }
         self.cred='testing'
-        user = User.objects.create_user(username=self.cred, password=self.cred)
-        self.author = Author.objects.create(
-            user=user,
-            display_name='display_name',
-            github_url='http://github.com',
-            admin_approved=True
+        self.author = get_user_model().objects.create_author(
+            username= self.cred,
+            password= self.cred
         )
+        # user = User.objects.create_user(username=self.cred, password=self.cred)
+        # self.author = Author.objects.create(
+        #     user=user,
+        #     display_name='display_name',
+        #     github_url='http://github.com',
+        #     admin_approved=True
+        # )
         self.client = APIClient()
 
     def test_create_post_endpoint(self):

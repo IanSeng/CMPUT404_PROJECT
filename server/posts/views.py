@@ -2,7 +2,8 @@ from django.shortcuts import render
 from rest_framework import generics, permissions
 from .models import Post
 from .serializers import PostSerializer
-from authors.models import Author
+from django.contrib.auth import get_user_model
+from main import models as mainModels
 
 
 class CreatePostView(generics.ListCreateAPIView):
@@ -12,4 +13,4 @@ class CreatePostView(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def perform_create(self, serializer):
-        serializer.save(author=Author.objects.get(user=self.request.user.id))
+        serializer.save(author=mainModels.Author.objects.get(id=self.request.user.id))
