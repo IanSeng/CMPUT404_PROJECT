@@ -1,18 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin, User
-from django.core.validators import RegexValidator
 
 import uuid
 import re
-from enum import Enum
-
-
-# TODO: Add host once we have the host IP
-HOST = ""
-
-class UserType(Enum):
-    super_user = 'superuser'
-    author = 'author'
+from main import utils
 
 class UserManager(BaseUserManager):
     def create_author(self, username, password, **extra_fields):
@@ -26,7 +17,7 @@ class UserManager(BaseUserManager):
         user=self.create_author(username, password)
         user.is_superuser=True
         user.is_staff=True
-        user.type=UserType.super_user
+        user.type=utils.UserType.superuser
         user.save(using=self._db)
 
         return user
@@ -34,10 +25,10 @@ class UserManager(BaseUserManager):
 
 class Author(AbstractBaseUser, PermissionsMixin):
     # Required objects
-    type=models.CharField(max_length=25, default=UserType.author)
+    type=models.CharField(max_length=25, default=utils.UserType.author.value)
     id=models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    host=models.CharField(max_length=253, default=HOST)
-    display_name=models.CharField(max_length=255)
+    host=models.CharField(max_length=253, default=utils.HOST)
+    displayName=models.CharField(max_length=255)
     # TODO: Append host once we have host IP
     url= models.CharField(max_length=255, default='')
     github=models.CharField(max_length=255, default='')

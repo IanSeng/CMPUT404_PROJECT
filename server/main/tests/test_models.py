@@ -2,7 +2,6 @@ from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.core.validators import MaxValueValidator
 
-from main import models
 # Create your models here.
 class ModelTests(TestCase):
     def test_sigup_user_with_username(self):
@@ -14,7 +13,7 @@ class ModelTests(TestCase):
         )
 
         self.assertEqual(author.username, username)
-        self.assertEquals(author.type, models.UserType.author)
+        self.assertEquals(author.type, 'author')
         self.assertTrue(author.check_password(password))
         self.assertTrue(author.id)
 
@@ -29,17 +28,17 @@ class ModelTests(TestCase):
 
         self.assertEqual(author.username, "test001")
 
-    def test_signup_display_name(self):
+    def test_signup_displayName(self):
         username='test001'
         password='testpwd'
-        display_name="🎉John 123"
+        displayName="🎉John 123"
         author = get_user_model().objects.create_author(
             username=username,
             password=password,
-            display_name=display_name,
+            displayName=displayName,
         )
 
-        self.assertEqual(author.display_name, display_name)
+        self.assertEqual(author.displayName, displayName)
 
     def test_signup_with_github(self):
         username='test001'
