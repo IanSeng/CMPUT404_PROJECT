@@ -18,7 +18,7 @@ const SignupLoginForm = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    var message = props.onSubmit(username, password);
+    let message = props.onSubmit(username, password);
 
     if (message !== null) {
       setError(true);
