@@ -1,6 +1,6 @@
 from django.test import TestCase
-from django.contrib.auth.models import User
-from authors.models import Author
+from django.contrib.auth import get_user_model
+from main import models as mainModels
 from posts.models import Post
 from unittest import mock
 from datetime import datetime
@@ -8,16 +8,9 @@ from django.utils.timezone import now
 
 class PostTestCase(TestCase):
     def setUp(self):
-        self.user = User.objects.create_user(
-            username='username', 
-            password='password'
-        )
-
-        self.author = Author.objects.create(
-            user=self.user,
-            display_name='TestUser',
-            github_url='',
-            admin_approved=True
+        self.author = get_user_model().objects.create_author(
+            username='test001',
+            password='testpwd'
         )
 
         self.title = 'Title'
