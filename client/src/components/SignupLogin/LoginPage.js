@@ -7,8 +7,6 @@ import { ReactComponent as AppName } from "../../assets/AppName.svg";
 
 const LoginPage = (props) => {
   const onSubmit = (username, password) => {
-    console.log("submitted");
-
     return (
       <Message
         error
