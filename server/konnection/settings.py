@@ -34,15 +34,17 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'authors',
-    'posts',
-    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'main',
+    'author',
+    'posts',
 ]
 
 MIDDLEWARE = [
@@ -153,3 +155,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 SERVER_URL = 'http://127.0.0.1:8000'
+
+AUTH_USER_MODEL = 'main.Author'
