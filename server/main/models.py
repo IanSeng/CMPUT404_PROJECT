@@ -30,7 +30,6 @@ class Author(AbstractBaseUser, PermissionsMixin):
     host=models.CharField(max_length=253, default=utils.HOST)
     displayName=models.CharField(max_length=255)
     # TODO: Append host once we have host IP
-
     url= models.CharField(max_length=255, default='')
     github=models.CharField(max_length=255, default='')
 

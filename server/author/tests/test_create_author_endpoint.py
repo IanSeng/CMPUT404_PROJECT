@@ -8,7 +8,7 @@ from rest_framework import status
 SIGNUP_USER_URL = reverse('author:create')
 
 
-class TestSignupEndpoint(TestCase):
+class TestCreateAuthorEndpoint(TestCase):
     def setUp(self):
         self.client = APIClient()
 
