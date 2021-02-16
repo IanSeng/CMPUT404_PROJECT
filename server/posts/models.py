@@ -9,7 +9,7 @@ import uuid
 class Post(models.Model):
     type = "post"
     title = models.CharField(max_length=100)
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, db_index=True, editable=False)
     source = models.URLField(blank=True, help_text="last location/url where we got this post")
     origin = models.URLField(blank=True,  help_text="original location/url")
     description = models.CharField(blank=True, max_length=250)
@@ -67,5 +67,6 @@ class Post(models.Model):
     # unlisted is used for images so they won't show up in timelines
     unlisted = models.BooleanField(default=False)
 
+    # TODO; page pagination
     def get_comments_page_url(self):
         return f'{settings.SERVER_URL}/author/{str(self.author.id)}/posts/{str(self.id)}/comments'

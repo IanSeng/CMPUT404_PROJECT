@@ -6,7 +6,7 @@ from django.urls import reverse
 from rest_framework.test import APIClient
 from rest_framework import status
 
-POST_URL = reverse('posts:posts')
+# POST_URL = reverse('posts:create')
 
 class TestPostEndpoint(TestCase):
     def setUp(self):

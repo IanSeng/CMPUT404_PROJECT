@@ -44,13 +44,22 @@ brew services start postgresql
 // To stop PostgreSQL
 brew services stop postgresql
 
-// To use the CLI
-createuser -s postgres 
+// To use the CLI and create the databse
+createuser -s myprojectuser 
 psql postgres
-
-Then within the shell run any commands such as...
 CREATE DATABASE myproject;
 ALTER ROLE myprojectuser SET client_encoding TO 'utf8'; etc.
+
+// Recreate the database
+psql postgres
+DROP DATABASE myproject;
+CREATE DATABASE myproject;
+ALTER ROLE myprojectuser SET client_encoding TO 'utf8';
+
+// Drop one particular table in your database
+python manage.py dbshell // access local database
+\dt                      // see existing tables
+DROP TABLE <table_name>;
 
 \q to quit
 ```
