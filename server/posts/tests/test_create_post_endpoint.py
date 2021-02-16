@@ -5,7 +5,6 @@ from django.urls import reverse
 
 from rest_framework.test import APIClient
 from rest_framework import status
-# from main.models import Author
 
 POST_URL = reverse('posts:posts')
 
@@ -27,13 +26,6 @@ class TestPostEndpoint(TestCase):
             username= self.cred,
             password= self.cred
         )
-        # user = User.objects.create_user(username=self.cred, password=self.cred)
-        # self.author = Author.objects.create(
-        #     user=user,
-        #     display_name='display_name',
-        #     github_url='http://github.com',
-        #     admin_approved=True
-        # )
         self.client = APIClient()
 
     def test_create_post_endpoint(self):
