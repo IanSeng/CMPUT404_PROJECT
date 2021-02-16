@@ -7,6 +7,7 @@ import uuid
 
 
 class Post(models.Model):
+    type = "post"
     title = models.CharField(max_length=100)
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     source = models.URLField(blank=True, help_text="last location/url where we got this post")
