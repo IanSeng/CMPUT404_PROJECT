@@ -6,4 +6,4 @@ app_name = 'posts'
 
 urlpatterns = [
     path('', views.CreatePostView.as_view(), name='posts')
-] 
+]
