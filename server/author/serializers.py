@@ -1,4 +1,4 @@
-from django.contrib.auth import get_user_model
+from django.contrib.auth import authenticate, get_user_model
 
 from rest_framework import serializers
 
@@ -20,3 +20,27 @@ class AuthorSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return get_user_model().objects.create_author(**validated_data)
+
+class AuthAuthorSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField(style={'input_type': 'password'})
+    class Meta:
+        model = get_user_model()
+        fields = ('username', 'password')
+
+    def validate(self, attributes):
+        username = attributes.get('username')
+        password = attributes.get('password')
+
+        author = authenticate(
+            username=username, 
+            password=password,
+        )
+        if author is not None:
+            attributes['user'] = author
+          
+            return attributes
+        else:
+            errorMsg = ('Unable to authenticate the user')
+            raise serializers.ValidationError(errorMsg, code='authentication')
+

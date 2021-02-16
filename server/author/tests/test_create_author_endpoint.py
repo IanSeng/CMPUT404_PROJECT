@@ -5,9 +5,13 @@ from django.urls import reverse
 from rest_framework.test import APIClient
 from rest_framework import status
 
-SIGNUP_USER_URL = reverse('author:create')
+CREATE_USER_URL = reverse('author:create')
+AUTH_USER_URL = reverse('author:auth')
 
 
+def create_author(**params):
+    """Helper function to create author"""
+    return get_user_model().objects.create_author(**params)
 class TestCreateAuthorEndpoint(TestCase):
     def setUp(self):
         self.client = APIClient()
@@ -17,7 +21,7 @@ class TestCreateAuthorEndpoint(TestCase):
             'username':'abc001',
             'password':'abcpwd',
         }
-        res = self.client.post(SIGNUP_USER_URL, payload)
+        res = self.client.post(CREATE_USER_URL, payload)
 
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
 
@@ -26,7 +30,7 @@ class TestCreateAuthorEndpoint(TestCase):
             'username':'abc001',
             'password':'abcpwd',
         }
-        res = self.client.post(SIGNUP_USER_URL, payload)
+        res = self.client.post(CREATE_USER_URL, payload)
         
         self.assertIn('type', res.data)
         self.assertIn('id', res.data)
@@ -40,9 +44,9 @@ class TestCreateAuthorEndpoint(TestCase):
             'username':'abc001',
             'password':'abcpwd',
         }
-        get_user_model().objects.create_author(**payload)
+        create_author(**payload)
 
-        res = self.client.post(SIGNUP_USER_URL, payload)
+        res = self.client.post(CREATE_USER_URL, payload)
 
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
@@ -52,7 +56,7 @@ class TestCreateAuthorEndpoint(TestCase):
             'password':'abc',
         }
 
-        res = self.client.post(SIGNUP_USER_URL, payload)
+        res = self.client.post(CREATE_USER_URL, payload)
 
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
     
@@ -62,6 +66,52 @@ class TestCreateAuthorEndpoint(TestCase):
             'password':'abc',
         }
 
-        res = self.client.post(SIGNUP_USER_URL, payload)
+        res = self.client.post(CREATE_USER_URL, payload)
 
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+
+class TestAuthAuthorEndpoint(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+
+    def test_auth_author_endpoint_to_return_token(self):
+        payload={
+            'username':'abc001',
+            'password':'abcpwd',
+        }
+        create_author(**payload)
+
+        res = self.client.post(AUTH_USER_URL, payload)
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertIn('token', res.data)
+
+    def test_auth_author_endpoint_with_invalid_credentials(self):
+        payload={
+            'username':'abc001',
+            'password':'abcpwd',
+        }
+        create_author(**{
+            'username':'abc001',
+            'password':'abcwrong',
+        })
+
+        res = self.client.post(AUTH_USER_URL, payload)
+
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertNotIn('token', res.data)
+
+    def test_auth_author_endpoint_with_missing_field(self):
+        payload={
+            'username':'abc001',
+            'password':'',
+        }
+
+        res = self.client.post(AUTH_USER_URL, payload)
+
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertNotIn('token', res.data)
+    
+# TODO: Test user retrive without credential
+
+    
