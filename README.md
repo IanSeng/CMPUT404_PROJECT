@@ -17,9 +17,6 @@ python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 
-// If you will be running tests, it will be helpful to run
-pip install -r test_requirements.txt
-
 // Then get a .env file from one of the project members
 and put it in the same directory as `manage.py`
 ```
