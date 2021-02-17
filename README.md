@@ -132,11 +132,13 @@ CORS
 * Accessed Feb 16 2021
 
 Django Restframework
-* From [Bennett Garner](https://medium.com/swlh/build-your-first-rest-api-with-django-rest-framework-e394e39a482c)
+* From [Medium](https://medium.com/swlh/build-your-first-rest-api-with-django-rest-framework-e394e39a482c)
+* From [Bennett Garner](https://bennettgarner.medium.com)
 * Accessed Feb 15 2021
 
 Fix Django Authenticate Token issue 
-* From [ilse2005](https://stackoverflow.com/questions/35601130/django-rest-framework-using-tokenauthentication-with-browsable-api)
+* From [StackOverflow](https://stackoverflow.com/questions/35601130/django-rest-framework-using-tokenauthentication-with-browsable-api)
+* From [ilse2005](https://stackoverflow.com/users/1762988/ilse2005)
 * Accessed Feb 16 2021
 
 Django Restframework Generic Views 

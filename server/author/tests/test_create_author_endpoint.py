@@ -21,6 +21,7 @@ class TestCreateAuthorEndpoint(TestCase):
         self.client = APIClient()
 
     def test_create_user_endpoint(self):
+        """Test signing up an author with valid payload return successful"""
         payload={
             'username':'abc001',
             'password':'abcpwd',
@@ -30,6 +31,7 @@ class TestCreateAuthorEndpoint(TestCase):
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
 
     def test_create_user_endpoint_return_obj(self):
+        """Test signing up an author return the correct object"""
         payload={
             'username':'abc001',
             'password':'abcpwd',
@@ -44,6 +46,7 @@ class TestCreateAuthorEndpoint(TestCase):
         self.assertNotIn('github', res.data)
 
     def test_create_user_with_existed_username(self):
+        """Test signing up an author with same username to return error"""
         payload={
             'username':'abc001',
             'password':'abcpwd',
@@ -55,9 +58,10 @@ class TestCreateAuthorEndpoint(TestCase):
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_create_user_with_username_too_short(self):
+        """Test signing up error with username less than 3 char long"""
         payload={
-            'username':'a',
-            'password':'abc',
+            'username':'ab',
+            'password':'abcaa',
         }
 
         res = self.client.post(CREATE_USER_URL, payload)
@@ -65,9 +69,10 @@ class TestCreateAuthorEndpoint(TestCase):
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
     
     def test_create_user_with_password_too_short(self):
+        """Test signing up error with password less than 5 char long"""
         payload={
-            'username':'a',
-            'password':'abc',
+            'username':'abc',
+            'password':'abca',
         }
 
         res = self.client.post(CREATE_USER_URL, payload)
@@ -79,6 +84,7 @@ class TestAuthAuthorEndpoint(TestCase):
         self.client = APIClient()
 
     def test_auth_author_endpoint_to_return_token(self):
+        """Test token as return object after logging in"""
         payload={
             'username':'abc001',
             'password':'abcpwd',
@@ -91,6 +97,7 @@ class TestAuthAuthorEndpoint(TestCase):
         self.assertIn('token', res.data)
 
     def test_auth_author_endpoint_with_invalid_credentials(self):
+        """Test logging in with invalid credentials"""
         payload={
             'username':'abc001',
             'password':'abcpwd',
@@ -106,6 +113,7 @@ class TestAuthAuthorEndpoint(TestCase):
         self.assertNotIn('token', res.data)
 
     def test_auth_author_endpoint_with_missing_field(self):
+        """Test logging in with incompleted data"""
         payload={
             'username':'abc001',
             'password':'',
@@ -117,13 +125,14 @@ class TestAuthAuthorEndpoint(TestCase):
         self.assertNotIn('token', res.data)
     
 class TestAuthGetAuthorEndpoint(TestCase):
-
+    """Test API(GET)://service/author/{AUTHOR_ID}/"""
     def setUp(self):
         self.client = APIClient()
         
 
     @patch(target='uuid.uuid4', new=uuid.UUID('77f1df52-4b43-11e9-910f-b8ca3a9b9f3e').int)
     def test_get_author_endpoint_with_auth(self):
+        """Test retrieving author profile if user is logged in"""
         user = create_author(
             username='abc001',
             password='abcpwd',
@@ -136,12 +145,14 @@ class TestAuthGetAuthorEndpoint(TestCase):
     
     @patch(target='uuid.uuid4', new=uuid.UUID('77f1df52-4b43-11e9-910f-b8ca3a9b9f3e').int)
     def test_get_author_endpoint_without_auth(self):
+        """Test unsuccessful getting author profile if user is not logged in"""
         res = self.client.get('/service/author/77f1df52-4b43-11e9-910f-b8ca3a9b9f3e/')
 
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
     @patch(target='uuid.uuid4', new=uuid.UUID('77f1df52-4b43-11e9-910f-b8ca3a9b9f3e').int)
     def test_invalid_author(self):
+        """Test retrieving invalid author profile"""
         user = create_author(
             username='abc001',
             password='abcpwd',
