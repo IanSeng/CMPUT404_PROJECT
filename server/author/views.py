@@ -6,6 +6,7 @@ from author.serializers import AuthorSerializer, AuthAuthorSerializer, AuthorPro
 
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
+
 class CreateAuthorView(generics.CreateAPIView):
     """Create a new author in the system"""
     serializer_class = AuthorSerializer
@@ -28,8 +29,3 @@ class AuthorProfileView(generics.RetrieveUpdateAPIView):
             return get_object_or_404(get_user_model().objects, id=id)
         except:
             raise ValidationError({"error": ["User not found"]})
-
-    
-
-
-    
