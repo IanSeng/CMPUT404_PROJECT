@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Menu, Segment } from "semantic-ui-react";
 import "./MyProfilePage.scss";
+import MyProfileData from "./MyProfileData";
 
 const recentPosts = "Recent Posts";
 const friends = "Friends";
@@ -19,12 +20,7 @@ const MyProfilePage = () => {
   return (
     <div className="profile-page-container">
       <div className="profile-data">
-        <Segment>
-          <img
-            alt="placeholder "
-            src="https://react.semantic-ui.com/images/wireframe/paragraph.png"
-          />
-        </Segment>
+        <MyProfileData />
       </div>
 
       <div className="profile-posts">
