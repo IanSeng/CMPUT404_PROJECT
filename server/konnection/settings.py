@@ -160,25 +160,12 @@ SERVER_URL = 'http://127.0.0.1:8000'
 
 AUTH_USER_MODEL = 'main.Author'
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 CORS_ORIGIN_ALLOW_ALL = True
 
 ALLOWED_HOSTS = ['*']
-=======
-# REST_FRAMEWORK = {
-#    'DEFAULT_AUTHENTICATION_CLASSES': (
-#         'rest_framework.authentication.TokenAuthentication',
-#     ),
-#    'DEFAULT_PERMISSION_CLASSES': (
-#         'rest_framework.permissions.IsAdminUser',
-#    ),
-# }
->>>>>>> get profile works
-=======
+
 REST_FRAMEWORK = {
    'DEFAULT_AUTHENTICATION_CLASSES': (
     'rest_framework.authentication.TokenAuthentication',
     ),
 }
->>>>>>> code clean up
