@@ -14,6 +14,7 @@ def create_author(**params):
     return get_user_model().objects.create_author(**params)
      
 class TestCreateAuthorEndpoint(TestCase):
+    """Test API(POST)://service/author/create/"""
     def setUp(self):
         self.client = APIClient()
 
@@ -77,6 +78,7 @@ class TestCreateAuthorEndpoint(TestCase):
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
 class TestAuthAuthorEndpoint(TestCase):
+    """Test API(POST)://service/author/auth/"""
     def setUp(self):
         self.client = APIClient()
 
@@ -85,6 +87,7 @@ class TestAuthAuthorEndpoint(TestCase):
         payload={
             'username':'abc001',
             'password':'abcpwd',
+            'adminApproval': True,
         }
         create_author(**payload)
 
@@ -120,7 +123,22 @@ class TestAuthAuthorEndpoint(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertNotIn('token', res.data)
-    
+
+    def test_user_without_admin_approval(self):
+        """Test returning error when logging into an
+        account that is without admin approval"""
+        payload={
+            'username':'abc001',
+            'password':'abcpwd',
+        }
+        create_author(**payload)
+
+        res = self.client.post(AUTH_USER_URL, payload)
+
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertNotIn('token', res.data)
+
+
 class TestAuthGetAuthorEndpoint(TestCase):
     """Test API(GET)://service/author/{AUTHOR_ID}/"""
     def setUp(self):

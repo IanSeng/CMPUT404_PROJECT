@@ -33,7 +33,7 @@ class AuthorProfileSerializer(serializers.ModelSerializer):
         authenticatedAuthor = self.context['request'].user.id
 
         if profileAuthor != authenticatedAuthor:
-            raise serializers.ValidationError({"error": "You dont have permission for edit this profile."})
+            raise serializers.ValidationError({"error": "You dont have permission for edit this profile"})
 
         author = super().update(instance, validated_data)
 
@@ -55,8 +55,13 @@ class AuthAuthorSerializer(serializers.Serializer):
             username=username, 
             password=password,
         )
+        
+
         if not author:
             raise serializers.ValidationError({"error": "Unable to authenticate with provided credentials"})
+        
+        if not author.adminApproval:
+            raise serializers.ValidationError({"error": "This account has not been approved by the admin"})
 
         attributes['user'] = author
         return attributes
