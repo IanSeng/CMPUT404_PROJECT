@@ -46,7 +46,7 @@ class PostTestCase(TestCase):
         self.assertEqual(post.source, self.source)
         self.assertEqual(post.origin, self.origin)
         self.assertEqual(post.description, self.description)
-        self.assertEqual(post.content_type, Post.CT_MARKDOWN)
+        self.assertEqual(post.contentType, Post.CT_MARKDOWN)
         self.assertEqual(post.content, self.content)
         self.assertEqual(post.author, self.author)
         self.assertEqual(post.count, 0)
@@ -65,13 +65,13 @@ class PostTestCase(TestCase):
             author=self.author,
             count=1,
             size=2,
-            content_type=self.content_type,
+            contentType=self.content_type,
             published=post_datetime,
             visibility=Post.FRIENDS
         )
         self.assertEqual(post.count, 1)
         self.assertEqual(post.size, 2)
-        self.assertEqual(post.content_type, self.content_type)
+        self.assertEqual(post.contentType, self.content_type)
         self.assertEqual(post.published, post_datetime)
         self.assertEqual(post.visibility, Post.FRIENDS)
 
