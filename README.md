@@ -138,3 +138,21 @@ AssertRegex
 * From [StackOverflow](https://stackoverflow.com/a/64192098)
 * From [mrts](https://stackoverflow.com/users/258772/mrts)
 * Accessed Feb 14 2021
+
+CORS
+* From [zaidfazil](https://stackoverflow.com/questions/44037474/cors-error-while-consuming-calling-rest-api-with-react/44037631#44037631)
+* Accessed Feb 16 2021
+
+Django Restframework
+* From [Medium](https://medium.com/swlh/build-your-first-rest-api-with-django-rest-framework-e394e39a482c)
+* From [Bennett Garner](https://bennettgarner.medium.com)
+* Accessed Feb 15 2021
+
+Fix Django Authenticate Token issue 
+* From [StackOverflow](https://stackoverflow.com/questions/35601130/django-rest-framework-using-tokenauthentication-with-browsable-api)
+* From [ilse2005](https://stackoverflow.com/users/1762988/ilse2005)
+* Accessed Feb 16 2021
+
+Django Restframework Generic Views 
+* From [Django REST framework Docs](https://www.django-rest-framework.org/api-guide/generic-views/)
+* Accessed Feb 16 2021

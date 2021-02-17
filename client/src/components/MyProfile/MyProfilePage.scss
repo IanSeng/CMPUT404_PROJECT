@@ -1,0 +1,84 @@
+.profile-page-container {
+  margin-top: 84px;
+  display: flex;
+
+  .profile-data {
+    margin-left: 50px;
+    margin-right: 72px;
+    background: #ffffff;
+    box-shadow: 2px 4px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    width: 561px;
+    height: max-content;
+  }
+
+  .ui.bottom.attached.segment {
+    background: #ffffff;
+    box-shadow: 2px 4px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+  }
+
+  .ui.tabular.menu {
+    display: flex;
+    justify-content: center;
+
+    .item {
+      background: #ffffff;
+      box-shadow: 2px -2px 4px 2px rgba(0, 0, 0, 0.25);
+      border-radius: 10px 10px 0 0 !important;
+      margin-right: 10px;
+    }
+
+    .active.item {
+      background: #ffffff;
+      box-shadow: 2px -2px 4px 2px rgba(0, 0, 0, 0.25);
+      border-radius: 10px 10px 0 0 !important;
+      margin-right: 10px;
+    }
+  }
+
+  .profile-top-section {
+    margin-top: 40px;
+  }
+
+  // My Profile Data styling
+  .display-name-heading {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+    line-height: 21px;
+    padding-left: 64px;
+    padding-right: 64px;
+
+    .ui.button {
+      margin-top: 0px;
+      align-self: start;
+    }
+  }
+
+  .profile-stats-table {
+    margin-top: 100px;
+    margin-bottom: 50px;
+  }
+}
+
+.ui.large.form.edit-profile-form {
+  width: 100%;
+  margin-top: 25px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.ui.fluid.button.edit-profile-save-btn {
+  width: 25%;
+  margin: 28px auto;
+}
+
+.ui.tiny.modal.transition.visible.active {
+  border-radius: 20px !important;
+
+  .modal-content-wrapper.content {
+    border-radius: 20px !important;
+  }
+}
