@@ -6,6 +6,7 @@ const SignupLoginForm = (props) => {
   const [username, updateUsername] = useState("");
   const [password, updatePassword] = useState("");
   const [error, setError] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [message, setMessage] = useState();
 
   const handleChange = (e, { name, value }) => {
@@ -16,18 +17,25 @@ const SignupLoginForm = (props) => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    let message = props.onSubmit(username, password);
+    let message = await props.onSubmit(username, password);
 
-    if (message !== null) {
+    if (message !== null && message.props.error == true) {
+      setSuccess(false);
       setError(true);
       setMessage(message);
+      console.log("error");
+    } else if (message !== null && message.props.success == true) {
+      setError(false);
+      setSuccess(true);
+      setMessage(message);
+      console.log("success");
     }
   };
 
   return (
-    <Form size="big" error={error} onSubmit={handleSubmit}>
+    <Form size="big" success={success} error={error} onSubmit={handleSubmit}>
       {message ? message : <div />}
       <Form.Field>
         <Input
@@ -39,6 +47,7 @@ const SignupLoginForm = (props) => {
           type="text"
           value={username}
           onChange={handleChange}
+          disabled={success}
         />
       </Form.Field>
       <Form.Field>
@@ -51,9 +60,10 @@ const SignupLoginForm = (props) => {
           type="password"
           value={password}
           onChange={handleChange}
+          disabled={success}
         />
       </Form.Field>
-      <Button fluid type="submit">
+      <Button fluid type="submit" disabled={success}>
         {props.buttonText}
       </Button>
     </Form>
