@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.shortcuts import render, get_object_or_404
-from rest_framework import generics, permissions, mixins, status
+from rest_framework import generics, authentication, permissions, mixins, status
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 from main import models as mainModels
@@ -10,8 +10,10 @@ from .serializers import PostSerializer
 
 # service/author/{AUTHOR_ID}/posts/{POST_ID}
 class UpdatePostView(generics.RetrieveUpdateDestroyAPIView): #mixins.DestroyModelMixin
+    http_method_names = ['get', 'post', 'delete', 'put']
     serializer_class = PostSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    authenticate_classes = (authentication.TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
 
     # returns a post object with the matching author_id and pk (post_id)
     # returns 404 otherwise
@@ -80,8 +82,10 @@ class UpdatePostView(generics.RetrieveUpdateDestroyAPIView): #mixins.DestroyMode
 
 # service/author/{AUTHOR_ID}/posts/
 class CreatePostView(generics.ListCreateAPIView):
+    http_method_names = ['get', 'post']
     serializer_class = PostSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    authenticate_classes = (authentication.TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
 
     # GET: get_queryset is called after a GET command
     def get_queryset(self):

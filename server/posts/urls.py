@@ -6,5 +6,5 @@ app_name = 'posts'
 
 urlpatterns = [
     path('<uuid:author_id>/posts/', views.CreatePostView.as_view(), name='create'),
-    path('<uuid:author_id>/posts/<uuid:pk>', views.UpdatePostView.as_view(), name='update')
+    path('<uuid:author_id>/posts/<uuid:pk>/', views.UpdatePostView.as_view(), name='update')
 ] 
