@@ -53,6 +53,7 @@
 
     .ui.button {
       margin-top: 0px;
+      align-self: start;
     }
   }
 
@@ -60,4 +61,16 @@
     margin-top: 100px;
     margin-bottom: 50px;
   }
+
+  // margin: 28px auto;
+  // width: 25%;
+}
+
+.ui.large.form.edit-profile-form {
+  width: 100%;
+}
+
+.ui.fluid.button.edit-profile-save-btn {
+  width: 25%;
+  margin: 28px auto;
 }

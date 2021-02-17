@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Header, Segment, Button } from "semantic-ui-react";
+import { Header, Button } from "semantic-ui-react";
+import EditProfileModal from "./EditProfileModal";
 import "./MyProfilePage.scss";
 
 const MyProfileData = () => {
@@ -10,7 +11,7 @@ const MyProfileData = () => {
           <Header as="h1" floated="left">
             Test User
           </Header>
-          <Button>Edit</Button>
+          <EditProfileModal />
         </div>
 
         <div className="display-name-heading">
