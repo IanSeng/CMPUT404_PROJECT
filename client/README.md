@@ -108,3 +108,8 @@ SCSS
 - From [sass-lang](https://sass-lang.com/documentation/syntax)
 - From [CSS Gradient](https://cssgradient.io/)
 - Accessed Feb 15 2021
+
+Using Cookies in React
+
+- From [jmfurlott](https://www.jmfurlott.com/handling-user-session-react-context/)
+- Accessed Feb 17 2021

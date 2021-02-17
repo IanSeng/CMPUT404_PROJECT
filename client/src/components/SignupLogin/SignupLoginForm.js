@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Form, Input, Button } from "semantic-ui-react";
+import { setSessionCookie } from "../../CommonUtils";
 import "./SignupLoginForm.scss";
 
 const SignupLoginForm = (props) => {
@@ -20,6 +21,12 @@ const SignupLoginForm = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     let message = await props.onSubmit(username, password);
+
+    // redirect the user to the stated to route
+    if (message !== null && message.props.to) {
+      setSessionCookie(message.props.token);
+      setMessage(message);
+    }
 
     if (message !== null && message.props.error == true) {
       setSuccess(false);
