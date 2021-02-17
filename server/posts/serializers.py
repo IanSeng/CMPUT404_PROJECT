@@ -10,7 +10,7 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = (
             'type', 'title', 'id', 'source', 'origin', 
-            'description', 'content_type', 'content',
+            'description', 'contentType', 'content',
             'author', 'count', 'size', 'published',
             'visibility', 'unlisted'
         )

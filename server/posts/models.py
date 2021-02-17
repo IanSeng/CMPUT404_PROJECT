@@ -37,7 +37,7 @@ class Post(models.Model):
         )),
     ]
  
-    content_type = models.CharField(
+    contentType = models.CharField(
         max_length=18,
         choices=CONTENT_TYPE_CHOICES,
         default=CT_MARKDOWN

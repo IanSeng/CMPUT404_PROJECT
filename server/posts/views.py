@@ -86,7 +86,7 @@ class CreatePostView(generics.ListCreateAPIView):
     # GET: get_queryset is called after a GET command
     def get_queryset(self):
         request_author_id = self.kwargs['author_id']
-        print(request_author_id)
+
         # TODO: allow friends to view the post too
         if (self.request.user.id == request_author_id):
             queryset = Post.objects.filter(author=mainModels.Author.objects.get(id=self.request.user.id))
