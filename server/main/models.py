@@ -33,9 +33,10 @@ class Author(AbstractBaseUser, PermissionsMixin):
     url= models.CharField(max_length=255, default='')
     github=models.CharField(max_length=255, default='', blank=True)
 
+    adminApproval = models.BooleanField(default=False)
     username = models.CharField(max_length=25, unique=True)
     is_staff = models.BooleanField(default=False)
-    is_active= models.BooleanField(default=True)
+    is_active = models.BooleanField(default=True)
     objects = UserManager()
 
     USERNAME_FIELD = 'username'
