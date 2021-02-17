@@ -112,17 +112,17 @@ const LoginPage = (props) => {
   };
 
   return (
-    <div className="Page">
+    <div className="page">
       {loading && (
         <Dimmer active>
           <Loader size="medium">Logging In...</Loader>
         </Dimmer>
       )}
-      <AppName className="AppName" />
-      <h2 className="Title">LOGIN</h2>
+      <AppName className="app-name" />
+      <h2 className="title">LOGIN</h2>
       <SignupLoginForm onSubmit={onSubmit} buttonText="Login" />
-      <div className="LinkContainer">
-        <p className="LinkInfo">Don't have an account?</p>
+      <div className="link-container">
+        <p className="link-info">Don't have an account?</p>
         <Link to="/signup">Sign up</Link>
       </div>
     </div>

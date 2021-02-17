@@ -31,7 +31,7 @@ const App = (props) => {
   };
 
   return (
-    <div className="App">
+    <div className="app">
       <Route exact path="/">
         {context.cookie ? <Redirect to="/myfeed" /> : <Redirect to="/login" />}
       </Route>
