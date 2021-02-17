@@ -87,6 +87,11 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 ## References
 
+Semantic-UI
+
+- Multiple pages accessed from [Semantic UI](https://react.semantic-ui.com/usage)
+- Accessed Feb 1 - Apr 16 2021
+
 React-Router
 
 - From [React Router](https://reactrouter.com/web/guides/quick-start)
@@ -119,3 +124,12 @@ Protected React Routes
 - From [StackOverflow](https://stackoverflow.com/a/43171515)
 - From [Tyler McGinnis](https://stackoverflow.com/users/1867084/tyler-mcginnis)
 - Accessed Feb 17 2021
+  Axios
+
+- From [Paul Halliday](https://www.digitalocean.com/community/tutorials/react-axios-react)
+- Accessed Feb 16 2021
+
+Responses
+
+- From [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/API/Response)
+- Accessed Feb 16 2021
