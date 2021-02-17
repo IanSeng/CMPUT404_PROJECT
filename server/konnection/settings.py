@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'main',
     'author',
     'posts',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -55,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'konnection.urls'
@@ -157,3 +159,7 @@ STATIC_URL = '/static/'
 SERVER_URL = 'http://127.0.0.1:8000'
 
 AUTH_USER_MODEL = 'main.Author'
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+ALLOWED_HOSTS = ['*']

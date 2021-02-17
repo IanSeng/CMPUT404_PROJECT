@@ -157,3 +157,7 @@ Put as Create
 * From [GitHub](https://gist.github.com/tomchristie/a2ace4577eff2c603b1b#gistcomment-2588991)
 * From [mightyroser](https://github.com/mightyroser)
 * Accessed Feb 16 2021
+
+CORS
+* From [zaidfazil](https://stackoverflow.com/questions/44037474/cors-error-while-consuming-calling-rest-api-with-react/44037631#44037631)
+* Accessed Feb 16 2021
