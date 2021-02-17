@@ -18,6 +18,26 @@ class AuthorProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = ('username', 'type', 'id', 'host', 'displayName', 'url', 'github')
+        extra_kwargs = {   
+                        'username': {'read_only': True},
+                        'id': {'read_only': True},
+                        'type': {'read_only': True},
+                        'host': {'read_only': True},
+                        'url': {'read_only': True}, 
+                        'github': {'required': False}, 
+                        'displayName': {'required': False}, 
+                        }
+                        
+    def update(self, instance, validated_data):
+        profileAuthor = instance.id
+        authenticatedAuthor = self.context['request'].user.id
+
+        if profileAuthor != authenticatedAuthor:
+            raise serializers.ValidationError({"error": "You dont have permission for edit this profile."})
+
+        author = super().update(instance, validated_data)
+
+        return author
 
 class AuthAuthorSerializer(serializers.Serializer):
     username = serializers.CharField()
@@ -36,8 +56,7 @@ class AuthAuthorSerializer(serializers.Serializer):
             password=password,
         )
         if not author:
-            errorMsg = ('Unable to authenticate with provided credentials')
-            raise serializers.ValidationError(errorMsg, code='authentication')
+            raise serializers.ValidationError({"error": "Unable to authenticate with provided credentials"})
 
         attributes['user'] = author
         return attributes

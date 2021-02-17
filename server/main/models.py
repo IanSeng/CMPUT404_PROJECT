@@ -28,10 +28,10 @@ class Author(AbstractBaseUser, PermissionsMixin):
     type=models.CharField(max_length=25, default=utils.UserType.author.value)
     id=models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     host=models.CharField(max_length=253, default=utils.HOST)
-    displayName=models.CharField(max_length=255)
+    displayName=models.CharField(max_length=255, blank=True)
     # TODO: Append host once we have host IP
     url= models.CharField(max_length=255, default='')
-    github=models.CharField(max_length=255, default='')
+    github=models.CharField(max_length=255, default='', blank=True)
 
     username = models.CharField(max_length=25, unique=True)
     is_staff = models.BooleanField(default=False)
