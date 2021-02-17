@@ -44,13 +44,22 @@ brew services start postgresql
 // To stop PostgreSQL
 brew services stop postgresql
 
-// To use the CLI
-createuser -s postgres 
+// To use the CLI and create the databse
+createuser -s myprojectuser 
 psql postgres
-
-Then within the shell run any commands such as...
 CREATE DATABASE myproject;
 ALTER ROLE myprojectuser SET client_encoding TO 'utf8'; etc.
+
+// Recreate the database
+psql postgres
+DROP DATABASE myproject;
+CREATE DATABASE myproject;
+ALTER ROLE myprojectuser SET client_encoding TO 'utf8';
+
+// Drop one particular table in your database
+python manage.py dbshell // access local database
+\dt                      // see existing tables
+DROP TABLE <table_name>;
 
 \q to quit
 ```
@@ -100,7 +109,6 @@ Connecting PostgreSQL to Django
 * From [Justin Ellingwood](https://www.digitalocean.com/community/users/jellingwood)
 * Accessed Feb 9 2021
 
-
 Adding secrets to env file
 * From [StackOverflow](https://stackoverflow.com/a/61437799)
 * From [Zack Plauché](https://stackoverflow.com/users/10415970/zack-plauch%c3%a9)
@@ -125,6 +133,7 @@ Django Settings
 
 AssertRegex
 * From [StackOverflow](https://stackoverflow.com/a/64192098)
+* From [mrts](https://stackoverflow.com/users/258772/mrts)
 * Accessed Feb 14 2021
 
 CORS
@@ -143,4 +152,30 @@ Fix Django Authenticate Token issue
 
 Django Restframework Generic Views 
 * From [Django REST framework Docs](https://www.django-rest-framework.org/api-guide/generic-views/)
+* Accessed Feb 16 2021
+
+Concrete View Classes
+* From [Django REST Framework](https://www.django-rest-framework.org/api-guide/generic-views/#concrete-view-classes)
+* Accessed Feb 16 2021
+
+Get Object of 404
+* From [Django Docs](https://docs.djangoproject.com/en/3.1/topics/http/shortcuts/#get-object-or-404)
+* Accessed Feb 16 2021
+
+PUT Partial Updates using Generics
+* From [StackOverflow](https://stackoverflow.com/a/29761525)
+* From [soooooot](https://stackoverflow.com/users/1889075/soooooot)
+* Accessed Feb 16 2021
+
+Serializers Partial Updates
+* From [Django REST Framework](https://www.django-rest-framework.org/api-guide/serializers/#partial-updates)
+* Accessed Feb 16 2021
+
+Put as Create
+* From [GitHub](https://gist.github.com/tomchristie/a2ace4577eff2c603b1b#gistcomment-2588991)
+* From [mightyroser](https://github.com/mightyroser)
+* Accessed Feb 16 2021
+
+CORS
+* From [zaidfazil](https://stackoverflow.com/questions/44037474/cors-error-while-consuming-calling-rest-api-with-react/44037631#44037631)
 * Accessed Feb 16 2021
