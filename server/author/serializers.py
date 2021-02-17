@@ -2,7 +2,6 @@ from django.contrib.auth import authenticate, get_user_model
 
 from rest_framework import serializers
 
-
 class AuthorSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
@@ -32,14 +31,15 @@ class AuthAuthorSerializer(serializers.Serializer):
         password = attributes.get('password')
 
         author = authenticate(
+            request=self.context.get('request'),
             username=username, 
             password=password,
         )
-        if author is not None:
-            attributes['user'] = author
-          
-            return attributes
-        else:
-            errorMsg = ('Unable to authenticate the user')
+        if not author:
+            errorMsg = ('Unable to authenticate with provided credentials')
             raise serializers.ValidationError(errorMsg, code='authentication')
+
+        attributes['user'] = author
+        return attributes
+        
 

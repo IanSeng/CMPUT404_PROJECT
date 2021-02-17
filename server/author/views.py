@@ -15,11 +15,12 @@ class AuthAuthorView(ObtainAuthToken):
     renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
 
 class AuthorProfileView(generics.ListCreateAPIView):
-    """G author in the system"""
-    http_method_names = ["get", "post"]
+    """Get author in the system"""
     serializer_class = AuthorProfileSerializer
-    # authenticate_classes = (authentication.TokenAuthentication,)
-    # permission_classes = (permissions.IsAuthenticated,)
+    authenticate_classes = (authentication.TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+    http_method_names = ["get", "post"]
+
     def get_queryset(self):
         id = self.kwargs['pk']
         try:

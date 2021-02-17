@@ -130,3 +130,15 @@ AssertRegex
 CORS
 * From [zaidfazil](https://stackoverflow.com/questions/44037474/cors-error-while-consuming-calling-rest-api-with-react/44037631#44037631)
 * Accessed Feb 16 2021
+
+Django Restframework
+* From [Bennett Garner](https://medium.com/swlh/build-your-first-rest-api-with-django-rest-framework-e394e39a482c)
+* Accessed Feb 15 2021
+
+Fix Django Authenticate Token issue 
+* From [ilse2005](https://stackoverflow.com/questions/35601130/django-rest-framework-using-tokenauthentication-with-browsable-api)
+* Accessed Feb 16 2021
+
+Django Restframework Generic Views 
+* From [Django REST framework Docs](https://www.django-rest-framework.org/api-guide/generic-views/)
+* Accessed Feb 16 2021

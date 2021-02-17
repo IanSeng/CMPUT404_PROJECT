@@ -5,14 +5,12 @@ from django.urls import reverse
 from rest_framework.test import APIClient
 from rest_framework import status
 
-from unittest.mock import Mock, patch
+from unittest.mock import patch
 
 import uuid
 
 CREATE_USER_URL = reverse('author:create')
 AUTH_USER_URL = reverse('author:auth')
-# USER_PROFILE_URL = reverse('author/', kwargs={'pk': '123', 'slug': '123' })
-
 
 def create_author(**params):
     """Helper function to create author"""
@@ -117,8 +115,6 @@ class TestAuthAuthorEndpoint(TestCase):
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertNotIn('token', res.data)
     
-# TODO: Test user retrive without credential
-
 class TestAuthGetAuthorEndpoint(TestCase):
 
     def setUp(self):
@@ -126,14 +122,33 @@ class TestAuthGetAuthorEndpoint(TestCase):
         
 
     @patch(target='uuid.uuid4', new=uuid.UUID('77f1df52-4b43-11e9-910f-b8ca3a9b9f3e').int)
-    def test_get_author_endpoint_with_valid_auth(self):
-        
-        payload={
-            'username':'abc001',
-            'password':'abcpwd',
-        }
-        create_author(**payload)
+    def test_get_author_endpoint_with_auth(self):
+        user = create_author(
+            username='abc001',
+            password='abcpwd',
+        )
+        self.client.force_authenticate(user=user)
 
         res = self.client.get('/service/author/77f1df52-4b43-11e9-910f-b8ca3a9b9f3e/')
+       
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        # self.assertIn('token', res.data)
+    
+    @patch(target='uuid.uuid4', new=uuid.UUID('77f1df52-4b43-11e9-910f-b8ca3a9b9f3e').int)
+    def test_get_author_endpoint_without_auth(self):
+        res = self.client.get('/service/author/77f1df52-4b43-11e9-910f-b8ca3a9b9f3e/')
+
+        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    @patch(target='uuid.uuid4', new=uuid.UUID('77f1df52-4b43-11e9-910f-b8ca3a9b9f3e').int)
+    def test_invalid_author(self):
+        user = create_author(
+            username='abc001',
+            password='abcpwd',
+        )
+        self.client.force_authenticate(user)
+
+        res = self.client.get('/service/author/hello-what-is-this/')
+       
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+          
+        
