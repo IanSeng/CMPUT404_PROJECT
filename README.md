@@ -109,7 +109,6 @@ Connecting PostgreSQL to Django
 * From [Justin Ellingwood](https://www.digitalocean.com/community/users/jellingwood)
 * Accessed Feb 9 2021
 
-
 Adding secrets to env file
 * From [StackOverflow](https://stackoverflow.com/a/61437799)
 * From [Zack Plauché](https://stackoverflow.com/users/10415970/zack-plauch%c3%a9)
@@ -152,4 +151,9 @@ PUT Partial Updates using Generics
 
 Serializers Partial Updates
 * From [Django REST Framework](https://www.django-rest-framework.org/api-guide/serializers/#partial-updates)
+* Accessed Feb 16 2021
+
+Put as Create
+* From [GitHub](https://gist.github.com/tomchristie/a2ace4577eff2c603b1b#gistcomment-2588991)
+* From [mightyroser](https://github.com/mightyroser)
 * Accessed Feb 16 2021

@@ -13,12 +13,8 @@ class UpdatePostView(generics.RetrieveUpdateDestroyAPIView): #mixins.DestroyMode
     serializer_class = PostSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-    # get_queryset is needed for the PUT method
-    # returning all posts made by current user because you can only update your own posts
-    # def get_queryset(self):
-    #     return Post.objects.filter(author=mainModels.Author.objects.get(id=self.request.user.id))
-
-    # returns a post with the matching author_id and pk (post_id)
+    # returns a post object with the matching author_id and pk (post_id)
+    # returns 404 otherwise
     def get_post(self):
         pk = self.kwargs.get('')
         request_author_id = self.kwargs['author_id']
@@ -38,31 +34,48 @@ class UpdatePostView(generics.RetrieveUpdateDestroyAPIView): #mixins.DestroyMode
     
     # DELETE - Only the author of the post can perform the deletion
     def delete(self, request, *args, **kwargs):
-        if (self.kwargs['author_id'] == self.request.user.id):
-            if self.get_post():
-                self.get_post().delete()
-                return Response(status=status.HTTP_204_NO_CONTENT)
-            else:
-                # Update this
-                return Response(status=status.HTTP_404_NOT_FOUND)
-        else:
+        if (self.kwargs['author_id'] != self.request.user.id):
             return Response(status=status.HTTP_403_FORBIDDEN)
+
+        if self.get_post():
+            self.get_post().delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            # Update this
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
     # POST - update existing post
     def post(self, request, *args, **kwargs):
-        if (self.kwargs['author_id'] != self.request.user.id):
+        if (self.kwargs['author_id'] != self.request.user.id):  
             return Response(status=status.HTTP_403_FORBIDDEN)
-        
+
         a_post = self.get_post()
         serializer = PostSerializer(a_post, data=request.data, partial=True)
         if (serializer.is_valid()):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    # def partial_update(self, request, *args, **kwargs):
-    #     return self.get_serializer(Post, data=request.data, partial=True)
+    # PUT - update existing or create a new post
+    def update(self, request, *args, **kwargs):
+        if (self.kwargs['author_id'] != self.request.user.id):
+            return Response(status=status.HTTP_403_FORBIDDEN)
+        
+        instance = Post.objects.filter(id=self.kwargs['pk']).first()
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        if instance is None:
+            self.perform_create(serializer, **kwargs)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
     
+    def perform_create(self, serializer, **kwargs):
+        serializer.save(**kwargs)
 
 
 # service/author/{AUTHOR_ID}/posts/
