@@ -39,7 +39,7 @@ const EditProfileModal = () => {
       trigger={<Button>Edit</Button>}
     >
       {error && <Message error header="Error" content={errorMessage} />}
-      <Modal.Content>
+      <Modal.Content className="modal-content-wrapper">
         <Form size="large" error={error} className="edit-profile-form">
           <Header as="h3">Display Name</Header>
           <Form.Field>

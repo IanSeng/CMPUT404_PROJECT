@@ -61,16 +61,24 @@
     margin-top: 100px;
     margin-bottom: 50px;
   }
-
-  // margin: 28px auto;
-  // width: 25%;
 }
 
 .ui.large.form.edit-profile-form {
   width: 100%;
+  margin-top: 25px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .ui.fluid.button.edit-profile-save-btn {
   width: 25%;
   margin: 28px auto;
+}
+
+.ui.tiny.modal.transition.visible.active {
+  border-radius: 20px !important;
+
+  .modal-content-wrapper.content {
+    border-radius: 20px !important;
+  }
 }
