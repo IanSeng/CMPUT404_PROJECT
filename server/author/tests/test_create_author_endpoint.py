@@ -5,8 +5,13 @@ from django.urls import reverse
 from rest_framework.test import APIClient
 from rest_framework import status
 
+from unittest.mock import Mock, patch
+
+import uuid
+
 CREATE_USER_URL = reverse('author:create')
 AUTH_USER_URL = reverse('author:auth')
+# USER_PROFILE_URL = reverse('author/', kwargs={'pk': '123', 'slug': '123' })
 
 
 def create_author(**params):
@@ -32,12 +37,12 @@ class TestCreateAuthorEndpoint(TestCase):
         }
         res = self.client.post(CREATE_USER_URL, payload)
         
-        self.assertIn('type', res.data)
-        self.assertIn('id', res.data)
-        self.assertIn('host', res.data)
-        self.assertIn('displayName', res.data)
-        self.assertIn('url', res.data)
-        self.assertIn('github', res.data)
+        self.assertNotIn('type', res.data)
+        self.assertNotIn('id', res.data)
+        self.assertNotIn('host', res.data)
+        self.assertNotIn('displayName', res.data)
+        self.assertNotIn('url', res.data)
+        self.assertNotIn('github', res.data)
 
     def test_create_user_with_existed_username(self):
         payload={
@@ -114,4 +119,21 @@ class TestAuthAuthorEndpoint(TestCase):
     
 # TODO: Test user retrive without credential
 
-    
+class TestAuthGetAuthorEndpoint(TestCase):
+
+    def setUp(self):
+        self.client = APIClient()
+        
+
+    @patch(target='uuid.uuid4', new=uuid.UUID('77f1df52-4b43-11e9-910f-b8ca3a9b9f3e').int)
+    def test_get_author_endpoint_with_valid_auth(self):
+        
+        payload={
+            'username':'abc001',
+            'password':'abcpwd',
+        }
+        create_author(**payload)
+
+        res = self.client.get('/service/author/77f1df52-4b43-11e9-910f-b8ca3a9b9f3e/')
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        # self.assertIn('token', res.data)
