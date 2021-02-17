@@ -147,6 +147,48 @@ Get Object of 404
 * From [Django Docs](https://docs.djangoproject.com/en/3.1/topics/http/shortcuts/#get-object-or-404)
 * Accessed Feb 16 2021
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 PUT Partial Updates using Generics
 * From [StackOverflow](https://stackoverflow.com/a/29761525)
 * From [soooooot](https://stackoverflow.com/users/1889075/soooooot)
