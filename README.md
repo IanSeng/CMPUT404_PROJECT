@@ -136,3 +136,20 @@ AssertRegex
 * From [StackOverflow](https://stackoverflow.com/a/64192098)
 * From [mrts](https://stackoverflow.com/users/258772/mrts)
 * Accessed Feb 14 2021
+
+Concrete View Classes
+* From [Django REST Framework](https://www.django-rest-framework.org/api-guide/generic-views/#concrete-view-classes)
+* Accessed Feb 16 2021
+
+Get Object of 404
+* From [Django Docs](https://docs.djangoproject.com/en/3.1/topics/http/shortcuts/#get-object-or-404)
+* Accessed Feb 16 2021
+
+PUT Partial Updates using Generics
+* From [StackOverflow](https://stackoverflow.com/a/29761525)
+* From [soooooot](https://stackoverflow.com/users/1889075/soooooot)
+* Accessed Feb 16 2021
+
+Serializers Partial Updates
+* From [Django REST Framework](https://www.django-rest-framework.org/api-guide/serializers/#partial-updates)
+* Accessed Feb 16 2021
