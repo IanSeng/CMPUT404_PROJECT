@@ -204,7 +204,7 @@ class TestUpdatePostEndpoint(TestCase):
         self.assertEqual('PUBLIC', res.data['visibility'])
 
     def test_cannot_get_user_friend_visible_post(self):
-        """Testing TestUpdatePostEndpoint returns 404 if the author is requesting
+        """Testing TestUpdatePostEndpoint returns 404 if the author is requesting 
         another author's friends-only post
         """
         self.client.login(username=self.cred, password=self.cred)
