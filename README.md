@@ -156,3 +156,29 @@ Fix Django Authenticate Token issue
 Django Restframework Generic Views 
 * From [Django REST framework Docs](https://www.django-rest-framework.org/api-guide/generic-views/)
 * Accessed Feb 16 2021
+
+Concrete View Classes
+* From [Django REST Framework](https://www.django-rest-framework.org/api-guide/generic-views/#concrete-view-classes)
+* Accessed Feb 16 2021
+
+Get Object of 404
+* From [Django Docs](https://docs.djangoproject.com/en/3.1/topics/http/shortcuts/#get-object-or-404)
+* Accessed Feb 16 2021
+
+PUT Partial Updates using Generics
+* From [StackOverflow](https://stackoverflow.com/a/29761525)
+* From [soooooot](https://stackoverflow.com/users/1889075/soooooot)
+* Accessed Feb 16 2021
+
+Serializers Partial Updates
+* From [Django REST Framework](https://www.django-rest-framework.org/api-guide/serializers/#partial-updates)
+* Accessed Feb 16 2021
+
+Put as Create
+* From [GitHub](https://gist.github.com/tomchristie/a2ace4577eff2c603b1b#gistcomment-2588991)
+* From [mightyroser](https://github.com/mightyroser)
+* Accessed Feb 16 2021
+
+CORS
+* From [zaidfazil](https://stackoverflow.com/questions/44037474/cors-error-while-consuming-calling-rest-api-with-react/44037631#44037631)
+* Accessed Feb 16 2021

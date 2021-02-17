@@ -103,7 +103,12 @@ class CreatePostView(generics.ListCreateAPIView):
         return queryset
 
     # POST: perform_create is called before saving to the database  
-    # TODO: only allow user to create post if author id matches?      
+    def post(self, request, *args, **kwargs):
+        if (self.kwargs['author_id'] != self.request.user.id):
+            return Response(status=status.HTTP_403_FORBIDDEN)
+        
+        return self.create(request, *args, **kwargs)
+        
     def perform_create(self, serializer):
         request_author_id = self.kwargs['author_id']
         serializer.save(author=mainModels.Author.objects.get(id=self.request.user.id))
