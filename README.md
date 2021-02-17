@@ -126,3 +126,7 @@ Django Settings
 AssertRegex
 * From [StackOverflow](https://stackoverflow.com/a/64192098)
 * Accessed Feb 14 2021
+
+CORS
+* From [zaidfazil](https://stackoverflow.com/questions/44037474/cors-error-while-consuming-calling-rest-api-with-react/44037631#44037631)
+* Accessed Feb 16 2021
