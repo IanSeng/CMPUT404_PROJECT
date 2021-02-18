@@ -200,6 +200,16 @@ class TestUpdatePostEndpoint(TestCase):
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual('Title', res.data['title'])
         self.assertEqual('PUBLIC', res.data['visibility'])
+    
+    def test_get_correct_author(self):
+        """returns the correct author of the post"""
+        client2 = APIClient()
+        client2.force_authenticate(user=self.author2)
+        res = client2.get(self.update_post_url)
+
+        returned_author = res.data['author']
+        self.assertEqual(returned_author['username'], self.cred)
+        self.assertEqual(returned_author['id'], str(self.author.id))
 
     def test_cannot_get_user_friend_visible_post(self):
         """Testing TestUpdatePostEndpoint returns 404 if requesting another 
