@@ -60,10 +60,9 @@ class AuthAuthorSerializer(serializers.Serializer):
         if not author:
             raise serializers.ValidationError({"error": "Unable to authenticate with provided credentials"})
         
-        if not author.adminApproval:
-            raise serializers.ValidationError({"error": "This account has not been approved by the admin"})
 
         attributes['user'] = author
+        
         return attributes
         
 
