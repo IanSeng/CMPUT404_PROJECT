@@ -95,6 +95,7 @@ class TestAuthAuthorEndpoint(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertIn('token', res.data)
+        self.assertIn('id', res.data)
 
     def test_auth_author_endpoint_with_invalid_credentials(self):
         """Test logging in with invalid credentials"""
@@ -135,7 +136,7 @@ class TestAuthAuthorEndpoint(TestCase):
 
         res = self.client.post(AUTH_USER_URL, payload)
 
-        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
         self.assertNotIn('token', res.data)
 
 
