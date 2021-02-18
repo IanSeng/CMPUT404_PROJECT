@@ -14,7 +14,6 @@ PAYLOAD = {
             "description": "A brief description",
             "contentType": "text/html",
             "content": "<h1>hello</h1>",
-            "published": "2021-02-16T05:51:07.263548Z",
             "visibility": "PUBLIC",
             "unlisted": False
         }
@@ -24,7 +23,6 @@ FRIENDS_VIS_PAYLOAD = {
             "description": "A brief description",
             "contentType": "text/html",
             "content": "<h1>hello</h1>",
-            "published": "2021-02-16T05:51:07.263548Z",
             "visibility": "FRIENDS",
             "unlisted": False
         }
@@ -255,7 +253,6 @@ class TestUpdatePostEndpoint(TestCase):
         res1 = self.client.get(self.update_post_url)
         self.assertEqual(res1.status_code, status.HTTP_200_OK)
         self.assertNotEqual(self.author2.id, self.author.id)
-        self.assertEqual(res1.data['author'], self.author.id)
         
         client2 = APIClient()
         client2.force_authenticate(user=self.author2)
