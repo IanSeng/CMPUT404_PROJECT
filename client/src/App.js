@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Route, withRouter, Switch, Redirect } from "react-router-dom";
 import LoginPage from "./components/SignupLogin/LoginPage";
 import SignupPage from "./components/SignupLogin/SignupPage";
-import MyFeedPage from "./components/MyFeed/MyFeedPage";
+import LandingPage from "./components/Landing/LandingPage";
 import MyProfilePage from "./components/MyProfile/MyProfilePage";
 import { Context } from "./Context";
 import "./App.scss";
@@ -33,7 +33,7 @@ const App = (props) => {
   return (
     <div className="app">
       <Route exact path="/">
-        {context.cookie ? <Redirect to="/myfeed" /> : <Redirect to="/login" />}
+        {context.cookie ? <Redirect to="/home" /> : <Redirect to="/login" />}
       </Route>
 
       <Switch key={props.location.key}>
@@ -41,8 +41,8 @@ const App = (props) => {
         <Route path="/signup" component={SignupPage} />
         <PrivateRoute
           isAuthorized={context.cookie}
-          path="/myfeed"
-          component={MyFeedPage}
+          path="/home"
+          component={LandingPage}
         />
         <PrivateRoute
           isAuthorized={context.cookie}
