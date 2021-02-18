@@ -1,8 +1,8 @@
-from django.conf import settings
 from django.db import models
 from django.utils.timezone import now
 
 from main import models as mainModels
+from main import utils
 import uuid
 
 
@@ -69,4 +69,7 @@ class Post(models.Model):
 
     # TODO; page pagination
     def get_comments_page_url(self):
-        return f'{settings.SERVER_URL}/author/{str(self.author.id)}/posts/{str(self.id)}/comments'
+        return f'{utils.HOST}/author/{str(self.author.id)}/posts/{str(self.id)}/comments'
+
+    def get_id_url(self):
+        return f'{utils.HOST}/author/{str(self.author.id)}/posts/{str(self.id)}/'
