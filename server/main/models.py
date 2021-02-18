@@ -40,3 +40,5 @@ class Author(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'username'
 
+    def get_id_url(self):
+        return f'{utils.HOST}/author/{str(self.id)}'

@@ -4,9 +4,9 @@ to be used for main user model
 """
 
 from enum import Enum
+from django.conf import settings
 
-# TODO: Add host once we have the host IP
-HOST = ""
+HOST = f"{settings.SERVER_URL}"
 
 class UserType(Enum):
     superuser = 'superuser'
