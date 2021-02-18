@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { Message, Dimmer, Loader } from "semantic-ui-react";
 import axios from "axios";
@@ -6,9 +6,12 @@ import "./SignupLoginPage.scss";
 import SignupLoginForm from "./SignupLoginForm";
 import { ReactComponent as AppName } from "../../assets/AppName.svg";
 import { SERVER_HOST } from "../../Constants";
+import { Context } from "../../Context";
+import { getUserObject } from "../../ApiUtils";
 
 const LoginPage = (props) => {
   const [loading, updateLoading] = useState(false);
+  const context = useContext(Context);
 
   const onSubmit = async (username, password) => {
     username = username.trim();
@@ -31,9 +34,11 @@ const LoginPage = (props) => {
 
     const response = await signinRequest(username, password);
     const { status } = response;
-    const { token } = response.data;
+    const { token, id } = response.data;
 
-    updateLoading(false);
+    if (status !== 200) {
+      updateLoading(false);
+    }
 
     if (status === 401) {
       return (
@@ -55,6 +60,24 @@ const LoginPage = (props) => {
       );
     } else if (status === 200) {
       // save cookie and redirect user to the myfeed page
+      const getAuthorResponse = await getUserObject(token, id);
+
+      updateLoading(false);
+      const getAuthorStatus = getAuthorResponse.status;
+      const userData = getAuthorResponse.data;
+
+      if (getAuthorStatus !== 200) {
+        return (
+          <Message
+            error
+            size="tiny"
+            header="Error"
+            content="Please try again."
+          />
+        );
+      }
+
+      context.updateUser(userData);
       return <Redirect to="/myfeed" token={token} />;
     } else {
       return (

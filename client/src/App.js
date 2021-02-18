@@ -35,12 +35,6 @@ const App = (props) => {
       <Route exact path="/">
         {context.cookie ? <Redirect to="/myfeed" /> : <Redirect to="/login" />}
       </Route>
-      <Route exact path="/login">
-        {context.cookie ? <Redirect to="/myfeed" /> : <Redirect to="/login" />}
-      </Route>
-      <Route exact path="/signup">
-        {context.cookie ? <Redirect to="/myfeed" /> : <Redirect to="/login" />}
-      </Route>
 
       <Switch key={props.location.key}>
         <Route path="/login" component={LoginPage} />
