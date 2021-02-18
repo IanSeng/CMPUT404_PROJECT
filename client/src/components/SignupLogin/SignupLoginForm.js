@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Form, Input, Button } from "semantic-ui-react";
+import { Context } from "../../Context";
 import "./SignupLoginForm.scss";
 
 const SignupLoginForm = (props) => {
+  const context = useContext(Context);
+
   const [username, updateUsername] = useState("");
   const [password, updatePassword] = useState("");
   const [error, setError] = useState(false);
@@ -20,6 +23,12 @@ const SignupLoginForm = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     let message = await props.onSubmit(username, password);
+
+    // redirect the user to the myfeed page
+    if (message !== null && message.props.to) {
+      context.updateCookie(message.props.token);
+      setMessage(message);
+    }
 
     if (message !== null && message.props.error == true) {
       setSuccess(false);

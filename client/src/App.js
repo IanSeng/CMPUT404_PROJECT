@@ -10,16 +10,45 @@ import "./App.scss";
 const App = (props) => {
   const context = useContext(Context);
 
+  // Protected React Routes
+  // From StackOverflow https://stackoverflow.com/a/43171515
+  // From Tyler McGinnis https://stackoverflow.com/users/1867084/tyler-mcginnis
+  const PrivateRoute = ({ component: Component, isAuthorized, ...rest }) => {
+    return (
+      <Route
+        {...rest}
+        render={(props) =>
+          isAuthorized ? (
+            <Component {...props} />
+          ) : (
+            <Redirect
+              to={{ pathname: "/login", state: { from: props.location } }}
+            />
+          )
+        }
+      />
+    );
+  };
+
   return (
     <div className="App">
       <Route exact path="/">
-        {context.user ? <Redirect to="/myfeed" /> : <Redirect to="/login" />}
+        {context.cookie ? <Redirect to="/myfeed" /> : <Redirect to="/login" />}
       </Route>
+
       <Switch key={props.location.key}>
         <Route path="/login" component={LoginPage} />
         <Route path="/signup" component={SignupPage} />
-        <Route path="/myfeed" component={MyFeedPage} />
-        <Route path="/profile" component={MyProfilePage} />
+        <PrivateRoute
+          isAuthorized={context.cookie}
+          path="/myfeed"
+          component={MyFeedPage}
+        />
+        <PrivateRoute
+          isAuthorized={context.cookie}
+          path="/profile"
+          component={MyProfilePage}
+        />
       </Switch>
     </div>
   );
