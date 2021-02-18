@@ -154,7 +154,6 @@ Django Restframework Generic Views
 * From [Django REST framework Docs](https://www.django-rest-framework.org/api-guide/generic-views/)
 * Accessed Feb 16 2021
 
-<<<<<<< HEAD
 Concrete View Classes
 * From [Django REST Framework](https://www.django-rest-framework.org/api-guide/generic-views/#concrete-view-classes)
 * Accessed Feb 16 2021
@@ -180,8 +179,9 @@ Put as Create
 CORS
 * From [zaidfazil](https://stackoverflow.com/questions/44037474/cors-error-while-consuming-calling-rest-api-with-react/44037631#44037631)
 * Accessed Feb 16 2021
-=======
+
 Django Update user profile 
 * From [Medium](https://medium.com/django-rest/django-rest-framework-change-password-and-update-profile-1db0c144c0a3)
 * From [Yunus Emre Cevik](https://yunusemrecevik.medium.com/)
->>>>>>> update readme
+* Accessed Feb 17 2021
+
