@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.contrib.auth import get_user_model
+from django.conf import settings
 
 class ModelTests(TestCase):
     def test_create_user_with_username(self):
@@ -69,7 +70,7 @@ class ModelTests(TestCase):
             password=password
         )
 
-        self.assertEqual(author.host, '')
+        self.assertEqual(author.host, settings.SERVER_URL)
 
     def test_author_superuser(self):
         username='testsuper001'

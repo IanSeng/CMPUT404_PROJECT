@@ -176,12 +176,12 @@ Put as Create
 * From [mightyroser](https://github.com/mightyroser)
 * Accessed Feb 16 2021
 
-CORS
-* From [zaidfazil](https://stackoverflow.com/questions/44037474/cors-error-while-consuming-calling-rest-api-with-react/44037631#44037631)
-* Accessed Feb 16 2021
-
 Django Update user profile 
 * From [Medium](https://medium.com/django-rest/django-rest-framework-change-password-and-update-profile-1db0c144c0a3)
 * From [Yunus Emre Cevik](https://yunusemrecevik.medium.com/)
 * Accessed Feb 17 2021
 
+Get User Info in Serializer
+* From [StackOverflow](https://stackoverflow.com/a/29934446)
+* From [soooooot](https://stackoverflow.com/users/1889075/soooooot)
+* Accessed Feb 17 2021 
