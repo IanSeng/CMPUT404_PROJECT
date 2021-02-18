@@ -6,10 +6,11 @@ from main import models
 
 class UserAdmin(BaseUserAdmin):
     ordering=['id']
-    list_display=["username", "displayName", "id"]
+    list_display=["username", "adminApproval", "id"]
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
-        (_('Other Info'), {'fields': ('display_name',)}),
+        (_('Approval Status'), {'fields': ('adminApproval',)}),
+        (_('Author Info'), {'fields': ('displayName', 'github')}),
         (
             _('Permissions'),
             {'fields': ('is_active', 'is_staff', 'is_superuser')}
