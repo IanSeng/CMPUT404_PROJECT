@@ -14,7 +14,6 @@ PAYLOAD = {
             "description": "A brief description",
             "contentType": "text/html",
             "content": "<h1>hello</h1>",
-            "published": "2021-02-16T05:51:07.263548Z",
             "visibility": "PUBLIC",
             "unlisted": False
         }
@@ -24,7 +23,6 @@ FRIENDS_VIS_PAYLOAD = {
             "description": "A brief description",
             "contentType": "text/html",
             "content": "<h1>hello</h1>",
-            "published": "2021-02-16T05:51:07.263548Z",
             "visibility": "FRIENDS",
             "unlisted": False
         }
@@ -181,9 +179,11 @@ class TestUpdatePostEndpoint(TestCase):
 
         self.client.force_authenticate(user=self.author)
         res = self.client.post(self.create_post_url, PAYLOAD)
+        post_id = res.data['id'].split('/')[-2]
+
         self.update_post_url = reverse(
             'posts:update',
-            kwargs={'author_id': self.author.id, 'pk': res.data['id']}
+            kwargs={'author_id': self.author.id, 'pk': post_id}
         )
 
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
@@ -207,10 +207,11 @@ class TestUpdatePostEndpoint(TestCase):
         """
         self.client.force_authenticate(user=self.author)
         res = self.client.post(self.create_post_url, FRIENDS_VIS_PAYLOAD)
+        post_id = res.data['id'].split('/')[-2]
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
         update_post_url = reverse(
             'posts:update',
-            kwargs={'author_id': self.author.id, 'pk': res.data['id']}
+            kwargs={'author_id': self.author.id, 'pk': post_id}
         )
 
         client2 = APIClient()
@@ -224,10 +225,11 @@ class TestUpdatePostEndpoint(TestCase):
         """
         self.client.force_authenticate(user=self.author)
         res = self.client.post(self.create_post_url, FRIENDS_VIS_PAYLOAD)
+        post_id = res.data['id'].split('/')[-2]
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
         update_post_url = reverse(
             'posts:update',
-            kwargs={'author_id': self.author.id, 'pk': res.data['id']}
+            kwargs={'author_id': self.author.id, 'pk': post_id}
         )
         
         res2 = self.client.get(update_post_url)
@@ -255,7 +257,6 @@ class TestUpdatePostEndpoint(TestCase):
         res1 = self.client.get(self.update_post_url)
         self.assertEqual(res1.status_code, status.HTTP_200_OK)
         self.assertNotEqual(self.author2.id, self.author.id)
-        self.assertEqual(res1.data['author'], self.author.id)
         
         client2 = APIClient()
         client2.force_authenticate(user=self.author2)
