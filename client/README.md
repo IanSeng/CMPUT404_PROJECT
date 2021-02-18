@@ -113,3 +113,9 @@ Using Cookies in React
 
 - From [jmfurlott](https://www.jmfurlott.com/handling-user-session-react-context/)
 - Accessed Feb 17 2021
+
+Protected React Routes
+
+- From [StackOverflow](https://stackoverflow.com/a/43171515)
+- From [Tyler McGinnis](https://stackoverflow.com/users/1867084/tyler-mcginnis)
+- Accessed Feb 17 2021

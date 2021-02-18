@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Form, Input, Button } from "semantic-ui-react";
-import { setSessionCookie } from "../../CommonUtils";
+import { Context } from "../../Context";
 import "./SignupLoginForm.scss";
 
 const SignupLoginForm = (props) => {
+  const context = useContext(Context);
+
   const [username, updateUsername] = useState("");
   const [password, updatePassword] = useState("");
   const [error, setError] = useState(false);
@@ -22,9 +24,9 @@ const SignupLoginForm = (props) => {
     e.preventDefault();
     let message = await props.onSubmit(username, password);
 
-    // redirect the user to the stated to route
+    // redirect the user to the myfeed page
     if (message !== null && message.props.to) {
-      setSessionCookie(message.props.token);
+      context.updateCookie(message.props.token);
       setMessage(message);
     }
 

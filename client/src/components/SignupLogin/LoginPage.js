@@ -54,7 +54,7 @@ const LoginPage = (props) => {
         />
       );
     } else if (status === 200) {
-      // save cookie and redirect user to public posts page
+      // save cookie and redirect user to the myfeed page
       return <Redirect to="/myfeed" token={token} />;
     } else {
       return (
