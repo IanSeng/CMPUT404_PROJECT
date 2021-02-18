@@ -152,8 +152,8 @@ USE_TZ = True
 
 # For tests
 # https://stackoverflow.com/a/35224204
-# TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
-# NOSE_ARGS = ['--with-spec', '--spec-color']
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+NOSE_ARGS = ['--with-spec', '--spec-color']
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
