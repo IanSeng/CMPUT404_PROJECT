@@ -8,6 +8,7 @@ import uuid
 
 CREATE_USER_URL = reverse('author:create')
 AUTH_USER_URL = reverse('author:auth')
+ME_URL = reverse('author:me')
 
 def create_author(**params):
     """Helper function to create author"""
@@ -95,7 +96,6 @@ class TestAuthAuthorEndpoint(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertIn('token', res.data)
-        self.assertIn('id', res.data)
 
     def test_auth_author_endpoint_with_invalid_credentials(self):
         """Test logging in with invalid credentials"""
@@ -227,5 +227,50 @@ class TestUpdateAuthorProfileEndpoint(TestCase):
         res = self.client.put(f'/service/author/{self.authorID}/', payload)
 
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
+
+class TestMeProfileEndpoint(TestCase):
+    """Test API(GET)://service/author/me/"""
+    def setUp(self):
+        self.client = APIClient()
+        
+    def test_me_endpoint_with_auth(self):
+        """Test retrieving my author profile if user is logged in"""
+        user = create_author(
+            username='abc001',
+            password='abcpwd',
+            adminApproval=True,
+        )
+        self.client.force_authenticate(user=user)
+
+        res = self.client.get(ME_URL)
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertIn('type', res.data)
+        self.assertIn('id', res.data)
+        self.assertIn('host', res.data)
+        self.assertIn('displayName', res.data)
+        self.assertIn('url', res.data)
+        self.assertIn('github', res.data)
+
+    def test_me_endpoint_without_auth(self):
+        """Test return error if user is not logged in"""
+        res = self.client.get(ME_URL)
+
+        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_me_endpoint_without_admin_approval(self):
+        """Test return error is author is not admin approved"""
+        user = create_author(
+            username='abc001',
+            password='abcpwd',
+            adminApproval=False,
+        )
+        self.client.force_authenticate(user=user)
+
+        res = self.client.get(ME_URL)
+
+        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
+        
+    
 
     
