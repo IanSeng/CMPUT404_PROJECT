@@ -191,3 +191,7 @@ Get User Info in Serializer
 * From [StackOverflow](https://stackoverflow.com/a/29934446)
 * From [soooooot](https://stackoverflow.com/users/1889075/soooooot)
 * Accessed Feb 17 2021 
+
+Serializer Method Field
+* From [ocobacho](https://stackoverflow.com/a/52935481)
+* Accessed Feb 18 2021
