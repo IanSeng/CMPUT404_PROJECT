@@ -1,0 +1,32 @@
+.custom-card {
+  .ui.card > .extra,
+  .ui.cards > .card > .extra {
+    display: flex;
+    justify-content: space-between;
+
+    .ui.button {
+      margin-top: 0;
+    }
+  }
+
+  .ui.card > .content,
+  .ui.cards > .card > .content {
+    margin-top: 10px;
+    border-top: 0 solid white !important;
+
+    .ui.button {
+      margin-top: 0;
+    }
+  }
+
+  .ui.card > .content:after,
+  .ui.cards > .card > .content:after {
+    display: none;
+  }
+
+  .ui.centered.fluid.raised.card {
+    width: 60%;
+    box-shadow: 1px 4px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+  }
+}
