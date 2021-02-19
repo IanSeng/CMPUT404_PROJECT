@@ -1,36 +1,26 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import NavBar from "./NavBar";
 import MyFeedPage from "../Feeds/MyFeedPage";
 import PublicFeedPage from "../Feeds/PublicFeedPage";
 import MyProfilePage from "../MyProfile/MyProfilePage";
-import { getCurrentUserObject } from "../../ApiUtils";
-import { Context } from "../../Context";
 import "./LandingPage.scss";
 
-class LandingPage extends Component {
-  constructor(props) {
-    super(props);
+const LandingPage = () => {
+  const [page, updatePage] = useState(<MyFeedPage />);
 
-    this.state = { page: <MyFeedPage />, name: "" };
-  }
-
-  renderPage = (page) => {
-    if (page === "MyFeed") this.setState({ page: <MyFeedPage /> });
-    else if (page === "PublicFeed") this.setState({ page: <PublicFeedPage /> });
-    else if (page === "Profile") this.setState({ page: <MyProfilePage /> });
-    else return this.setState({ page: <MyFeedPage /> });
+  const renderPage = (page) => {
+    if (page === "MyFeed") updatePage(<MyFeedPage />);
+    else if (page === "PublicFeed") updatePage(<PublicFeedPage />);
+    else if (page === "Profile") updatePage(<MyProfilePage />);
+    else return updatePage(<MyFeedPage />);
   };
 
-  render() {
-    return (
-      <div className="landing-page">
-        <NavBar renderPage={this.renderPage} />
-        {this.state.page}
-      </div>
-    );
-  }
-}
-
-LandingPage.contextType = Context;
+  return (
+    <div className="landing-page">
+      <NavBar renderPage={renderPage} />
+      {page}
+    </div>
+  );
+};
 
 export default LandingPage;
