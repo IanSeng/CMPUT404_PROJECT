@@ -148,5 +148,17 @@ React Hooks
 
 Infinite Rerender Fix
 
-- [From M.D.](https://stackoverflow.com/questions/54219194/updating-react-context-from-consumer-componentdidmount-causes-infinite-re-render)
+- [From M.D.](https://stackoverflow.com/users/7006105/m-d)
+- [From Stack Overflow](https://stackoverflow.com/questions/54219194/updating-react-context-from-consumer-componentdidmount-causes-infinite-re-render)
+- Accessed Feb 18 2021
+
+Displaying Dates in JS
+
+- From [Moment JS Docs](https://momentjs.com/docs/#/displaying/format/)
+- Accessed Feb 18 2021
+
+Managing Markdown in React
+
+- From [Remark JS Docs](https://github.com/remarkjs/react-markdown#use)
+- From [Espen Hovlandsdal](https://espen.codes/)
 - Accessed Feb 18 2021
