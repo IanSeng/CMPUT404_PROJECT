@@ -1,6 +1,5 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState } from "react";
 import * as Cookies from "js-cookie";
-import { getCurrentUserObject } from "./ApiUtils";
 
 export const Context = createContext();
 

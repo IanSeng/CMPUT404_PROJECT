@@ -60,7 +60,7 @@ const LoginPage = (props) => {
       );
     } else if (status === 200) {
       // save cookie and redirect user to the myfeed page
-      const getAuthorResponse = await getCurrentUserObject(token, id);
+      const getAuthorResponse = await getCurrentUserObject(token);
 
       updateLoading(false);
       const getAuthorStatus = getAuthorResponse.status;
