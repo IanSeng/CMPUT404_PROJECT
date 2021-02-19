@@ -87,6 +87,11 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 ## References
 
+Semantic-UI
+
+- Multiple pages accessed from [Semantic UI](https://react.semantic-ui.com/usage)
+- Accessed Feb 1 - Apr 16 2021
+
 React-Router
 
 - From [React Router](https://reactrouter.com/web/guides/quick-start)
@@ -109,6 +114,16 @@ SCSS
 - From [CSS Gradient](https://cssgradient.io/)
 - Accessed Feb 15 2021
 
+Axios
+
+- From [Paul Halliday](https://www.digitalocean.com/community/tutorials/react-axios-react)
+- Accessed Feb 16 2021
+
+Responses
+
+- From [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/API/Response)
+- Accessed Feb 16 2021
+
 Using Cookies in React
 
 - From [jmfurlott](https://www.jmfurlott.com/handling-user-session-react-context/)
@@ -119,3 +134,19 @@ Protected React Routes
 - From [StackOverflow](https://stackoverflow.com/a/43171515)
 - From [Tyler McGinnis](https://stackoverflow.com/users/1867084/tyler-mcginnis)
 - Accessed Feb 17 2021
+
+Menu Styling
+
+- From [zopu](https://github.com/Semantic-Org/Semantic-UI-React/issues/3894)
+- Accessed Feb 17 2021
+
+React Hooks
+
+- From [React JS](https://reactjs.org/docs/hooks-reference.html)
+- From [Mertcan Diken and Yangshun Tay](https://stackoverflow.com/questions/53945763/componentdidmount-equivalent-on-a-react-function-hooks-component)
+- Accessed Feb 18 2021
+
+Infinite Rerender Fix
+
+- [From M.D.](https://stackoverflow.com/questions/54219194/updating-react-context-from-consumer-componentdidmount-causes-infinite-re-render)
+- Accessed Feb 18 2021
