@@ -1,4 +1,7 @@
 .custom-card {
+  margin-top: 10px;
+  margin-bottom: 10px;
+
   .ui.card > .extra,
   .ui.cards > .card > .extra {
     display: flex;
@@ -11,7 +14,6 @@
 
   .ui.card > .content,
   .ui.cards > .card > .content {
-    margin-top: 10px;
     border-top: 0 solid white !important;
 
     .ui.button {
@@ -25,8 +27,18 @@
   }
 
   .ui.centered.fluid.raised.card {
-    width: 60%;
+    max-width: 100%;
+    min-width: 850px;
     box-shadow: 1px 4px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 20px;
   }
+}
+
+.ui.centered.cards {
+  flex-direction: column;
+}
+
+.ui.centered.one.cards {
+  flex-wrap: nowrap;
+  margin-top: 5%;
 }
