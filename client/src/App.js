@@ -1,10 +1,11 @@
-import React, { useState, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import { Route, withRouter, Switch, Redirect } from "react-router-dom";
 import LoginPage from "./components/SignupLogin/LoginPage";
 import SignupPage from "./components/SignupLogin/SignupPage";
 import LandingPage from "./components/Landing/LandingPage";
 import MyProfilePage from "./components/MyProfile/MyProfilePage";
 import { Context } from "./Context";
+import { getCurrentUserObject } from "./ApiUtils";
 import "./App.scss";
 
 const App = (props) => {
@@ -29,6 +30,18 @@ const App = (props) => {
       />
     );
   };
+
+  const updateUserObject = async () => {
+    const response = await getCurrentUserObject(context.cookie);
+
+    if (response.data && response.data.username) {
+      context.updateUser(response.data);
+    }
+  };
+
+  useEffect(() => {
+    updateUserObject();
+  }, []);
 
   return (
     <div className="app">
