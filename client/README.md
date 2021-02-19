@@ -156,3 +156,9 @@ Displaying Dates in JS
 
 - From [Moment JS Docs](https://momentjs.com/docs/#/displaying/format/)
 - Accessed Feb 18 2021
+
+Managing Markdown in React
+
+- From [Remark JS Docs](https://github.com/remarkjs/react-markdown#use)
+- From [Espen Hovlandsdal](https://espen.codes/)
+- Accessed Feb 18 2021
