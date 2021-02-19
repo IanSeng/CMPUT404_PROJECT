@@ -14,7 +14,7 @@ class InboxView(generics.RetrieveDestroyAPIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get_inbox(self):
-        request_author_id = self.kwargs['inboxAuthorID']
+        request_author_id = self.kwargs['author_id']
 
         if (self.request.user.id != request_author_id):
             raise ValidationError({"error": ["Not authorized to view this inbox."]})
@@ -31,7 +31,7 @@ class InboxView(generics.RetrieveDestroyAPIView):
         
         if (inbox_type == 'post'):
             post_id = request.data.get('id')
-            request_author_id = self.kwargs['inboxAuthorID']
+            request_author_id = self.kwargs['author_id']
             # TODO: allow sharing of friend's post
             a_post = get_object_or_404(Post, pk=post_id, visibility=Post.PUBLIC)
             inbox = self.get_inbox()
