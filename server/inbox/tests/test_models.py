@@ -15,10 +15,16 @@ class InboxTestCase(TestCase):
             password='testpwd'
         )
 
-        self.post = Post.objects.create(
+        self.post_1 = Post.objects.create(
             title='Title',
             content='The actual content',
             author=self.author_1
+        )
+
+        self.post_2 = Post.objects.create(
+            title='Title2',
+            content='The actual content2',
+            author=self.author_2
         )
 
     def create_inbox(self):
@@ -44,6 +50,14 @@ class InboxTestCase(TestCase):
         """Test adding a post to Inbox"""
         inbox = self.create_inbox()
         self.assertEqual(inbox.posts.count(), 0)
-        inbox.posts.add(self.post)
+        inbox.posts.add(self.post_1)
         self.assertEqual(inbox.posts.count(), 1)
 
+    def test_clear_inbox(self):
+        """Test clearing items in Inbox"""
+        inbox = self.create_inbox()
+        inbox.posts.add(self.post_1)
+        inbox.posts.add(self.post_2)
+        self.assertEqual(inbox.posts.count(), 2)
+        inbox.posts.clear()
+        self.assertEqual(inbox.posts.count(), 0)
