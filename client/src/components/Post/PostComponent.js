@@ -48,7 +48,8 @@ const PostComponent = (props) => {
             </div>
             <div>
               <span className="date">
-                Posted by {author.displayName} on {published}
+                Posted by <a href="/home">{author.displayName}</a> on{" "}
+                {published}
               </span>
             </div>
           </Card.Meta>
@@ -76,7 +77,7 @@ const PostComponent = (props) => {
             </Label>
           </Button>
           <Button as="div" labelPosition="left">
-            <Button basic color="blue" floated="right">
+            <Button color="blue" floated="right">
               <Icon name="comments" />
               Comment
             </Button>

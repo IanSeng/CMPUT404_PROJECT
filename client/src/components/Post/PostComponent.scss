@@ -32,6 +32,10 @@
     box-shadow: 1px 4px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 20px;
   }
+
+  .ui.black.basic.icon.right.floated.button {
+    border-radius: 20px;
+  }
 }
 
 .ui.centered.cards {
@@ -40,5 +44,4 @@
 
 .ui.centered.one.cards {
   flex-wrap: nowrap;
-  margin-top: 5%;
 }
