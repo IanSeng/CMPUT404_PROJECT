@@ -1,38 +1,95 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { Button, Input, Message, Header, Modal, Form } from "semantic-ui-react";
+import { Context } from "../../Context";
+import axios from "axios";
+import { SERVER_HOST } from "../../Constants";
 
-const EditProfileModal = () => {
-  const [open, setOpen] = useState(false);
-  const [displayName, updateDisplayName] = useState("");
-  const [githubUsername, updateGithubUsername] = useState("");
-  const [error, setError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+const EditProfileModal = (props) => {
+  const context = useContext(Context);
+
+  const [open, updateOpen] = useState(false);
+  const [loading, updateLoading] = useState(false);
+  const [currentDisplayName, updateCurrentDisplayName] = useState(
+    context.user.displayName
+  );
+  const [githubUsername, updateGithubUsername] = useState(context.user.github);
+  const [error, updateError] = useState(false);
+  const [errorMessage, updateErrorMessage] = useState("");
+
+  const modalOnClose = () => {
+    updateError(false);
+    updateErrorMessage("");
+    updateCurrentDisplayName(context.user.displayName);
+    updateGithubUsername(context.user.github);
+    updateOpen(false);
+  };
 
   const handleChange = (e, { name, value }) => {
     if (name === "displayName") {
-      updateDisplayName(value);
+      updateCurrentDisplayName(value);
     } else if (name === "githubUsername") {
       updateGithubUsername(value);
     }
   };
 
-  const handleSubmit = (e) => {
+  const validateDisplayName = () => {
+    const displayNameLength = currentDisplayName.trim().length;
+    return displayNameLength >= 3 || displayNameLength === 0;
+  };
+
+  const updateUserProfile = async () => {
+    try {
+      const response = await axios.put(
+        `${SERVER_HOST}/service/author/${context.user.id}/`,
+        {
+          displayName: currentDisplayName,
+          github: githubUsername,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Token ${context.cookie}`,
+          },
+        }
+      );
+
+      return response;
+    } catch (error) {
+      return error.response;
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    updateLoading(true);
 
-    // TODO validate user input
-    // Check if display name is valid
-    // Check if GitHub username exists
+    if (!validateDisplayName()) {
+      updateError(true);
+      updateErrorMessage("Display Name must be at least 3 characters or more.");
+      updateLoading(false);
+      return;
+    }
 
-    // Validate if django backend saved user profile correctly
-    // If so close modal, and display toast message saying success
-    // Otherwise, show error message in modal
-    // setOpen(false);
+    const updateUserProfileResponse = await updateUserProfile();
+    if (updateUserProfileResponse.status === 200) {
+      context.updateUser(updateUserProfileResponse.data);
+    } else {
+      updateError(true);
+      updateErrorMessage(
+        "Something happened while trying to update your profile. Please try again later."
+      );
+      updateLoading(false);
+      return;
+    }
+
+    updateLoading(false);
+    updateOpen(false);
   };
 
   return (
     <Modal
-      onClose={() => setOpen(false)}
-      onOpen={() => setOpen(true)}
+      onClose={() => modalOnClose()}
+      onOpen={() => updateOpen(true)}
       closeIcon
       open={open}
       size="tiny"
@@ -48,7 +105,7 @@ const EditProfileModal = () => {
               placeholder="Display Name"
               name="displayName"
               type="text"
-              value={displayName}
+              value={currentDisplayName}
               onChange={handleChange}
             />
           </Form.Field>
@@ -66,6 +123,7 @@ const EditProfileModal = () => {
           <Button
             fluid
             type="submit"
+            loading={loading}
             onClick={handleSubmit}
             className="edit-profile-save-btn"
           >
