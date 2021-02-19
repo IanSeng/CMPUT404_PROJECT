@@ -19,7 +19,6 @@ class InboxView(generics.ListCreateAPIView):
         if (self.request.user.id != request_author_id):
             raise ValidationError({"error": ["Not authorized to view this inbox."]})
 
-        # queryset = Inbox.objects.filter(author=Author.objects.get(id=self.request.user.id))
-        queryset = Inbox.objects.all()
+        queryset = Inbox.objects.filter(author=Author.objects.get(id=self.request.user.id))
 
         return queryset
