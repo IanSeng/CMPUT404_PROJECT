@@ -1,6 +1,8 @@
 import React, { createContext, useState } from "react";
 import * as Cookies from "js-cookie";
 
+export const Context = createContext();
+
 export const setSessionCookie = (token) => {
   Cookies.remove("session");
   Cookies.set("session", token, { expires: 1 });
@@ -19,8 +21,6 @@ export const getSessionCookie = () => {
 export const removeSessionCookie = () => {
   Cookies.remove("session");
 };
-
-export const Context = createContext();
 
 const ContextProvider = (props) => {
   const [currentUser, updateCurrentUser] = useState(null);

@@ -52,9 +52,15 @@ ALTER ROLE myprojectuser SET client_encoding TO 'utf8'; etc.
 
 // Recreate the database
 psql postgres
-DROP DATABASE myproject;
+DROP DATABASE myproject; // make sure to INCLUDE THE SEMICOLON
 CREATE DATABASE myproject;
 ALTER ROLE myprojectuser SET client_encoding TO 'utf8';
+
+// Don't forget to do the following steps after recreating the db
+python3 manage.py makemigrations
+python3 manage.py migrate
+python3 manage.py createsuperuser
+
 
 // Drop one particular table in your database
 python manage.py dbshell // access local database

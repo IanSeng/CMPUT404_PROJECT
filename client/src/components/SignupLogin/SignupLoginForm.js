@@ -34,20 +34,25 @@ const SignupLoginForm = (props) => {
       setSuccess(false);
       setError(true);
       setMessage(message);
-      console.log("error");
     } else if (message !== null && message.props.success == true) {
       setError(false);
       setSuccess(true);
       setMessage(message);
-      console.log("success");
     }
   };
 
   return (
-    <Form size="big" success={success} error={error} onSubmit={handleSubmit}>
+    <Form
+      className="signup-login-form"
+      size="big"
+      success={success}
+      error={error}
+      onSubmit={handleSubmit}
+    >
       {message ? message : <div />}
       <Form.Field>
         <Input
+          className="signup-login-input"
           fluid
           icon="user"
           iconPosition="left"
@@ -61,6 +66,7 @@ const SignupLoginForm = (props) => {
       </Form.Field>
       <Form.Field>
         <Input
+          className="signup-login-input"
           fluid
           icon="lock"
           iconPosition="left"
@@ -72,7 +78,12 @@ const SignupLoginForm = (props) => {
           disabled={success}
         />
       </Form.Field>
-      <Button fluid type="submit" disabled={success}>
+      <Button
+        className="signup-login-btn"
+        fluid
+        type="submit"
+        disabled={success}
+      >
         {props.buttonText}
       </Button>
     </Form>

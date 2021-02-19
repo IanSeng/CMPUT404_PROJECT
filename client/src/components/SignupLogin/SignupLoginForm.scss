@@ -1,15 +1,17 @@
-.ui.form {
+.ui.form.signup-login-form {
   width: 30%;
   min-width: 300px;
 }
 
-.ui.form input {
-  border-radius: 50px !important;
-  box-shadow: 5px 10px 10px rgba(163, 163, 163, 0.19),
-    0 3px 3px rgba(141, 141, 141, 0.23) !important;
+.ui.fluid.left.icon.input.signup-login-input {
+  input {
+    border-radius: 50px !important;
+    box-shadow: 5px 10px 10px rgba(163, 163, 163, 0.19),
+      0 3px 3px rgba(141, 141, 141, 0.23) !important;
+  }
 }
 
-.ui.button {
+.ui.button.signup-login-btn {
   border-radius: 50px !important;
   box-shadow: 5px 10px 10px rgba(163, 163, 163, 0.19),
     0 3px 3px rgba(141, 141, 141, 0.23);

@@ -15,3 +15,18 @@ export const getUserObject = async (token, id) => {
     return error.response;
   }
 };
+
+export const getCurrentUserObject = async (token) => {
+  try {
+    const response = await axios.get(`${SERVER_HOST}/service/author/me/`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${token}`,
+      },
+    });
+
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
