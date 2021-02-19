@@ -13,6 +13,6 @@ class Inbox(models.Model):
     posts = models.ManyToManyField(Post, blank=True)
 
 # create Inbox object after Author is created and called save()
-# @receiver(post_save, sender=Author)
-# def my_handler(sender, instance, **kwargs):
-#     Inbox.objects.create(author=instance)
+@receiver(post_save, sender=Author)
+def my_handler(sender, instance, **kwargs):
+    Inbox.objects.create(author=instance)
