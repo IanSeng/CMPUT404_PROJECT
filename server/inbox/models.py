@@ -12,8 +12,7 @@ class Inbox(models.Model):
     author = models.OneToOneField(Author, on_delete=models.CASCADE)
     posts = models.ManyToManyField(Post, blank=True)
 
-# TODO create object when Author is created
-# @receiver(post_save, sender=Author)
-# def my_handler(sender, **kwargs):
-#     if sender.pk is None:  # create
-#         sender.model = Inbox.objects.create(author=sender)
+# create Inbox object after Author is created and called save()
+@receiver(post_save, sender=Author)
+def my_handler(sender, instance, **kwargs):
+    Inbox.objects.create(author=instance)
