@@ -14,7 +14,13 @@ def create_post(**params):
     return Post.objects.create(**params)
 # TODO: add test cases for Like and Follow
 class TestInboxEndpoint(TestCase):
-    """Test Inbox API ://service/author/{AUTHOR_ID}/inbox/"""
+    """Test Inbox API ://service/author/{AUTHOR_ID}/inbox/
+    
+    GET - get the Inbox
+    POST - send Follow, Like, Post to the Inbox
+    DELETE - clear the Inbox
+
+    """
 
     def setUp(self):
         self.author_1 = get_user_model().objects.create_author(
