@@ -193,5 +193,6 @@ Get User Info in Serializer
 * Accessed Feb 17 2021 
 
 Serializer Method Field
-* From [ocobacho](https://stackoverflow.com/a/52935481)
+* From [StackOverflow](https://stackoverflow.com/a/52935481)
+* From [ocobacho](https://stackoverflow.com/users/10297128/ocobacho)
 * Accessed Feb 18 2021

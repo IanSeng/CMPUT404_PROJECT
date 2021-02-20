@@ -1,10 +1,10 @@
 from django.shortcuts import render, get_object_or_404
+from django.core.exceptions import PermissionDenied, ValidationError
 from rest_framework import authentication, generics, permissions, status
 from main.models import Author
 from posts.models import Post
 from .models import Inbox
 from .serializers import InboxSerializer
-from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -18,7 +18,7 @@ class InboxView(APIView):
         request_author_id = self.kwargs['author_id']
 
         if (self.request.user.id != request_author_id):
-            raise ValidationError({"error": ["Not authorized for this inbox."]})
+            raise PermissionDenied
 
         return get_object_or_404(Inbox, author=Author.objects.get(id=self.request.user.id))
 
@@ -29,6 +29,7 @@ class InboxView(APIView):
 
     # POST: send a Post, Like or Follow to Inbox
     def post(self, request, *args, **kwargs):
+        request_author_id = self.kwargs['author_id']
         inbox_type = request.data.get('type')
 
         # TODO: send Like and Follow
@@ -36,8 +37,11 @@ class InboxView(APIView):
             post_id = request.data.get('id')
             request_author_id = self.kwargs['author_id']
             # TODO: allow sharing of friend's post
-            a_post = get_object_or_404(Post, pk=post_id, visibility=Post.PUBLIC)
-            inbox = self.get_inbox()
+            try:
+                a_post = get_object_or_404(Post, pk=post_id, visibility=Post.PUBLIC)
+            except ValidationError:
+                return Response(status=status.HTTP_400_BAD_REQUEST)
+            inbox = get_object_or_404(Inbox, author=Author.objects.get(id=self.request.user.id))
             inbox.posts.add(a_post)
             inbox.save()
             return Response(f'Shared {post_id} with {request_author_id}', status=status.HTTP_200_OK)

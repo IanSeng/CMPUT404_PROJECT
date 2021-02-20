@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.contrib.auth import get_user_model
 from inbox.models import Inbox
 from posts.models import Post
-
+# TODO: test cases for Like and Follow
 class InboxTestCase(TestCase):
     def setUp(self):
         self.author_1 = get_user_model().objects.create_author(
