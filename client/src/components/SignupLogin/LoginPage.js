@@ -34,7 +34,7 @@ const LoginPage = (props) => {
 
     const response = await signinRequest(username, password);
     const { status } = response;
-    const { token, id } = response.data;
+    const { token } = response.data;
 
     if (status !== 200) {
       updateLoading(false);
@@ -78,7 +78,7 @@ const LoginPage = (props) => {
       }
 
       context.updateUser(userData);
-      return <Redirect to="/home" token={token} />;
+      return <Redirect to="/myfeed" token={token} />;
     } else {
       return (
         <Message error size="tiny" header="Error" content="Please try again." />

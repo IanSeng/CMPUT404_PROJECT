@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Menu, Segment } from "semantic-ui-react";
-import "./MyProfilePage.scss";
-import MyProfileData from "./MyProfileData";
+import "./ProfilePage.scss";
+import ProfileData from "./ProfileData";
 
 const recentPosts = "Recent Posts";
 const friends = "Friends";
@@ -20,7 +20,7 @@ const MyProfilePage = () => {
   return (
     <div className="profile-page-container">
       <div className="profile-data">
-        <MyProfileData />
+        <ProfileData />
       </div>
 
       <div className="profile-posts">

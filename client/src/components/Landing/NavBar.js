@@ -1,25 +1,28 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Menu, Dropdown, Icon } from "semantic-ui-react";
 import { Context } from "../../Context";
 import { ReactComponent as AppLogo } from "../../assets/AppLogo.svg";
+import {
+  PAGE_MY_FEED,
+  PAGE_PROFILE,
+  PAGE_PUBLIC_FEED,
+  ROUTE_LOGIN,
+} from "../../Constants";
 import "./NavBar.scss";
 
 const NavBar = (props) => {
   const context = useContext(Context);
   let history = useHistory();
 
-  const [active, updateActive] = useState("MyFeed");
-
   const handleClick = (e, { name }) => {
-    updateActive(name);
     props.renderPage(name);
   };
 
   const handleLogout = () => {
     context.updateUser(null);
     context.deleteCookie();
-    history.push("/login");
+    history.push(ROUTE_LOGIN);
   };
 
   return (
@@ -30,8 +33,8 @@ const NavBar = (props) => {
         </Menu.Item>
         <Menu.Item
           className="menu-item"
-          name="MyFeed"
-          active={active === "MyFeed"}
+          name={PAGE_MY_FEED}
+          active={props.activeMenuItem === PAGE_MY_FEED}
           onClick={handleClick}
         >
           <Icon inverted name="newspaper outline" />
@@ -39,8 +42,8 @@ const NavBar = (props) => {
         </Menu.Item>
         <Menu.Item
           className="menu-item"
-          name="PublicFeed"
-          active={active === "PublicFeed"}
+          name={PAGE_PUBLIC_FEED}
+          active={props.activeMenuItem === PAGE_PUBLIC_FEED}
           onClick={handleClick}
         >
           <Icon inverted name="bullhorn" />
@@ -50,7 +53,7 @@ const NavBar = (props) => {
           <Menu.Item
             className="menu-item"
             name="CreatePost"
-            active={active === "CreatePost"}
+            active={props.activeMenuItem === "CreatePost"}
             onClick={handleClick}
           >
             <Icon inverted name="edit outline" />
@@ -71,7 +74,7 @@ const NavBar = (props) => {
             <Dropdown.Menu>
               <Dropdown.Item
                 text="Profile"
-                name="Profile"
+                name={PAGE_PROFILE}
                 onClick={handleClick}
               />
               <Dropdown.Item
