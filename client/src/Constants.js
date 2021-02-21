@@ -1,6 +1,7 @@
 export const SERVER_HOST = "http://127.0.0.1:8000";
 
 export const ROUTE_LOGIN = "/login";
+export const ROUTE_SIGNUP = "/signup";
 export const ROUTE_MY_FEED = "/myfeed";
 export const ROUTE_PUBLIC_FEED = "/publicfeed";
 
