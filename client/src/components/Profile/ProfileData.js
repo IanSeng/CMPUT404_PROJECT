@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Header, Button } from "semantic-ui-react";
 import EditProfileModal from "./EditProfileModal";
 import { Context } from "../../Context";
-import "./MyProfilePage.scss";
+import "./ProfilePage.scss";
 
 const MyProfileData = () => {
   const context = useContext(Context);

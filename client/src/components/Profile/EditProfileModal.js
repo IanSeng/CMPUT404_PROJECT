@@ -10,9 +10,11 @@ const EditProfileModal = (props) => {
   const [open, updateOpen] = useState(false);
   const [loading, updateLoading] = useState(false);
   const [currentDisplayName, updateCurrentDisplayName] = useState(
-    context.user.displayName
+    context.user ? context.user.displayName : "Loading..."
   );
-  const [githubUsername, updateGithubUsername] = useState(context.user.github);
+  const [githubUsername, updateGithubUsername] = useState(
+    context.user ? context.user.github : "Loading..."
+  );
   const [error, updateError] = useState(false);
   const [errorMessage, updateErrorMessage] = useState("");
 
@@ -81,9 +83,6 @@ const EditProfileModal = (props) => {
       updateLoading(false);
       return;
     }
-
-    updateLoading(false);
-    updateOpen(false);
   };
 
   return (

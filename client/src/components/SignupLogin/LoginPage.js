@@ -8,6 +8,7 @@ import { ReactComponent as AppName } from "../../assets/AppName.svg";
 import { SERVER_HOST } from "../../Constants";
 import { Context } from "../../Context";
 import { getCurrentUserObject } from "../../ApiUtils";
+import { ROUTE_MY_FEED, ROUTE_SIGNUP } from "../../Constants";
 
 const LoginPage = (props) => {
   const [loading, updateLoading] = useState(false);
@@ -34,7 +35,7 @@ const LoginPage = (props) => {
 
     const response = await signinRequest(username, password);
     const { status } = response;
-    const { token, id } = response.data;
+    const { token } = response.data;
 
     if (status !== 200) {
       updateLoading(false);
@@ -78,7 +79,7 @@ const LoginPage = (props) => {
       }
 
       context.updateUser(userData);
-      return <Redirect to="/home" token={token} />;
+      return <Redirect to={ROUTE_MY_FEED} token={token} />;
     } else {
       return (
         <Message error size="tiny" header="Error" content="Please try again." />
@@ -123,7 +124,7 @@ const LoginPage = (props) => {
       <SignupLoginForm onSubmit={onSubmit} buttonText="Login" />
       <div className="link-container">
         <p className="link-info">Don't have an account?</p>
-        <Link to="/signup">Sign up</Link>
+        <Link to={ROUTE_SIGNUP}>Sign up</Link>
       </div>
     </div>
   );
