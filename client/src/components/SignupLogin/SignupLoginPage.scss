@@ -1,4 +1,4 @@
-.Page {
+.page {
   height: 100%;
   width: 100%;
   display: flex;
@@ -6,13 +6,13 @@
   flex-direction: column;
 }
 
-.AppName {
+.app-name {
   width: 40%;
   min-width: 300px;
   margin-top: 10%;
 }
 
-.Title {
+.title {
   background: -webkit-linear-gradient(
     140deg,
     rgba(83, 32, 229, 1) 0%,
@@ -25,11 +25,11 @@
   margin-bottom: 2em;
 }
 
-.LinkContainer {
+.link-container {
   margin-top: 1em;
   display: inline-flex;
 }
 
-.LinkInfo {
+.link-info {
   margin-right: 0.5em;
 }

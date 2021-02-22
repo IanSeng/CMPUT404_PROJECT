@@ -5,7 +5,7 @@ import axios from "axios";
 import "./SignupLoginPage.scss";
 import SignupLoginForm from "./SignupLoginForm";
 import { ReactComponent as AppName } from "../../assets/AppName.svg";
-import { SERVER_HOST } from "../../Constants";
+import { SERVER_HOST, ROUTE_LOGIN } from "../../Constants";
 
 const SignupPage = () => {
   const onSubmit = async (username, password) => {
@@ -78,13 +78,13 @@ const SignupPage = () => {
   };
 
   return (
-    <div className="Page">
-      <AppName className="AppName" />
-      <h2 className="Title">SIGNUP</h2>
+    <div className="page">
+      <AppName className="app-name" />
+      <h2 className="title">SIGNUP</h2>
       <SignupLoginForm onSubmit={onSubmit} buttonText="Sign up" />
-      <div className="LinkContainer">
-        <p className="LinkInfo">Already have an account?</p>
-        <Link to="/login">Login</Link>
+      <div className="link-container">
+        <p className="link-info">Already have an account?</p>
+        <Link to={ROUTE_LOGIN}>Login</Link>
       </div>
     </div>
   );

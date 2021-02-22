@@ -7,7 +7,8 @@ import SignupLoginForm from "./SignupLoginForm";
 import { ReactComponent as AppName } from "../../assets/AppName.svg";
 import { SERVER_HOST } from "../../Constants";
 import { Context } from "../../Context";
-import { getUserObject } from "../../ApiUtils";
+import { getCurrentUserObject } from "../../ApiUtils";
+import { ROUTE_MY_FEED, ROUTE_SIGNUP } from "../../Constants";
 
 const LoginPage = (props) => {
   const [loading, updateLoading] = useState(false);
@@ -34,7 +35,7 @@ const LoginPage = (props) => {
 
     const response = await signinRequest(username, password);
     const { status } = response;
-    const { token, id } = response.data;
+    const { token } = response.data;
 
     if (status !== 200) {
       updateLoading(false);
@@ -60,7 +61,7 @@ const LoginPage = (props) => {
       );
     } else if (status === 200) {
       // save cookie and redirect user to the myfeed page
-      const getAuthorResponse = await getUserObject(token, id);
+      const getAuthorResponse = await getCurrentUserObject(token);
 
       updateLoading(false);
       const getAuthorStatus = getAuthorResponse.status;
@@ -78,7 +79,7 @@ const LoginPage = (props) => {
       }
 
       context.updateUser(userData);
-      return <Redirect to="/myfeed" token={token} />;
+      return <Redirect to={ROUTE_MY_FEED} token={token} />;
     } else {
       return (
         <Message error size="tiny" header="Error" content="Please try again." />
@@ -112,18 +113,18 @@ const LoginPage = (props) => {
   };
 
   return (
-    <div className="Page">
+    <div className="page">
       {loading && (
-        <Dimmer active>
+        <Dimmer inverted active>
           <Loader size="medium">Logging In...</Loader>
         </Dimmer>
       )}
-      <AppName className="AppName" />
-      <h2 className="Title">LOGIN</h2>
+      <AppName className="app-name" />
+      <h2 className="title">LOGIN</h2>
       <SignupLoginForm onSubmit={onSubmit} buttonText="Login" />
-      <div className="LinkContainer">
-        <p className="LinkInfo">Don't have an account?</p>
-        <Link to="/signup">Sign up</Link>
+      <div className="link-container">
+        <p className="link-info">Don't have an account?</p>
+        <Link to={ROUTE_SIGNUP}>Sign up</Link>
       </div>
     </div>
   );
