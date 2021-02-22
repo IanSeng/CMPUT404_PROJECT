@@ -1,15 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Header, Button } from "semantic-ui-react";
 import EditProfileModal from "./EditProfileModal";
-import "./MyProfilePage.scss";
+import { Context } from "../../Context";
+import "./ProfilePage.scss";
 
 const MyProfileData = () => {
+  const context = useContext(Context);
+
+  let nameToRender = "Loading...";
+
+  if (context.user && context.user.displayName) {
+    nameToRender = context.user.displayName;
+  } else if (context.user && context.user.username) {
+    nameToRender = context.user.username;
+  }
+
   return (
     <div>
       <div className="profile-top-section">
         <div className="display-name-heading">
           <Header as="h1" floated="left">
-            Test User
+            {nameToRender}
           </Header>
           <EditProfileModal />
         </div>
@@ -18,7 +29,9 @@ const MyProfileData = () => {
           <Header as="h4" floated="left">
             GitHub:
           </Header>
-          <span>bui1</span>
+          <span>
+            {context.user && context.user.github ? context.user.github : "N/A"}
+          </span>
         </div>
       </div>
 
