@@ -14,6 +14,7 @@ import {
   ROUTE_LOGIN,
   PAGE_MY_FEED,
   PAGE_PUBLIC_FEED,
+  ROUTE_SIGNUP,
 } from "./Constants";
 import "./App.scss";
 
@@ -69,15 +70,15 @@ const App = (props) => {
     <div className="app">
       <Route exact path="/">
         {context.cookie ? (
-          <Redirect to={PAGE_MY_FEED} />
+          <Redirect to={ROUTE_MY_FEED} />
         ) : (
           <Redirect to={ROUTE_LOGIN} />
         )}
       </Route>
 
       <Switch key={props.location.key}>
-        <Route path="/login" component={LoginPage} />
-        <Route path="/signup" component={SignupPage} />
+        <Route path={ROUTE_LOGIN} component={LoginPage} />
+        <Route path={ROUTE_SIGNUP} component={SignupPage} />
         <PrivateRoute
           isAuthorized={context.cookie}
           path={ROUTE_MY_FEED}
