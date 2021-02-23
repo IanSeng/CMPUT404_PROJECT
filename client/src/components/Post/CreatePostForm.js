@@ -13,9 +13,9 @@ import ImageUploader from "react-images-upload";
 import "./CreatePostPage.scss";
 
 const visibilityOptions = [
-  { key: "p", text: "Public", value: "public" },
-  { key: "f", text: "Friends", value: "friends" },
-  { key: "a", text: "Author", value: "author" },
+  { key: "p", text: "Public", value: "PUBLIC" },
+  { key: "f", text: "Friends", value: "FRIENDS" },
+  { key: "a", text: "Author", value: "AUTHOR" },
 ];
 
 const CreatePost = (props) => {
@@ -26,12 +26,12 @@ const CreatePost = (props) => {
   const [descError, updateDescError] = useState(null);
   const [image, updateImage] = useState([]);
   const [contentType, updateContentType] = useState("text/markdown");
-  const [visibility, updateVisibility] = useState("public");
+  const [visibility, updateVisibility] = useState("PUBLIC");
   const [unlisted, updateUnlisted] = useState(false);
   const [formError, updateFormError] = useState(false);
   const [formErrorMessage, updateFormErrorMessage] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (titleError || descError) {
@@ -52,11 +52,16 @@ const CreatePost = (props) => {
 
     const postInfo = {
       title,
+      source: "",
+      origin: "",
       description,
-      content,
-      image,
       contentType,
+      content,
+      visibility,
+      unlisted,
     };
+
+    await props.submit(postInfo);
   };
 
   const handleInputChange = (e, { name, value }) => {

@@ -1,16 +1,39 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
+import axios from "axios";
 import { Header, Icon } from "semantic-ui-react";
 import CreatePostForm from "./CreatePostForm";
+import { Context } from "../../Context";
+import { SERVER_HOST } from "../../Constants";
 import "./CreatePostPage.scss";
 
 const CreatePostPage = (props) => {
+  const context = useContext(Context);
+
+  const onSubmit = async (body) => {
+    try {
+      const response = await axios.post(
+        `${SERVER_HOST}/service/author/${context.user.id}/posts/`,
+        {
+          headers: {
+            Authorization: `Token ${context.cookie}`,
+          },
+          body,
+        }
+      );
+
+      console.log(response);
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+
   return (
-    <div className="create-post">
+    <div className="create-post-page">
       <Header as="h2">
         <Icon name="edit" />
         <Header.Content>Create Post</Header.Content>
       </Header>
-      <CreatePostForm />
+      <CreatePostForm submit={onSubmit} />
     </div>
   );
 };
