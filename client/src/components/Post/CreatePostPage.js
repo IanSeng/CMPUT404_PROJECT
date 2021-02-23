@@ -13,11 +13,12 @@ const CreatePostPage = (props) => {
     try {
       const response = await axios.post(
         `${SERVER_HOST}/service/author/${context.user.id}/posts/`,
+        body,
         {
           headers: {
             Authorization: `Token ${context.cookie}`,
+            "Content-Type": "application/json",
           },
-          body,
         }
       );
 
