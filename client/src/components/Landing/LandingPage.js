@@ -4,7 +4,7 @@ import { Context } from "../../Context";
 import NavBar from "./NavBar";
 import MyFeedPage from "../Feeds/MyFeedPage";
 import PublicFeedPage from "../Feeds/PublicFeedPage";
-import CreatePostPage from "../Post/CreatePostForm";
+import CreatePostPage from "../Post/CreatePostPage";
 import ProfilePage from "../Profile/ProfilePage";
 import {
   ROUTE_MY_FEED,
@@ -31,7 +31,7 @@ const LandingPage = ({ subComponent, activeMenuItem }) => {
       history.push(ROUTE_PUBLIC_FEED);
     } else if (page === PAGE_CREATE_POST) {
       updatePage(<CreatePostPage />);
-      history.push(`/author/create/post`);
+      history.push(`/author/createpost`);
     } else if (page === PAGE_PROFILE) {
       updatePage(<ProfilePage />);
       history.push(`/author/${context.user.id}`);
