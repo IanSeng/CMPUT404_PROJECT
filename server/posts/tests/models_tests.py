@@ -77,8 +77,8 @@ class PostTestCase(TestCase):
 
     def test_get_comments_page_url(self):
         post = self.create_post()
-        self.assertRegex(post.get_comments_page_url(), r'^http.+/author/.+/posts/.+/comments')
+        self.assertRegex(post.get_comments_page_url(), r'^http.+/author/.+/posts/.+/comments$')
     
     def test_get_id_url(self):
         post = self.create_post()
-        self.assertRegex(post.get_comments_page_url(), r'^http.+/author/.+/posts/.+')
+        self.assertRegex(post.get_id_url(), r'^http.+/author/.+/posts/.+/$')
