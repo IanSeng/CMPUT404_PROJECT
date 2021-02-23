@@ -6,6 +6,7 @@ import LandingPage from "./components/Landing/LandingPage";
 import ProfilePage from "./components/Profile/ProfilePage";
 import MyFeedPage from "./components/Feeds/MyFeedPage";
 import PublicFeedPage from "./components/Feeds/PublicFeedPage";
+import CreatePostPage from "./components/Post/CreatePostPage";
 import { Context } from "./Context";
 import { getCurrentUserObject } from "./ApiUtils";
 import {
@@ -15,6 +16,7 @@ import {
   PAGE_MY_FEED,
   PAGE_PUBLIC_FEED,
   ROUTE_SIGNUP,
+  PAGE_CREATE_POST,
 } from "./Constants";
 import "./App.scss";
 
@@ -92,6 +94,13 @@ const App = (props) => {
           component={LandingPage}
           subComponent={PublicFeedPage}
           activeMenuItem={PAGE_PUBLIC_FEED}
+        />
+        <PrivateRoute
+          isAuthorized={context.cookie}
+          path="/author/createpost"
+          component={LandingPage}
+          subComponent={CreatePostPage}
+          activeMenuItem={PAGE_CREATE_POST}
         />
         <PrivateRoute
           isAuthorized={context.cookie}

@@ -8,6 +8,7 @@ import {
   PAGE_PROFILE,
   PAGE_PUBLIC_FEED,
   ROUTE_LOGIN,
+  PAGE_CREATE_POST,
 } from "../../Constants";
 import "./NavBar.scss";
 
@@ -52,8 +53,8 @@ const NavBar = (props) => {
         <Menu.Menu position="right">
           <Menu.Item
             className="menu-item"
-            name="CreatePost"
-            active={props.activeMenuItem === "CreatePost"}
+            name={PAGE_CREATE_POST}
+            active={props.activeMenuItem === PAGE_CREATE_POST}
             onClick={handleClick}
           >
             <Icon inverted name="edit outline" />
@@ -67,7 +68,7 @@ const NavBar = (props) => {
             trigger={
               <>
                 <Icon inverted name="user" />
-                {context.user ? context.user.username : "loading"}
+                {context.user ? context.user.username : "loading..."}
               </>
             }
           >
