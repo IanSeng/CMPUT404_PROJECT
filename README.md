@@ -196,3 +196,8 @@ Serializer Method Field
 * From [StackOverflow](https://stackoverflow.com/a/52935481)
 * From [ocobacho](https://stackoverflow.com/users/10297128/ocobacho)
 * Accessed Feb 18 2021
+
+Serialize Model Instance
+* From [StackOverflow](https://stackoverflow.com/a/3289057)
+* From [xaralis](https://stackoverflow.com/users/303184/xaralis)
+* Accessed Feb 23 2021

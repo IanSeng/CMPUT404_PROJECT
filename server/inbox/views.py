@@ -1,10 +1,12 @@
 from django.shortcuts import render, get_object_or_404
+from django.core import serializers
 from django.core.exceptions import PermissionDenied, ValidationError
 from rest_framework import authentication, generics, permissions, status
 from main.models import Author
 from posts.models import Post
 from .models import Inbox
 from .serializers import InboxSerializer
+from posts.serializers import PostSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -41,13 +43,16 @@ class InboxView(APIView):
                 a_post = get_object_or_404(Post, pk=post_id, visibility=Post.PUBLIC)
             except ValidationError:
                 return Response(status=status.HTTP_400_BAD_REQUEST)
+            # data = serializers.serialize('json', [a_post])
+            data = PostSerializer(a_post).data
             inbox = get_object_or_404(Inbox, author=Author.objects.get(id=self.request.user.id))
-            inbox.posts.add(a_post)
+            inbox.items.append(data)
             inbox.save()
             return Response(f'Shared {post_id} with {request_author_id}', status=status.HTTP_200_OK)
 
     # DELETE: Clear the inbox
     def delete(self, request, *args, **kwargs):
         inbox = self.get_inbox()
-        inbox.posts.clear()
+        inbox.items.clear()
+        inbox.save()
         return Response(status=status.HTTP_204_NO_CONTENT)

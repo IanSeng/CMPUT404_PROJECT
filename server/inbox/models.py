@@ -1,3 +1,4 @@
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -5,12 +6,11 @@ from django.dispatch import receiver
 from main.models import Author
 from posts.models import Post
 
-
 class Inbox(models.Model):
     # TODO add like and follow
     type = "inbox"
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
-    posts = models.ManyToManyField(Post, blank=True)
+    items = ArrayField(models.TextField(), blank=True, null=True)
 
 # create Inbox object after Author is created and called save()
 # @receiver(post_save, sender=Author)
