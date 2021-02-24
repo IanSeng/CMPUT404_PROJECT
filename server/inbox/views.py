@@ -1,20 +1,27 @@
 from django.shortcuts import render, get_object_or_404
 from django.core import serializers
 from django.core.exceptions import PermissionDenied, ValidationError
-from rest_framework import authentication, generics, permissions, status
+from rest_framework import authentication, generics, pagination, permissions, status
 from main.models import Author
 from posts.models import Post
 from .models import Inbox
 from .serializers import InboxSerializer
 from posts.serializers import PostSerializer
+from author.serializers import AuthorProfileSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
+class CustomPagination(pagination.PageNumberPagination):
+    page_size = 2
+    page_size_query_param = 'size'
 
 # service/author/{AUTHOR_ID}/inbox/
 class InboxView(APIView):
     serializer_class = InboxSerializer
     authenticate_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
+    pagination_class = CustomPagination
+
 
     def get_inbox(self):
         request_author_id = self.kwargs['author_id']
@@ -27,7 +34,8 @@ class InboxView(APIView):
     # GET: get Inbox of an user
     def get(self, request, *args, **kwargs):
         inbox = self.get_inbox()
-        return Response(InboxSerializer(inbox).data)
+        serializer = InboxSerializer(inbox, context={'request': request})
+        return Response(serializer.data)
 
     # POST: send a Post, Like or Follow to Inbox
     def post(self, request, *args, **kwargs):
@@ -45,6 +53,8 @@ class InboxView(APIView):
                 return Response(status=status.HTTP_400_BAD_REQUEST)
             # data = serializers.serialize('json', [a_post])
             data = PostSerializer(a_post).data
+            # replace author with serialized Author as it is None
+            data['author'] = AuthorProfileSerializer(a_post.author).data
             inbox = get_object_or_404(Inbox, author=Author.objects.get(id=self.request.user.id))
             inbox.items.append(data)
             inbox.save()
