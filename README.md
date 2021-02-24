@@ -201,3 +201,8 @@ Serialize Model Instance
 * From [StackOverflow](https://stackoverflow.com/a/3289057)
 * From [xaralis](https://stackoverflow.com/users/303184/xaralis)
 * Accessed Feb 23 2021
+
+Paginate Nested Object
+* From [StackOverflow](https://stackoverflow.com/a/49677960)
+* From [Abdelrahmen Ayman](https://stackoverflow.com/users/7469841/abdelrahmen-ayman)
+* Accessed Feb 24 2021
