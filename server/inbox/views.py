@@ -1,19 +1,15 @@
 from django.shortcuts import render, get_object_or_404
-from django.core import serializers
 from django.core.exceptions import PermissionDenied, ValidationError
-from rest_framework import authentication, generics, pagination, permissions, status
+from rest_framework import authentication, permissions, status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from posts.serializers import PostSerializer
+from author.serializers import AuthorProfileSerializer
 from main.models import Author
 from posts.models import Post
 from .models import Inbox
 from .serializers import InboxSerializer
-from posts.serializers import PostSerializer
-from author.serializers import AuthorProfileSerializer
-from rest_framework.response import Response
-from rest_framework.views import APIView
-
-class CustomPagination(pagination.PageNumberPagination):
-    page_size = 2
-    page_size_query_param = 'size'
 
 # service/author/{AUTHOR_ID}/inbox/
 class InboxView(APIView):
@@ -26,7 +22,7 @@ class InboxView(APIView):
     def get_inbox(self):
         request_author_id = self.kwargs['author_id']
 
-        if (self.request.user.id != request_author_id):
+        if self.request.user.id != request_author_id:
             raise PermissionDenied
 
         return get_object_or_404(Inbox, author=Author.objects
@@ -44,7 +40,7 @@ class InboxView(APIView):
         inbox_type = request.data.get('type')
 
         # TODO: send Like and Follow
-        if (inbox_type == 'post'):
+        if inbox_type == 'post':
             post_id = request.data.get('id')
             request_author_id = self.kwargs['author_id']
             # TODO: allow sharing of friend's post

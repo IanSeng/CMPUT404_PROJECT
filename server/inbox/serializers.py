@@ -1,9 +1,10 @@
-from rest_framework import serializers
-from .models import Inbox
-from posts.serializers import PostSerializer
-from main import utils
 from ast import literal_eval
+
 from django.core.paginator import Paginator
+from rest_framework import serializers
+
+from main import utils
+from .models import Inbox
 
 class InboxSerializer(serializers.ModelSerializer):
     items = serializers.SerializerMethodField('paginated_items')

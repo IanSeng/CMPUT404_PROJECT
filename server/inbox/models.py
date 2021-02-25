@@ -4,7 +4,6 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from main.models import Author
-from posts.models import Post
 
 class Inbox(models.Model):
     # TODO add like and follow

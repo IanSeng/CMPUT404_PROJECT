@@ -55,7 +55,7 @@ class InboxTestCase(TestCase):
 
         post_1 = PostSerializer(self.post_1).data
         inbox.items.append(post_1)
-        
+
         self.assertEqual(len(inbox.items), 1)
 
     def test_edit_post_after_sending(self):
