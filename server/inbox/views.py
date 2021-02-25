@@ -29,7 +29,8 @@ class InboxView(APIView):
         if (self.request.user.id != request_author_id):
             raise PermissionDenied
 
-        return get_object_or_404(Inbox, author=Author.objects.get(id=self.request.user.id))
+        return get_object_or_404(Inbox, author=Author.objects
+                                 .get(id=self.request.user.id))
 
     # GET: get Inbox of an user
     def get(self, request, *args, **kwargs):
@@ -55,10 +56,15 @@ class InboxView(APIView):
             data = PostSerializer(a_post).data
             # replace author with serialized Author as it is None
             data['author'] = AuthorProfileSerializer(a_post.author).data
-            inbox = get_object_or_404(Inbox, author=Author.objects.get(id=self.request.user.id))
+            inbox = get_object_or_404(Inbox, author=Author.objects
+                                      .get(id=self.request.user.id))
             inbox.items.append(data)
             inbox.save()
-            return Response(f'Shared {post_id} with {request_author_id}', status=status.HTTP_200_OK)
+            return Response(f'Shared {post_id} with {request_author_id}',
+                            status=status.HTTP_200_OK)
+        else:
+            return Response('Invalid type, only \'post\', \'follow\', \'like\'',
+                            status=status.HTTP_400_BAD_REQUEST)
 
     # DELETE: Clear the inbox
     def delete(self, request, *args, **kwargs):

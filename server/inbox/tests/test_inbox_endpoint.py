@@ -8,10 +8,18 @@ from main import utils
 from rest_framework.test import APIClient
 from rest_framework import status
 
-
 def create_post(**params):
     """Helper function to create Post"""
     return Post.objects.create(**params)
+
+def create_payload(item_type, item_id):
+    """Helper function to create Post"""
+    payload = {
+        "type": item_type,
+        "id": item_id,
+    }
+    return payload
+
 # TODO: add test cases for Like and Follow
 class TestInboxEndpoint(TestCase):
     """Test Inbox API ://service/author/{AUTHOR_ID}/inbox/
@@ -41,23 +49,21 @@ class TestInboxEndpoint(TestCase):
 
     def test_send_public_post(self):
         """Test sending public Post returns Response with Post id"""
-        self.client.force_authenticate(user=self.author_1)
         post_params = {
             "title": "Title",
             "author": self.author_1,
             "visibility": "PUBLIC",
         }
-        
+
+        self.client.force_authenticate(user=self.author_1)
         post = create_post(**post_params)
-        
-        payload = {
-            "type": "post",
-            "id": post.id,
-        }
-        self.assertEqual(self.inbox_1.posts.count(), 0)
+        payload = create_payload("post", post.id)
+
+        self.inbox_1 = Inbox.objects.get(author=self.author_1)
+        self.assertEqual(len(self.inbox_1.items), 0)
         res = self.client.post(self.inbox_url, payload)
-        self.assertEqual(self.inbox_1.posts.count(), 1)
-        self.assertTrue(self.inbox_1.posts.get(id=post.id))
+        self.inbox_1 = Inbox.objects.get(author=self.author_1)
+        self.assertEqual(len(self.inbox_1.items), 1)
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertIn(f'{post.id}', res.data)
@@ -65,39 +71,41 @@ class TestInboxEndpoint(TestCase):
 
     def test_send_friend_post_not_friend(self):
         """Test sending friend Post when user is not friends with Author"""
-        self.client.force_authenticate(user=self.author_1)
         post_params = {
             "title": "Title",
             "author": self.author_1,
             "visibility": "FRIENDS",
         }
-        
+
+        self.client.force_authenticate(user=self.author_1)
         post = create_post(**post_params)
-        
-        payload = {
-            "type": "post",
-            "id": post.id,
-        }
+        payload = create_payload("post", post.id)
+
         res = self.client.post(self.inbox_url, payload)
         self.assertEqual(res.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_send_post_with_invalid_post_id(self):
         """Test sending public Post with invalid Post id"""
         self.client.force_authenticate(user=self.author_1)
+        payload = create_payload("post", "0000")
+
+        res = self.client.post(self.inbox_url, payload)
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_send_invalid_payload(self):
+        """Test sending item with invalid type to Inbox"""
         post_params = {
             "title": "Title",
             "author": self.author_1,
             "visibility": "FRIENDS",
         }
-        
+        self.client.force_authenticate(user=self.author_1)
         post = create_post(**post_params)
-        
-        payload = {
-            "type": "post",
-            "id": "00000"
-        }
+        payload = create_payload("invalid_type", post.id)
+
         res = self.client.post(self.inbox_url, payload)
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(res.data, "Invalid type, only \'post\', \'follow\', \'like\'")
 
     def test_get_self_inbox(self):
         """Test Author getting Author's own inbox"""
@@ -126,14 +134,19 @@ class TestInboxEndpoint(TestCase):
         post_2 = create_post(**post_params)
         post_3 = create_post(**post_params)
 
-        self.inbox_1.posts.add(post_1)
-        self.inbox_1.posts.add(post_2)
-        self.inbox_1.posts.add(post_3)
+        payload = create_payload("post", post_1.id)
+        res = self.client.post(self.inbox_url, payload)
+        payload = create_payload("post", post_2.id)
+        res = self.client.post(self.inbox_url, payload)
+        payload = create_payload("post", post_3.id)
+        res = self.client.post(self.inbox_url, payload)
 
-        self.assertEqual(self.inbox_1.posts.count(), 3)
+        inbox_1 = Inbox.objects.get(author=self.author_1)
+        self.assertEqual(len(inbox_1.items), 3)
         res = self.client.delete(self.inbox_url)
         self.assertEqual(res.status_code, status.HTTP_204_NO_CONTENT)
-        self.assertEqual(self.inbox_1.posts.count(), 0)
+        inbox_1 = Inbox.objects.get(author=self.author_1)
+        self.assertEqual(len(inbox_1.items), 0)
 
     def test_delete_others_inbox(self):
         """Test Author delete other Author's inbox"""
@@ -147,9 +160,12 @@ class TestInboxEndpoint(TestCase):
         post_2 = create_post(**post_params)
         post_3 = create_post(**post_params)
 
-        self.inbox_1.posts.add(post_1)
-        self.inbox_1.posts.add(post_2)
-        self.inbox_1.posts.add(post_3)
+        payload = create_payload("post", post_1.id)
+        res = self.client.post(self.inbox_url, payload)
+        payload = create_payload("post", post_2.id)
+        res = self.client.post(self.inbox_url, payload)
+        payload = create_payload("post", post_3.id)
+        res = self.client.post(self.inbox_url, payload)
 
         res = self.client.delete(self.inbox_url)
         self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)

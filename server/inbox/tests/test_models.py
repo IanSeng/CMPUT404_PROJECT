@@ -1,7 +1,9 @@
 from django.test import TestCase
 from django.contrib.auth import get_user_model
+
 from inbox.models import Inbox
 from posts.models import Post
+from posts.serializers import PostSerializer
 # TODO: test cases for Like and Follow
 class InboxTestCase(TestCase):
     def setUp(self):
@@ -49,15 +51,36 @@ class InboxTestCase(TestCase):
     def test_send_post_to_inbox(self):
         """Test adding a post to Inbox"""
         inbox = self.create_inbox()
-        self.assertEqual(inbox.posts.count(), 0)
-        inbox.posts.add(self.post_1)
-        self.assertEqual(inbox.posts.count(), 1)
+        self.assertEqual(len(inbox.items), 0)
+
+        post_1 = PostSerializer(self.post_1).data
+        inbox.items.append(post_1)
+        
+        self.assertEqual(len(inbox.items), 1)
+
+    def test_edit_post_after_sending(self):
+        """Test editing Post after sending to Inbox"""
+        inbox = self.create_inbox()
+        post_1 = PostSerializer(self.post_1).data
+
+        inbox.items.append(post_1)
+        self.assertEqual(post_1, inbox.items[0])
+
+        self.post_1.title = "Modified Title"
+        modified_post_1 = PostSerializer(self.post_1).data
+
+        self.assertEqual(post_1, inbox.items[0])
+        self.assertNotEqual(modified_post_1, inbox.items[0])
+        self.assertNotEqual(modified_post_1, post_1)
 
     def test_clear_inbox(self):
         """Test clearing items in Inbox"""
         inbox = self.create_inbox()
-        inbox.posts.add(self.post_1)
-        inbox.posts.add(self.post_2)
-        self.assertEqual(inbox.posts.count(), 2)
-        inbox.posts.clear()
-        self.assertEqual(inbox.posts.count(), 0)
+        post_1 = PostSerializer(self.post_1).data
+        post_2 = PostSerializer(self.post_1).data
+
+        inbox.items.append(post_1)
+        inbox.items.append(post_2)
+        self.assertEqual(len(inbox.items), 2)
+        inbox.items.clear()
+        self.assertEqual(len(inbox.items), 0)
