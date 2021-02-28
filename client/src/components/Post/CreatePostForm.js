@@ -30,6 +30,7 @@ const CreatePost = (props) => {
   const [unlisted, updateUnlisted] = useState(false);
   const [formError, updateFormError] = useState(false);
   const [formErrorMessage, updateFormErrorMessage] = useState(null);
+  const [loading, updateLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -52,8 +53,8 @@ const CreatePost = (props) => {
 
     const postInfo = {
       title,
-      source: "",
-      origin: "",
+      source: "", // TODO: not sure what source is
+      origin: "", // TODO: not sure what origin is
       description,
       contentType,
       content,
@@ -61,7 +62,24 @@ const CreatePost = (props) => {
       unlisted,
     };
 
-    await props.submit(postInfo);
+    updateLoading(true);
+    const response = await props.submit(postInfo);
+    updateLoading(false);
+
+    if (response.status === 201) {
+      props.postSuccess();
+    } else {
+      const message = (
+        <Message
+          error
+          size="tiny"
+          header="Unexpected Error"
+          content="Please try again."
+        />
+      );
+
+      updateFormErrorMessage(message);
+    }
   };
 
   const handleInputChange = (e, { name, value }) => {
@@ -132,6 +150,7 @@ const CreatePost = (props) => {
       className="create-post-form"
       onSubmit={handleSubmit}
       error={formError}
+      loading={loading}
     >
       {formErrorMessage ? formErrorMessage : <div></div>}
       <Form.Field
