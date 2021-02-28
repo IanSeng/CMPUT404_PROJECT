@@ -162,3 +162,8 @@ Managing Markdown in React
 - From [Remark JS Docs](https://github.com/remarkjs/react-markdown#use)
 - From [Espen Hovlandsdal](https://espen.codes/)
 - Accessed Feb 18 2021
+
+React Image Uploader
+
+- From [Jake Hartnell](https://github.com/jakehartnell/react-images-upload#readme)
+- Accessed Feb 20 2021
