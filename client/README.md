@@ -167,3 +167,21 @@ React Image Uploader
 
 - From [Jake Hartnell](https://github.com/jakehartnell/react-images-upload#readme)
 - Accessed Feb 20 2021
+
+Icon Gradient
+
+- From [Code Grepper](https://www.codegrepper.com/code-examples/css/change+icon+color+to+gradient+css)
+- Accessed Feb 28 2021
+
+Button Hover Overlay
+
+- From [ncuda](https://stackoverflow.com/questions/21423422/color-transparency-overlay-on-hover)
+- Accessed Feb 28 2021
+
+Base64 Images
+
+- From [Boky](https://stackoverflow.com/questions/47176280/how-to-convert-files-to-base64-in-react)
+- From [Simon Schraeder](https://simon-schraeder.de/posts/filereader-async/)
+- From [asifsid88](https://stackoverflow.com/questions/14867835/get-substring-between-two-characters-using-javascript)
+- From [Jordan Enev](https://stackoverflow.com/questions/42395034/how-to-display-binary-data-as-image-in-react)
+- Accessed Feb 28 2021
