@@ -76,8 +76,8 @@ class NodeTestCase(TestCase):
         )
 
     
-    def test_change_admin_approval_to_false_will_refect_in_author(self):
-        """Test change admin approval to false will be reflected in author"""
+    def test_change_to_admin_approval_will_refect_in_author(self):
+        """Test change to admin approval will reflect in author"""
         self.assertEqual(
             get_user_model().objects.get(username=self.remote_username).adminApproval,
             True
@@ -97,11 +97,7 @@ class NodeTestCase(TestCase):
         self.assertEqual(
             get_user_model().objects.get(username=self.remote_username).adminApproval,
             True
-        )
-    
-    def test_change_admin_approval_to_true_will_refect_in_author(self):
-        """Test change admin approval to true will be reflected in author"""
-        pass
+        )     
     
     def test_hostname(self):
         self.assertEqual(self.node.hostname(),self.hostname)
