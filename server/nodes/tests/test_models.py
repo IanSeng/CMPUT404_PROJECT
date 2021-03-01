@@ -75,7 +75,6 @@ class NodeTestCase(TestCase):
             False
         )
 
-    
     def test_change_to_admin_approval_will_refect_in_author(self):
         """Test change to admin approval will reflect in author"""
         self.assertEqual(
