@@ -5,6 +5,7 @@ import gfm from "remark-gfm";
 import "./PostComponent.scss";
 
 const markdownType = "text/markdown";
+const plainTextType = "text/plain";
 
 const defaultProps = {
   title: "Test Title",
@@ -26,10 +27,19 @@ const PostComponent = (props) => {
     author,
     published,
     visibility,
-    imageUrl,
   } = passedValues;
 
   const markdown = `# Hello World \n**This markdown thing is really cool**`;
+
+  const renderContent = () => {
+    if (contentType.includes("image")) {
+      return <Image src={content} size="medium" />;
+    } else if (contentType === markdownType) {
+      return <ReactMarkdown plugins={[gfm]} children={markdown} />;
+    } else if (contentType === plainTextType) {
+      return <p>{content}</p>;
+    }
+  };
 
   return (
     <div className="custom-card">
@@ -55,16 +65,8 @@ const PostComponent = (props) => {
           </Card.Meta>
           <Card.Description>{description}</Card.Description>
         </Card.Content>
-
-        {imageUrl && <Image src={imageUrl} />}
         <Card.Content>
-          <Card.Description>
-            {contentType === markdownType ? (
-              <ReactMarkdown plugins={[gfm]} children={markdown} />
-            ) : (
-              content
-            )}
-          </Card.Description>
+          <Card.Description>{renderContent()}</Card.Description>
         </Card.Content>
         <Card.Content extra>
           <Button as="div" labelPosition="right">
