@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.conf import settings
 
+from main import models
 class ModelTests(TestCase):
     def test_create_user_with_username(self):
         username='test001'
@@ -82,4 +83,66 @@ class ModelTests(TestCase):
         self.assertTrue(user.is_superuser)
         self.assertTrue(user.is_staff)
 
+    def test_author_follower_empty(self):
+        "author create empty follower list"
+        username='test0010'
+        password='testpwd'
+        author = get_user_model().objects.create_author(
+            username=username,
+            password=password,
+        )
 
+        author = models.Followers.objects.create(author=author)  
+
+        self.assertEqual(len(author.followers.all()), 0)
+
+    def test_author_with_follower(self):
+        "author create follower list"
+        username='test001'
+        followerUserName="test002"
+        password='testpwd'
+        author = get_user_model().objects.create_author(
+            username=username,
+            password=password,
+        )
+        follower = get_user_model().objects.create_author(
+            username=followerUserName,
+            password=password,
+        )
+
+        author = models.Followers.objects.create(author=author)  
+        author.followers.add(follower)
+
+        self.assertEqual(len(author.followers.all()), 1)
+
+    def test_author_following_empty(self):
+        "author create empty following list"
+        username='test0010'
+        password='testpwd'
+        author = get_user_model().objects.create_author(
+            username=username,
+            password=password,
+        )
+
+        author = models.Following.objects.create(author=author)  
+
+        self.assertEqual(len(author.following.all()), 0)
+
+    def test_author_with_follwing(self):
+        "author create follower list"
+        username='test001'
+        followingUserName="test002"
+        password='testpwd'
+        author = get_user_model().objects.create_author(
+            username=username,
+            password=password,
+        )
+        follower = get_user_model().objects.create_author(
+            username=followingUserName,
+            password=password,
+        )
+
+        author = models.Following.objects.create(author=author)  
+        author.following.add(follower)
+
+        self.assertEqual(len(author.following.all()), 1)
