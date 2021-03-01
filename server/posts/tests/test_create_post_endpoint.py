@@ -338,7 +338,7 @@ class TestPublicPostEndpoint(TestCase):
             password= 'password'
         )
         self.public_url = reverse(
-            'public',
+            'posts:public',
         )
         self.create_post_url = reverse(
             'posts:create', kwargs={'author_id': self.author.id}
