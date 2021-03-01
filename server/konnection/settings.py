@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'nodes',
     'author',
     'posts',
+    'inbox',
     'corsheaders',
 ]
 

@@ -191,3 +191,18 @@ Get User Info in Serializer
 * From [StackOverflow](https://stackoverflow.com/a/29934446)
 * From [soooooot](https://stackoverflow.com/users/1889075/soooooot)
 * Accessed Feb 17 2021 
+
+Serializer Method Field
+* From [StackOverflow](https://stackoverflow.com/a/52935481)
+* From [ocobacho](https://stackoverflow.com/users/10297128/ocobacho)
+* Accessed Feb 18 2021
+
+Serialize Model Instance
+* From [StackOverflow](https://stackoverflow.com/a/3289057)
+* From [xaralis](https://stackoverflow.com/users/303184/xaralis)
+* Accessed Feb 23 2021
+
+Paginate Nested Object
+* From [StackOverflow](https://stackoverflow.com/a/49677960)
+* From [Abdelrahmen Ayman](https://stackoverflow.com/users/7469841/abdelrahmen-ayman)
+* Accessed Feb 24 2021
