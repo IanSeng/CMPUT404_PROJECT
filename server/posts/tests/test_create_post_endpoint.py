@@ -340,6 +340,7 @@ class TestPublicPostEndpoint(TestCase):
         self.public_url = reverse(
             'posts:public',
         )
+        self.assertEqual(self.public_url, '/service/public/')
         self.create_post_url = reverse(
             'posts:create', kwargs={'author_id': self.author.id}
         )
