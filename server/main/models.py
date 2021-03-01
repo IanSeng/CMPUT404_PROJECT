@@ -48,11 +48,11 @@ class Author(AbstractBaseUser, PermissionsMixin):
         return f'{utils.HOST}/author/{str(self.id)}'
 
 class Followers(models.Model):
-    author = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="followers", on_delete=models.CASCADE)
+    author = models.ForeignKey(Author, related_name="followers", on_delete=models.CASCADE)
     followers = models.ManyToManyField(Author, related_name='author_followers')
-
+    
 
 class Following(models.Model):
-    author = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="following", unique=False, on_delete=models.CASCADE)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="following", unique=False, on_delete=models.CASCADE)
     following = models.ManyToManyField(Author, related_name='author_following')
 
