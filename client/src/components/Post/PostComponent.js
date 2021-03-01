@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Card, Icon, Image, Button, Label } from "semantic-ui-react";
 import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
 import "./PostComponent.scss";
+import { Context } from "../../Context";
 
 const markdownType = "text/markdown";
 const plainTextType = "text/plain";
@@ -18,6 +19,8 @@ const defaultProps = {
 };
 
 const PostComponent = (props) => {
+  const context = useContext(Context);
+
   const passedValues = { ...defaultProps, ...props };
   const {
     title,
@@ -44,8 +47,17 @@ const PostComponent = (props) => {
       <Card fluid raised centered>
         <Card.Content>
           <Button basic color="black" floated="right" icon="share alternate" />
-          <Button basic color="black" floated="right" icon="trash alternate" />
-          <Button basic color="black" floated="right" icon="pencil" />
+          {author.id === context.user.id && (
+            <Button
+              basic
+              color="black"
+              floated="right"
+              icon="trash alternate"
+            />
+          )}
+          {author.id === context.user.id && (
+            <Button basic color="black" floated="right" icon="pencil" />
+          )}
           <Card.Header>{title}</Card.Header>
           <Card.Meta>
             <div>
