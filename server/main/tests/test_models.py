@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from django.conf import settings
 
 from main import models
+
 class ModelTests(TestCase):
     def test_create_user_with_username(self):
         username='test001'

@@ -14,4 +14,3 @@ class FollowersSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Followers
         fields = ('followers',)
-        read_only_fields = ()
