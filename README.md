@@ -191,3 +191,7 @@ Get User Info in Serializer
 * From [StackOverflow](https://stackoverflow.com/a/29934446)
 * From [soooooot](https://stackoverflow.com/users/1889075/soooooot)
 * Accessed Feb 17 2021 
+
+Django Anti-Patterns: Signals
+* From [lincoln loop](https://lincolnloop.com/blog/django-anti-patterns-signals/)
+* From [Peter Baumgartner](https://lincolnloop.com/about/peter-baumgartner/)
