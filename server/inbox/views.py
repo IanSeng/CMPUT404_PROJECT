@@ -16,7 +16,6 @@ class InboxView(APIView):
     serializer_class = InboxSerializer
     authenticate_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
-    pagination_class = CustomPagination
 
 
     def get_inbox(self):
