@@ -29,13 +29,11 @@ const PostComponent = (props) => {
     visibility,
   } = passedValues;
 
-  const markdown = `# Hello World \n**This markdown thing is really cool**`;
-
   const renderContent = () => {
     if (contentType.includes("image")) {
       return <Image src={content} size="medium" />;
     } else if (contentType === markdownType) {
-      return <ReactMarkdown plugins={[gfm]} children={markdown} />;
+      return <ReactMarkdown plugins={[gfm]} children={content} />;
     } else if (contentType === plainTextType) {
       return <p>{content}</p>;
     }
