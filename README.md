@@ -206,3 +206,8 @@ Paginate Nested Object
 * From [StackOverflow](https://stackoverflow.com/a/49677960)
 * From [Abdelrahmen Ayman](https://stackoverflow.com/users/7469841/abdelrahmen-ayman)
 * Accessed Feb 24 2021
+
+Django Anti-Patterns: Signals
+* From [lincoln loop](https://lincolnloop.com/blog/django-anti-patterns-signals/)
+* From [Peter Baumgartner](https://lincolnloop.com/about/peter-baumgartner/)
+* Accessed Feb 28 2021
