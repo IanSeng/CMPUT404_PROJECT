@@ -20,6 +20,7 @@ class TestFollowerListEndpoint(TestCase):
         user = create_author(
             username='abc001',
             password='abcpwd',
+            adminApproval=True,
             id=uuid.UUID('77f1df52-4b43-11e9-910f-b8ca3a9b9f3e').int,
         )
         self.client.force_authenticate(user=user)
@@ -40,8 +41,21 @@ class TestFollowerListEndpoint(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
+    def test_endpoint_with_unauthorized_user(self):
+        "Test endpoint is safeguard by user credential"
+        create_author(
+            username='abc001',
+            password='abcpwd',
+            adminApproval=True,
+            id=uuid.UUID('77f1df52-4b43-11e9-910f-b8ca3a9b9f3e').int,
+        )
+
+        res = self.client.get('/service/author/77f1df52-4b43-11e9-910f-b8ca3a9b9f3e/followers/')
+
+        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
+        
     def test_endpoint_with_admin_approval(self):
-        "Test return unauthorized if user is not admin approved"
+        "Test endpoint is safeguard by adminApproval"
         user = create_author(
             username='abc001',
             password='abcpwd',
@@ -53,5 +67,3 @@ class TestFollowerListEndpoint(TestCase):
         res = self.client.get('/service/author/77f1df52-4b43-11e9-910f-b8ca3a9b9f3e/followers/')
 
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
-
-

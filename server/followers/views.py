@@ -1,6 +1,6 @@
 from rest_framework import generics, permissions
 from rest_framework.response import Response
-from rest_framework.exceptions import ValidationError
+from rest_framework.exceptions import ValidationError, AuthenticationFailed
 
 from main import models
 from followers.serializers import FollowersSerializer
@@ -11,6 +11,10 @@ class FollowersView(generics.RetrieveAPIView):
 
     def get_object(self):
         request_author_id = self.kwargs['id']
+
+        if not self.request.user.adminApproval:
+            raise AuthenticationFailed(detail ={"error": ["User has not been approved by admin"]})
+
         try:
             return models.Followers.objects.filter(author=request_author_id)
         except:
