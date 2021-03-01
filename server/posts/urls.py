@@ -5,6 +5,7 @@ from posts import views
 app_name = 'posts'
 
 urlpatterns = [
-    path('<uuid:author_id>/posts/', views.CreatePostView.as_view(), name='create'),
-    path('<uuid:author_id>/posts/<uuid:pk>/', views.UpdatePostView.as_view(), name='update')
+    path('author/<uuid:author_id>/posts/', views.CreatePostView.as_view(), name='create'),
+    path('author/<uuid:author_id>/posts/<uuid:pk>/', views.UpdatePostView.as_view(), name='update'),
+    path('public/', views.PublicPostView.as_view(), name='public'),
 ] 

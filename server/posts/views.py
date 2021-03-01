@@ -112,3 +112,13 @@ class CreatePostView(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         request_author_id = self.kwargs['author_id']
         serializer.save(author=mainModels.Author.objects.get(id=self.request.user.id))
+
+
+# service/public/
+class PublicPostView(generics.ListAPIView):
+    serializer_class = PostSerializer
+
+    # GET: get all public and not unlisted Post
+    def get_queryset(self):
+        queryset = Post.objects.filter(visibility=Post.PUBLIC, unlisted=False)
+        return queryset
