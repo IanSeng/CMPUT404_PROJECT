@@ -62,6 +62,10 @@ const CreatePost = (props) => {
       unlisted,
     };
 
+    if (image.length > 0) {
+      postInfo["content"] = image;
+    }
+
     updateLoading(true);
     const response = await props.submit(postInfo);
     updateLoading(false);
@@ -77,7 +81,7 @@ const CreatePost = (props) => {
           content="Please try again."
         />
       );
-
+      updateFormError(true);
       updateFormErrorMessage(message);
     }
   };
@@ -128,7 +132,6 @@ const CreatePost = (props) => {
 
   const addImage = (image) => {
     updateImage(image);
-    console.log(image);
   };
 
   const truncateFileName = (filename) => {

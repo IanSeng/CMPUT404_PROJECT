@@ -13,6 +13,13 @@ const CreatePostPage = (props) => {
   const [success, updateSuccess] = useState(false);
 
   const onSubmit = async (body) => {
+    if (Array.isArray(body.content)) {
+      let base64Image = await getBase64(body.content[0]);
+
+      body["content"] = base64Image;
+      body["contentType"] = base64Image.split(/[:,]/)[1];
+    }
+
     try {
       const response = await axios.post(
         `${SERVER_HOST}/service/author/${context.user.id}/posts/`,
@@ -29,6 +36,20 @@ const CreatePostPage = (props) => {
     } catch (error) {
       return error.response;
     }
+  };
+
+  const getBase64 = async (file) => {
+    return new Promise((resolve, reject) => {
+      let reader = new FileReader();
+
+      reader.onload = () => {
+        resolve(reader.result);
+      };
+
+      reader.onerror = reject;
+
+      reader.readAsDataURL(file);
+    });
   };
 
   const postSuccess = () => {
