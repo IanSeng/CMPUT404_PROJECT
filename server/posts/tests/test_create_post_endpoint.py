@@ -27,6 +27,15 @@ FRIENDS_VIS_PAYLOAD = {
             "unlisted": False
         }
 
+UNLISTED_PAYLOAD = {
+            "title": "Title",
+            "description": "A brief description",
+            "contentType": "text/html",
+            "content": "<h1>hello</h1>",
+            "visibility": "PUBLIC",
+            "unlisted": True
+        }
+
 class TestCreatePostEndpoint(TestCase):
     """Tests the endpoint service/author/{AUTHOR_ID}/posts/
 
@@ -316,3 +325,58 @@ class TestUpdatePostEndpoint(TestCase):
         self.client.force_authenticate(user=self.author2)
         res = self.client.put(self.update_post_url, FRIENDS_VIS_PAYLOAD)
         self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)
+
+
+class TestPublicPostEndpoint(TestCase):
+    """Tests the endpoint service/public/
+
+    GET - returns a list of public posts
+    """
+    def setUp(self):
+        self.author = get_user_model().objects.create_author(
+            username= 'username',
+            password= 'password'
+        )
+        self.public_url = reverse(
+            'public',
+        )
+        self.create_post_url = reverse(
+            'posts:create', kwargs={'author_id': self.author.id}
+        )
+        self.client = APIClient()
+        self.client.force_authenticate(user=self.author)
+
+    def test_get_all_public_posts(self):
+        """Testing TestPublicPostEndpoint can get all public posts
+        """
+        res = self.client.post(self.create_post_url, PAYLOAD)
+        res = self.client.post(self.create_post_url, PAYLOAD)
+        res = self.client.post(self.create_post_url, PAYLOAD)
+        res = self.client.post(self.create_post_url, PAYLOAD)
+        res = self.client.get(self.public_url)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(res.data), 4)
+
+    def test_get_all_public_posts_with_friends(self):
+        """Testing TestPublicPostEndpoint can get all public posts among public
+        and friends posts
+        """
+        res = self.client.post(self.create_post_url, PAYLOAD)
+        res = self.client.post(self.create_post_url, PAYLOAD)
+        res = self.client.post(self.create_post_url, FRIENDS_VIS_PAYLOAD)
+        res = self.client.post(self.create_post_url, FRIENDS_VIS_PAYLOAD)
+        res = self.client.get(self.public_url)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(res.data), 2)
+
+    def test_get_all_public_posts_with_unlisted(self):
+        """Testing TestPublicPostEndpoint can get all public posts among public
+        and unlisted public posts
+        """
+        res = self.client.post(self.create_post_url, PAYLOAD)
+        res = self.client.post(self.create_post_url, PAYLOAD)
+        res = self.client.post(self.create_post_url, UNLISTED_PAYLOAD)
+        res = self.client.post(self.create_post_url, UNLISTED_PAYLOAD)
+        res = self.client.get(self.public_url)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(res.data), 2)
