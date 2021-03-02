@@ -129,7 +129,7 @@ class ModelTests(TestCase):
 
         self.assertEqual(len(author.following.all()), 0)
 
-    def test_author_with_follwing(self):
+    def test_author_with_following(self):
         "author create follower list"
         username='test001'
         followingUserName="test002"
