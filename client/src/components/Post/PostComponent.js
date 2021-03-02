@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Card, Icon, Image, Button, Label } from "semantic-ui-react";
 import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
 import "./PostComponent.scss";
+import { Context } from "../../Context";
 
 const markdownType = "text/markdown";
 const plainTextType = "text/plain";
@@ -12,12 +13,14 @@ const defaultProps = {
   description: "Some Description",
   content: "Some Content",
   contentType: "text/plain",
-  author: { displayName: "John Appleseed" },
+  author: { displayName: "John Appleseed", id: "1" },
   published: "2021-02-18T07:21:52.915800Z",
   visibility: "PUBLIC",
 };
 
 const PostComponent = (props) => {
+  const context = useContext(Context);
+
   const passedValues = { ...defaultProps, ...props };
   const {
     title,
@@ -29,13 +32,11 @@ const PostComponent = (props) => {
     visibility,
   } = passedValues;
 
-  const markdown = `# Hello World \n**This markdown thing is really cool**`;
-
   const renderContent = () => {
     if (contentType.includes("image")) {
       return <Image src={content} size="medium" />;
     } else if (contentType === markdownType) {
-      return <ReactMarkdown plugins={[gfm]} children={markdown} />;
+      return <ReactMarkdown plugins={[gfm]} children={content} />;
     } else if (contentType === plainTextType) {
       return <p>{content}</p>;
     }
@@ -46,8 +47,17 @@ const PostComponent = (props) => {
       <Card fluid raised centered>
         <Card.Content>
           <Button basic color="black" floated="right" icon="share alternate" />
-          <Button basic color="black" floated="right" icon="trash alternate" />
-          <Button basic color="black" floated="right" icon="pencil" />
+          {author.id === context.user.id && (
+            <Button
+              basic
+              color="black"
+              floated="right"
+              icon="trash alternate"
+            />
+          )}
+          {author.id === context.user.id && (
+            <Button basic color="black" floated="right" icon="pencil" />
+          )}
           <Card.Header>{title}</Card.Header>
           <Card.Meta>
             <div>
@@ -58,8 +68,11 @@ const PostComponent = (props) => {
             </div>
             <div>
               <span className="date">
-                Posted by <a href="/home">{author.displayName}</a> on{" "}
-                {published}
+                Posted by{" "}
+                <a href={`/author/${author.id}`}>
+                  {author.displayName || author.username}
+                </a>{" "}
+                on {published}
               </span>
             </div>
           </Card.Meta>
@@ -75,7 +88,7 @@ const PostComponent = (props) => {
               Like
             </Button>
             <Label as="a" basic color="red" pointing="left">
-              2,048
+              0
             </Label>
           </Button>
           <Button as="div" labelPosition="left">
@@ -84,7 +97,7 @@ const PostComponent = (props) => {
               Comment
             </Button>
             <Label as="a" basic color="blue" pointing="left">
-              2,048
+              0
             </Label>
           </Button>
         </Card.Content>

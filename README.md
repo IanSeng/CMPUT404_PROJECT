@@ -211,3 +211,11 @@ Django Anti-Patterns: Signals
 * From [lincoln loop](https://lincolnloop.com/blog/django-anti-patterns-signals/)
 * From [Peter Baumgartner](https://lincolnloop.com/about/peter-baumgartner/)
 * Accessed Feb 28 2021
+
+Follower 
+* From [StackOverflow](https://stackoverflow.com/questions/62060573/django-rest-framework-getting-followers-using-related-name-of-manytomanyfield)
+* Accessed Feb 28 2021
+
+Aceess Many to Many object
+* From [StackOverflow](https://stackoverflow.com/questions/31876213/how-to-use-limit-in-django-rest-framework-generics-retrieveapiview)
+* Accessed Mar 1 2021
