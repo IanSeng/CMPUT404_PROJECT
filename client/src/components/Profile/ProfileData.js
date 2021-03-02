@@ -16,7 +16,7 @@ const MyProfileData = (props) => {
     const authorId = window.location.pathname.split("/").pop();
     nameToRender(authorId);
     shouldShowEditBtn(authorId);
-  }, [location, props]);
+  }, [location, props.author]);
 
   const shouldShowEditBtn = (authorId) => {
     if (context.user) {
