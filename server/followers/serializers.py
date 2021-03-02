@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from django.contrib.auth import authenticate, get_user_model
 
 from main import models
 from author.serializers import AuthorProfileSerializer
@@ -22,6 +21,7 @@ class FollowersModificationSerializer(serializers.ModelSerializer):
         followersObj = obj.all().first()
         allFollowers = followersObj.followers.all()
         return allFollowers
+        
     class Meta:
         model = models.Followers
         fields = ('followers',)

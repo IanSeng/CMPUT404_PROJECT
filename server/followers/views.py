@@ -3,12 +3,8 @@ from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError, AuthenticationFailed
 from rest_framework import generics, permissions, status
 
-from django.contrib.auth import get_user_model
-
 from main import models
 from followers.serializers import FollowersSerializer, FollowersModificationSerializer
-from author.serializers import AuthorProfileSerializer
-
 
 class FollowersView(generics.RetrieveAPIView):
     serializer_class = FollowersSerializer
@@ -60,24 +56,27 @@ class FollowersModificationView(generics.RetrieveUpdateDestroyAPIView):
         serializer = self.get_serializer(instance)
 
         return Response({
-            'status': self.foreignAuthor in serializer.data['followers'],
-            'author':  self.author.id,
-            'follower': self.foreignAuthor.id,
+            'type': 'follower',
+            'items': [{
+                'status': self.foreignAuthor in serializer.data['followers'],
+                'author':  self.author.id,
+                'follower': self.foreignAuthor.id,
+            }]
         })
 
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
         self.get_serializer(instance, data=request.data, partial=True)
         
-        if (self.requestAuthorId == self.requestForeignAuthorId):
+        if (str(self.requestForeignAuthorId) != str(request.user.id)):
+           return Response({
+                'error': ['This is not your account, you cannot follow this author']}, status=status.HTTP_403_FORBIDDEN) 
+        elif (self.requestAuthorId == self.requestForeignAuthorId):
             return Response({
-                'error': ['you cannot follow yourself']}, status=status.HTTP_400_BAD_REQUEST)
+                'error': ['You cannot follow yourself']}, status=status.HTTP_400_BAD_REQUEST)
         elif (not self.request.user.adminApproval):
             raise AuthenticationFailed(
                 detail={"error": ["User has not been approved by admin"]})
-        elif (self.requestForeignAuthorId is not request.user.id):
-           return Response({
-                'error': ['this is not your account, you cannot follow this author']}, status=status.HTTP_403_FORBIDDEN) 
         
         authorObj = models.Author.objects.get(id=self.requestAuthorId)
         author = models.Followers.objects.get(author=authorObj)
@@ -87,7 +86,47 @@ class FollowersModificationView(generics.RetrieveUpdateDestroyAPIView):
         author.save()
         
         return Response({
-            'status': True,
-            'author':  self.author.id,
-            'follower': self.foreignAuthor.id,
+            'type': 'follow',
+            'items': [{
+                'status': True,
+                'author':  self.author.id,
+                'follower': self.foreignAuthor.id,
+            }]
+        })
+    
+    def delete(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+
+        if not serializer.is_valid():
+            raise ValidationError({"error": ["User not found"]})
+
+        if (str(self.requestForeignAuthorId) != str(request.user.id)):
+           return Response({
+                'error': ['This is not your account, you cannot unfollow this author']}, status=status.HTTP_403_FORBIDDEN) 
+        elif (self.requestAuthorId == self.requestForeignAuthorId):
+            return Response({
+                'error': ['You cannot unfollow yourself']}, status=status.HTTP_400_BAD_REQUEST)
+        elif (self.foreignAuthor not in serializer.data['followers']):
+            return Response({
+                'error': ['You are not following this author, hence, you can unfollow']}, status=status.HTTP_400_BAD_REQUEST)
+        elif (not self.request.user.adminApproval):
+            raise AuthenticationFailed(
+                detail={"error": ["User has not been approved by admin"]})
+
+
+        authorObj = models.Author.objects.get(id=self.requestAuthorId)
+        author = models.Followers.objects.get(author=authorObj)
+        foreignAuthor = models.Author.objects.get(id=self.requestForeignAuthorId)
+
+        author.followers.remove(foreignAuthor)
+        author.save()
+
+        return Response({
+            'type': 'unfollow',
+            'items': [{
+                'status': False,
+                'author':  author.author.id,
+                'follower': foreignAuthor.id,
+            }]
         })
