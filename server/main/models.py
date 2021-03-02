@@ -49,7 +49,6 @@ class Author(AbstractBaseUser, PermissionsMixin):
         return f'{utils.HOST}/author/{str(self.id)}'
 
 class Followers(models.Model):
-    type = models.CharField(max_length=9, default="followers", editable=False)
     author = models.ForeignKey(Author, related_name="followers", on_delete=models.CASCADE)
     followers = models.ManyToManyField(Author, related_name='author_followers')
     
