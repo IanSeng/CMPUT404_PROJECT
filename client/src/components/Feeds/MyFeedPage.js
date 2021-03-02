@@ -23,7 +23,7 @@ const MyFeedPage = () => {
           },
         }
       );
-      console.log(response);
+
       updatePosts(response.data);
     } catch (error) {
       updateError(true);
