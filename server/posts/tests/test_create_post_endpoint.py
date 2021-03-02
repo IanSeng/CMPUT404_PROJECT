@@ -393,3 +393,15 @@ class TestPublicPostEndpoint(TestCase):
         res = self.client.get(self.public_url)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(len(res.data), 2)
+    
+    def test_public_posts_allow_page_pagination(self):
+        res = self.client.post(self.create_post_url, PAYLOAD)
+        res = self.client.post(self.create_post_url, PAYLOAD)
+        res = self.client.post(self.create_post_url, FRIENDS_VIS_PAYLOAD)
+        res = self.client.post(self.create_post_url, FRIENDS_VIS_PAYLOAD)
+
+        res5 = self.client.get(f'{self.create_post_url}?page=1&size=3')
+        self.assertEqual(len(res5.data), 3)
+
+        res6 = self.client.get(f'{self.create_post_url}?page=2&size=3')
+        self.assertEqual(len(res6.data), 1)

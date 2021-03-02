@@ -140,3 +140,18 @@ class PublicPostView(generics.ListAPIView):
     def get_queryset(self):
         queryset = Post.objects.filter(visibility=Post.PUBLIC, unlisted=False).order_by('-published')
         return queryset
+    
+    # GET: Paginated posts
+    # service/public?page=1&size=2
+    def get(self, request, *args, **kwargs):
+        page_size = request.query_params.get('size') or 20
+        page = request.query_params.get('page') or 1
+        posts = self.get_queryset() 
+        paginator = Paginator(posts, page_size)
+        
+        data = []
+        items = paginator.page(page)
+        for item in items:
+            data.append(PostSerializer(item).data)
+
+        return Response(data)
