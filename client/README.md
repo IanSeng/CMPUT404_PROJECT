@@ -185,3 +185,15 @@ Base64 Images
 - From [asifsid88](https://stackoverflow.com/questions/14867835/get-substring-between-two-characters-using-javascript)
 - From [Jordan Enev](https://stackoverflow.com/questions/42395034/how-to-display-binary-data-as-image-in-react)
 - Accessed Feb 28 2021
+
+Getting URL Path
+
+- From [StackOverflow](https://stackoverflow.com/a/40725409)
+- From [Dblock247](https://stackoverflow.com/users/1762404/dblock247)
+- Accessed March 1 2021
+
+Detecting Router Location Updates
+
+- From [StackOverflow](https://stackoverflow.com/a/61153138)
+- From [onosendi](https://stackoverflow.com/users/12241335/onosendi)
+- Accessed March 1 2021
