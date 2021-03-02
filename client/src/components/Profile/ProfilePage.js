@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Menu, Segment } from "semantic-ui-react";
 import "./ProfilePage.scss";
 import ProfileData from "./ProfileData";
+import FriendRequestList from "../Friends/FriendRequestList";
+import FriendList from "../Friends/FriendList";
 
 const recentPosts = "Recent Posts";
 const friends = "Friends";
@@ -10,13 +12,21 @@ const following = "Following";
 const friendRequests = "Friend Requests";
 
 const MyProfilePage = () => {
-  const [activeItem, updateActiveItem] = useState(recentPosts);
+  const [activeItem, updateActiveItem] = useState(friendRequests);
+  const [currentSection, updateSection] = useState(<FriendRequestList />);
 
-  const handleItemClick = (e, { name }) => {
+  const handleItemClick = (e, { name, section }) => {
     updateActiveItem(name);
+    updateSection(section);
   };
 
-  // TODO depending on the active menu item, display the right profile component using segment
+  const placeholder = (
+    <img
+      alt="placeholder "
+      src="https://react.semantic-ui.com/images/wireframe/paragraph.png"
+    />
+  );
+
   return (
     <div className="profile-page-container">
       <div className="profile-data">
@@ -29,35 +39,35 @@ const MyProfilePage = () => {
             name={recentPosts}
             active={activeItem === recentPosts}
             onClick={handleItemClick}
+            section={placeholder}
           />
           <Menu.Item
             name={friends}
             active={activeItem === friends}
             onClick={handleItemClick}
+            section={<FriendList />}
           />
           <Menu.Item
             name={followers}
             active={activeItem === followers}
             onClick={handleItemClick}
+            section={placeholder}
           />
           <Menu.Item
             name={following}
             active={activeItem === following}
             onClick={handleItemClick}
+            section={placeholder}
           />
           <Menu.Item
             name={friendRequests}
             active={activeItem === friendRequests}
             onClick={handleItemClick}
+            section={<FriendRequestList />}
           />
         </Menu>
 
-        <Segment attached="bottom">
-          <img
-            alt="placeholder "
-            src="https://react.semantic-ui.com/images/wireframe/paragraph.png"
-          />
-        </Segment>
+        <Segment attached="bottom">{currentSection}</Segment>
       </div>
     </div>
   );
