@@ -1,5 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.conf import settings
+
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 
 import uuid
 import re
@@ -43,3 +47,17 @@ class Author(AbstractBaseUser, PermissionsMixin):
 
     def get_id_url(self):
         return f'{utils.HOST}/author/{str(self.id)}'
+
+class Followers(models.Model):
+    type = models.CharField(max_length=9, default="followers", editable=False)
+    author = models.ForeignKey(Author, related_name="followers", on_delete=models.CASCADE)
+    followers = models.ManyToManyField(Author, related_name='author_followers')
+    
+
+class Following(models.Model):
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="following", unique=False, on_delete=models.CASCADE)
+    following = models.ManyToManyField(Author, related_name='author_following')
+
+@receiver(post_save, sender=Author)
+def my_handler(sender, instance, **kwargs):
+     Followers.objects.create(author=instance) 
