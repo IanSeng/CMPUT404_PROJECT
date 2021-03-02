@@ -1,24 +1,25 @@
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, authentication
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError, AuthenticationFailed
 from rest_framework import generics, permissions, status
 
 from main import models
 from followers.serializers import FollowersSerializer, FollowersModificationSerializer
-
+import uuid
 class FollowersView(generics.RetrieveAPIView):
     serializer_class = FollowersSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    authenticate_classes = (authentication.TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
 
     def get_object(self):
-        request_author_id = self.kwargs['id']
+        requestAuthorId = self.kwargs['id']
 
         if not self.request.user.adminApproval:
             raise AuthenticationFailed(
                 detail={"error": ["User has not been approved by admin"]})
 
         try:
-            return models.Followers.objects.filter(author=request_author_id)
+            return models.Followers.objects.filter(author=requestAuthorId)
         except:
             raise ValidationError({"error": ["User not found"]})
 
@@ -32,7 +33,8 @@ class FollowersView(generics.RetrieveAPIView):
 
 class FollowersModificationView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = FollowersModificationSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    authenticate_classes = (authentication.TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
  
     def get_object(self):
         self.requestAuthorId = self.kwargs['id']
@@ -55,6 +57,10 @@ class FollowersModificationView(generics.RetrieveUpdateDestroyAPIView):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
 
+        if not self.request.user.adminApproval:
+            raise AuthenticationFailed(
+                detail={"error": ["User has not been approved by admin"]})
+                
         return Response({
             'type': 'follower',
             'items': [{
@@ -67,6 +73,10 @@ class FollowersModificationView(generics.RetrieveUpdateDestroyAPIView):
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
         self.get_serializer(instance, data=request.data, partial=True)
+        # TODO: Leave this here for debugging will remove it soon
+        # print("++++++++")
+        # print(self.requestForeignAuthorId)
+        # print(request.user.id)
         
         if (str(self.requestForeignAuthorId) != str(request.user.id)):
            return Response({
