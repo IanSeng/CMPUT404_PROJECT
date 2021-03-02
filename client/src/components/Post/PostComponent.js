@@ -13,7 +13,7 @@ const defaultProps = {
   description: "Some Description",
   content: "Some Content",
   contentType: "text/plain",
-  author: { displayName: "John Appleseed" },
+  author: { displayName: "John Appleseed", id: "1" },
   published: "2021-02-18T07:21:52.915800Z",
   visibility: "PUBLIC",
 };
@@ -68,7 +68,8 @@ const PostComponent = (props) => {
             </div>
             <div>
               <span className="date">
-                Posted by <a href="/home">{author.displayName}</a> on{" "}
+                Posted by{" "}
+                <a href={`/author/${author.id}`}>{author.displayName}</a> on{" "}
                 {published}
               </span>
             </div>
@@ -85,7 +86,7 @@ const PostComponent = (props) => {
               Like
             </Button>
             <Label as="a" basic color="red" pointing="left">
-              2,048
+              0
             </Label>
           </Button>
           <Button as="div" labelPosition="left">
@@ -94,7 +95,7 @@ const PostComponent = (props) => {
               Comment
             </Button>
             <Label as="a" basic color="blue" pointing="left">
-              2,048
+              0
             </Label>
           </Button>
         </Card.Content>

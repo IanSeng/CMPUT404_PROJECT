@@ -9,7 +9,6 @@ const PublicFeedPage = () => {
   const [error, updateError] = useState(false);
   const [loading, updateLoading] = useState(true);
 
-  // if we update ROUTE, TODO re-fetch all public posts
   const getAllPublicPosts = async () => {
     try {
       const response = await axios.get(`${SERVER_HOST}/service/public/`);
