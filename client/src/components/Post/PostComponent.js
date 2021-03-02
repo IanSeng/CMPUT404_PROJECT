@@ -69,8 +69,10 @@ const PostComponent = (props) => {
             <div>
               <span className="date">
                 Posted by{" "}
-                <a href={`/author/${author.id}`}>{author.displayName}</a> on{" "}
-                {published}
+                <a href={`/author/${author.id}`}>
+                  {author.displayName || author.username}
+                </a>{" "}
+                on {published}
               </span>
             </div>
           </Card.Meta>
