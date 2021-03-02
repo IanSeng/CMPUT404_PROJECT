@@ -1,7 +1,8 @@
 from django.contrib.auth import get_user_model
 from django.shortcuts import render, get_object_or_404
 from rest_framework import generics, authentication, permissions, mixins, status
-from rest_framework.exceptions import ValidationError
+from django.http import Http404
+from django.core.paginator import Paginator
 from rest_framework.response import Response
 from main import models as mainModels
 from .models import Post
@@ -12,7 +13,6 @@ from .serializers import PostSerializer
 class UpdatePostView(generics.RetrieveUpdateDestroyAPIView): #mixins.DestroyModelMixin
     http_method_names = ['get', 'post', 'delete', 'put']
     serializer_class = PostSerializer
-    authenticate_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
 
     # returns a post object with the matching author_id and pk (post_id)
@@ -84,23 +84,41 @@ class UpdatePostView(generics.RetrieveUpdateDestroyAPIView): #mixins.DestroyMode
 class CreatePostView(generics.ListCreateAPIView):
     http_method_names = ['get', 'post']
     serializer_class = PostSerializer
-    authenticate_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
 
-    # GET: get_queryset is called after a GET command
     def get_queryset(self):
         request_author_id = self.kwargs['author_id']
 
         # TODO: allow friends to view the post too
-        if (self.request.user.id == request_author_id):
-            queryset = Post.objects.filter(author=mainModels.Author.objects.get(id=self.request.user.id))
-        else:
-            queryset = Post.objects.filter(
-                author=mainModels.Author.objects.get(id=request_author_id),
-                visibility='PUBLIC'
-            )
+        try:
+            if (self.request.user.id == request_author_id):
+                queryset = Post.objects.filter(
+                    author=mainModels.Author.objects.get(id=self.request.user.id)
+                ).order_by('-published')
+            else:
+                queryset = Post.objects.filter(
+                    author=mainModels.Author.objects.get(id=request_author_id),
+                    visibility='PUBLIC'
+                ).order_by('-published')
+        except get_user_model().DoesNotExist:
+            raise Http404
 
         return queryset
+    
+    # GET: Paginated posts
+    # /service/author/<AUTHOR_ID>/posts?page=1&size=2
+    def get(self, request, *args, **kwargs):
+        page_size = request.query_params.get('size') or 20
+        page = request.query_params.get('page') or 1
+        posts = self.get_queryset() 
+        paginator = Paginator(posts, page_size)
+        
+        data = []
+        items = paginator.page(page)
+        for item in items:
+            data.append(PostSerializer(item).data)
+
+        return Response(data)
 
     # POST: perform_create is called before saving to the database  
     def post(self, request, *args, **kwargs):
@@ -120,5 +138,5 @@ class PublicPostView(generics.ListAPIView):
 
     # GET: get all public and not unlisted Post
     def get_queryset(self):
-        queryset = Post.objects.filter(visibility=Post.PUBLIC, unlisted=False)
+        queryset = Post.objects.filter(visibility=Post.PUBLIC, unlisted=False).order_by('-published')
         return queryset
