@@ -14,3 +14,14 @@ class FollowersSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Followers
         fields = ('followers',)
+
+class FollowersModificationSerializer(serializers.ModelSerializer):
+    followers = serializers.SerializerMethodField()
+    
+    def get_followers(self, obj):
+        followersObj = obj.all().first()
+        allFollowers = followersObj.followers.all()
+        return allFollowers
+    class Meta:
+        model = models.Followers
+        fields = ('followers',)
