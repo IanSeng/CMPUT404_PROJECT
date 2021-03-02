@@ -4,6 +4,8 @@ import "./ProfilePage.scss";
 import ProfileData from "./ProfileData";
 import FriendRequestList from "../Friends/FriendRequestList";
 import FriendList from "../Friends/FriendList";
+import FollowerList from "../Friends/FollowerList";
+import FollowingList from "../Friends/FollowingList";
 
 const recentPosts = "Recent Posts";
 const friends = "Friends";
@@ -51,13 +53,13 @@ const MyProfilePage = () => {
             name={followers}
             active={activeItem === followers}
             onClick={handleItemClick}
-            section={placeholder}
+            section={<FollowerList />}
           />
           <Menu.Item
             name={following}
             active={activeItem === following}
             onClick={handleItemClick}
-            section={placeholder}
+            section={<FollowingList />}
           />
           <Menu.Item
             name={friendRequests}

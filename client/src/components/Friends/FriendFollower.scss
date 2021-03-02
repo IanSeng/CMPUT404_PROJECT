@@ -1,4 +1,4 @@
-.friendrequest-container {
+@mixin container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -7,6 +7,10 @@
   .ui.large.header.userlink {
     margin: auto 0;
   }
+}
+
+.friendrequest-container {
+  @include container;
 
   .ui.button.accept-request-btn {
     margin-left: 15px;
@@ -39,12 +43,5 @@
 }
 
 .friendfollower-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin: 5px 5px;
-
-  .ui.large.header.userlink {
-    margin: auto 0;
-  }
+  @include container;
 }

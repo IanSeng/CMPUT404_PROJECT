@@ -3,7 +3,9 @@ import { Header, Button } from "semantic-ui-react";
 import "./FriendFollower.scss";
 
 const FriendFollowerComponent = (props) => {
-  const handleDelete = () => {};
+  const handleDelete = () => {
+    // call props function depending if parent is FriendList, FollowerList, FollowingList
+  };
 
   return (
     <div className="friendfollower-container">
