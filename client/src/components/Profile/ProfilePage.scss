@@ -57,6 +57,34 @@
       margin-top: 0px;
       align-self: start;
     }
+
+    .ui.button.send-friend-request-btn {
+      box-shadow: 5px 10px 10px rgba(163, 163, 163, 0.19),
+        0 3px 3px rgba(141, 141, 141, 0.23);
+      background: linear-gradient(
+        140deg,
+        rgba(83, 32, 229, 1) 0%,
+        rgba(83, 32, 229, 1) 30%,
+        rgba(225, 27, 229, 1) 100%
+      ) !important;
+      color: white !important;
+
+      &:hover {
+        box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.19),
+          0 3px 3px rgba(0, 0, 0, 0.23);
+      }
+
+      &:disabled {
+        box-shadow: 5px 10px 10px rgba(163, 163, 163, 0.19),
+          0 3px 3px rgba(141, 141, 141, 0.23) !important;
+        background-image: linear-gradient(
+          140deg,
+          rgba(83, 32, 229, 1) 0%,
+          rgba(83, 32, 229, 1) 30%,
+          rgba(225, 27, 229, 1) 100%
+        ) !important;
+      }
+    }
   }
 
   .profile-stats-table {

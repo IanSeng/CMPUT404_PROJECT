@@ -57,7 +57,9 @@ const MyProfileData = (props) => {
           {showEditBtn ? (
             <EditProfileModal />
           ) : (
-            <Button>Send Friend Request</Button>
+            <Button className="send-friend-request-btn">
+              Send Friend Request
+            </Button>
           )}
         </div>
 
