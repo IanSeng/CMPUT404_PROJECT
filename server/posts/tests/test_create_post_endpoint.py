@@ -149,8 +149,7 @@ class TestCreatePostEndpoint(TestCase):
         self.assertEqual(len(res2.data), 0)
 
     def test_author_can_get_all_their_posts(self):
-        """Testing TestCreatePostEndpoint author can get all their own posts
-        no matter the visibility
+        """Test author can get all their own posts no matter the visibility
         """
         self.client.force_authenticate(user=self.author)
         res1 = self.client.post(self.create_post_url, PAYLOAD)
@@ -161,6 +160,19 @@ class TestCreatePostEndpoint(TestCase):
         
         self.assertEqual(res3.status_code, status.HTTP_200_OK)
         self.assertEqual(len(res3.data), 2)
+    
+    def test_allow_page_pagination(self):
+        self.client.force_authenticate(user=self.author)
+        res1 = self.client.post(self.create_post_url, PAYLOAD)
+        res2 = self.client.post(self.create_post_url, PAYLOAD)
+        res3 = self.client.post(self.create_post_url, FRIENDS_VIS_PAYLOAD)
+        res4 = self.client.post(self.create_post_url, FRIENDS_VIS_PAYLOAD)
+
+        res5 = self.client.get(f'{self.create_post_url}?page=1&size=3')
+        self.assertEqual(len(res5.data), 3)
+
+        res6 = self.client.get(f'{self.create_post_url}?page=2&size=3')
+        self.assertEqual(len(res6.data), 1)
 
 
 class TestUpdatePostEndpoint(TestCase):
@@ -381,3 +393,15 @@ class TestPublicPostEndpoint(TestCase):
         res = self.client.get(self.public_url)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(len(res.data), 2)
+    
+    def test_public_posts_allow_page_pagination(self):
+        res = self.client.post(self.create_post_url, PAYLOAD)
+        res = self.client.post(self.create_post_url, PAYLOAD)
+        res = self.client.post(self.create_post_url, FRIENDS_VIS_PAYLOAD)
+        res = self.client.post(self.create_post_url, FRIENDS_VIS_PAYLOAD)
+
+        res5 = self.client.get(f'{self.create_post_url}?page=1&size=3')
+        self.assertEqual(len(res5.data), 3)
+
+        res6 = self.client.get(f'{self.create_post_url}?page=2&size=3')
+        self.assertEqual(len(res6.data), 1)

@@ -5,6 +5,10 @@ from main import models as mainModels
 from main import utils
 import uuid
 
+class Category(models.Model):
+    class Meta:
+        verbose_name_plural = "categories"
+    category = models.CharField(max_length=200, unique=True)
 
 class Post(models.Model):
     type = "post"
@@ -47,7 +51,7 @@ class Post(models.Model):
     author = models.ForeignKey(mainModels.Author, on_delete=models.PROTECT)
 
     # TODO: create categories
-    # categories = models.CharField(blank=True, max_length=250) # e.g. ["web","tutorial"]
+    categories = models.ManyToManyField(Category, blank=True) # e.g. ["web","tutorial"]
     count =  models.PositiveIntegerField(default=0)       # for comments
     size =  models.PositiveIntegerField(default=0)        # page size for comments
 
