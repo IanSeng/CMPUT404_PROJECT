@@ -156,7 +156,6 @@ class TestInboxEndpoint(TestCase):
         inbox_1 = Inbox.objects.get(author=self.author_1)
         self.assertEqual(len(inbox_1.items), 3)
         res = self.client.delete(self.inbox_url)
-        print(res)
         self.assertEqual(res.status_code, status.HTTP_204_NO_CONTENT)
         inbox_1 = Inbox.objects.get(author=self.author_1)
         self.assertEqual(len(inbox_1.items), 0)
