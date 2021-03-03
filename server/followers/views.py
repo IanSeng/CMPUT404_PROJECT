@@ -4,8 +4,25 @@ from rest_framework.exceptions import ValidationError, AuthenticationFailed
 from rest_framework import generics, permissions, status
 
 from main import models
+from .models import FriendRequest
+from inbox.models import Inbox
 from followers.serializers import FollowersSerializer, FollowersModificationSerializer
+from .serializers import FriendSerializer
 import uuid
+
+# https://stackoverflow.com/a/48159596
+import json
+from uuid import UUID
+
+class UUIDEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, UUID):
+            # if the obj is uuid, we simply return the value of uuid
+            return obj.hex
+        return json.JSONEncoder.default(self, obj)
+
+
+#<slug:id>/followers/
 class FollowersView(generics.RetrieveAPIView):
     serializer_class = FollowersSerializer
     authenticate_classes = (authentication.TokenAuthentication,)
@@ -17,9 +34,8 @@ class FollowersView(generics.RetrieveAPIView):
         if not self.request.user.adminApproval:
             raise AuthenticationFailed(
                 detail={"error": ["User has not been approved by admin"]})
-
         try:
-            return models.Followers.objects.filter(author=requestAuthorId)
+            return models.Followers.objects.get(author=requestAuthorId)
         except:
             raise ValidationError({"error": ["User not found"]})
 
@@ -31,6 +47,7 @@ class FollowersView(generics.RetrieveAPIView):
             'items': serializer.data['followers'],
         })
 
+#/<slug:id>/followers/<slug:foreignId>/
 class FollowersModificationView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = FollowersModificationSerializer
     authenticate_classes = (authentication.TokenAuthentication,)
@@ -94,6 +111,15 @@ class FollowersModificationView(generics.RetrieveUpdateDestroyAPIView):
 
         author.followers.add(foreignAuthor)
         author.save()
+
+        friend_request = FriendRequest.objects.filter(follower=foreignAuthor, author=authorObj)
+        if not friend_request:
+            create_friend_request = FriendRequest.objects.create(follower=foreignAuthor, author=authorObj)
+            friend_request_obj = FriendRequest.objects.get(follower=foreignAuthor, author=authorObj)
+            friend_request_text = json.dumps(FriendSerializer(friend_request_obj).data)
+            inbox = Inbox.objects.get(author=authorObj)
+            inbox.items.append(friend_request_text)
+            inbox.save()
         
         return Response({
             'type': 'follow',
@@ -131,6 +157,8 @@ class FollowersModificationView(generics.RetrieveUpdateDestroyAPIView):
 
         author.followers.remove(foreignAuthor)
         author.save()
+
+        FriendRequest.objects.filter(follower=foreignAuthor, author=authorObj).delete()
 
         return Response({
             'type': 'unfollow',

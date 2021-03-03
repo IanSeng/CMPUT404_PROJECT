@@ -1,7 +1,10 @@
 from rest_framework import serializers
 
 from main import models
+from .models import FriendRequest
 from author.serializers import AuthorProfileSerializer
+
+
 class FollowersSerializer(serializers.ModelSerializer):
     followers = serializers.SerializerMethodField()
     
@@ -26,4 +29,20 @@ class FollowersModificationSerializer(serializers.ModelSerializer):
         model = models.Followers
         fields = ('followers',)
 
-    
+class FriendSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FriendRequest
+        summary = serializers.SerializerMethodField()
+        actor = serializers.SerializerMethodField()
+        object = serializers.SerializerMethodField()
+        
+        def get_summary(self, obj):
+            return obj.summary()
+
+        def get_actor(self, obj):
+            return obj.actor()
+        
+        def get_object(self, obj):
+            return obj.object()
+        
+        fields = ('type', 'summary', 'actor', 'object')
