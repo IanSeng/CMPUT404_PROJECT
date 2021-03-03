@@ -1,0 +1,5 @@
+from konnection.settings.base import *
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = False
+SECRET_KEY = 'temporaryKey'
