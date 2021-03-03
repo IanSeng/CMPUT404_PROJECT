@@ -54,10 +54,7 @@ class InboxView(APIView):
             except ValidationError:
                 return Response(f'{post_id} is not a valid UUID.',
                                 status=status.HTTP_400_BAD_REQUEST)
-            # data = serializers.serialize('json', [a_post])
             data = PostSerializer(a_post).data
-            # replace author with serialized Author as it is None
-            # data['author'] = AuthorProfileSerializer(a_post.author).data
             inbox = get_object_or_404(Inbox, author=Author.objects
                                       .get(id=self.request.user.id))
             inbox.items.append(data)
