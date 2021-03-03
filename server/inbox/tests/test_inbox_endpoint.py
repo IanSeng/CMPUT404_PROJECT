@@ -33,11 +33,13 @@ class TestInboxEndpoint(TestCase):
     def setUp(self):
         self.author_1 = get_user_model().objects.create_author(
             username='testing1',
-            password='testing1'
+            password='testing1',
+            adminApproval=True
         )
         self.author_2 = get_user_model().objects.create_author(
             username='testing2',
-            password='testing2'
+            password='testing2',
+            adminApproval=True
         )
         self.inbox_1 = Inbox.objects.get(author=self.author_1)
         self.inbox_2 = Inbox.objects.get(author=self.author_2)
@@ -122,6 +124,16 @@ class TestInboxEndpoint(TestCase):
         res = self.client.get(self.inbox_url)
         self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)
 
+    def test_get_not_approved_inbox(self):
+        """Test Author getting Author's own inbox when account not approved"""
+        self.client.force_authenticate(user=self.author_1)
+        self.author_1.adminApproval = False
+        self.author_1.save()
+        res = self.client.get(self.inbox_url)
+        self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)
+        self.author_1.adminApproval = True
+        self.author_1.save()
+
     def test_delete_self_inbox(self):
         """Test Author delete Author's own inbox"""
         self.client.force_authenticate(user=self.author_1)
@@ -144,6 +156,7 @@ class TestInboxEndpoint(TestCase):
         inbox_1 = Inbox.objects.get(author=self.author_1)
         self.assertEqual(len(inbox_1.items), 3)
         res = self.client.delete(self.inbox_url)
+        print(res)
         self.assertEqual(res.status_code, status.HTTP_204_NO_CONTENT)
         inbox_1 = Inbox.objects.get(author=self.author_1)
         self.assertEqual(len(inbox_1.items), 0)

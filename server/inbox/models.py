@@ -14,4 +14,5 @@ class Inbox(models.Model):
 # create Inbox object after Author is created and called save()
 @receiver(post_save, sender=Author)
 def my_handler(sender, instance, **kwargs):
-    Inbox.objects.create(author=instance)
+    if not Inbox.objects.filter(author=instance).exists():
+        Inbox.objects.create(author=instance)
