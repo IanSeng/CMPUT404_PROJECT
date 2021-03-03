@@ -17,6 +17,10 @@ class FollowersView(generics.RetrieveAPIView):
         if not self.request.user.adminApproval:
             raise AuthenticationFailed(
                 detail={"error": ["User has not been approved by admin"]})
+       
+        if not models.Followers.objects.filter(author=requestAuthorId).exists():
+            authorObj = models.Author.objects.get(id=requestAuthorId)
+            models.Followers.objects.create(author=authorObj)
 
         try:
             return models.Followers.objects.filter(author=requestAuthorId)
@@ -35,7 +39,7 @@ class FollowersModificationView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = FollowersModificationSerializer
     authenticate_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
- 
+    
     def get_object(self):
         self.requestAuthorId = self.kwargs['id']
         self.requestForeignAuthorId = self.kwargs['foreignId']
@@ -43,6 +47,10 @@ class FollowersModificationView(generics.RetrieveUpdateDestroyAPIView):
         if not self.request.user.adminApproval:
             raise AuthenticationFailed(
                 detail={"error": ["User has not been approved by admin"]})
+
+        if not models.Followers.objects.filter(author=self.requestAuthorId).exists():
+            authorObj = models.Author.objects.get(id=self.requestAuthorId)
+            models.Followers.objects.create(author=authorObj)
 
         try:
             self.author = models.Author.objects.get(id=self.requestAuthorId)

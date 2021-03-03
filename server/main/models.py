@@ -57,6 +57,6 @@ class Following(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="following", unique=False, on_delete=models.CASCADE)
     following = models.ManyToManyField(Author, related_name='author_following')
 
-@receiver(post_save, sender=Author)
-def my_handler(sender, instance, **kwargs):
-     Followers.objects.create(author=instance) 
+# @receiver(post_save, sender=Author)
+# def my_handler(sender, instance, **kwargs):
+#      Followers.objects.create(author=instance) 
