@@ -1,6 +1,7 @@
+from django.core.exceptions import ValidationError
 from django.shortcuts import render, get_object_or_404
-from django.core.exceptions import PermissionDenied, ValidationError
 from rest_framework import authentication, permissions, status
+from rest_framework.exceptions import PermissionDenied
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -22,7 +23,12 @@ class InboxView(APIView):
         request_author_id = self.kwargs['author_id']
 
         if self.request.user.id != request_author_id:
-            raise PermissionDenied
+            raise PermissionDenied(
+                detail={'error': ['You do not have permission to this inbox.']})
+
+        if not self.request.user.adminApproval:
+            raise PermissionDenied(
+                detail={'error': ['User has not been approved by admin.']})
 
         return get_object_or_404(Inbox, author=Author.objects
                                  .get(id=self.request.user.id))
@@ -46,11 +52,9 @@ class InboxView(APIView):
             try:
                 a_post = get_object_or_404(Post, pk=post_id, visibility=Post.PUBLIC)
             except ValidationError:
-                return Response(status=status.HTTP_400_BAD_REQUEST)
-            # data = serializers.serialize('json', [a_post])
+                return Response(f'{post_id} is not a valid UUID.',
+                                status=status.HTTP_400_BAD_REQUEST)
             data = PostSerializer(a_post).data
-            # replace author with serialized Author as it is None
-            #data['author'] = AuthorProfileSerializer(a_post.author).data
             inbox = get_object_or_404(Inbox, author=Author.objects
                                       .get(id=self.request.user.id))
             data['categories'] = list(data['categories'])
