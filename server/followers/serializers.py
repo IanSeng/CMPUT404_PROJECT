@@ -4,14 +4,8 @@ from main import models
 from .models import FriendRequest
 from author.serializers import AuthorProfileSerializer
 
-
 class FollowersSerializer(serializers.ModelSerializer):
-    followers = serializers.SerializerMethodField()
-    
-    def get_followers(self, obj):
-        followersObj = obj.all().first()
-        allFollowers = followersObj.followers.all()
-        return [AuthorProfileSerializer(obj).data for obj in allFollowers]
+    followers = AuthorProfileSerializer(read_only=True, many=True)
 
     class Meta:
         model = models.Followers
