@@ -11,17 +11,6 @@ from posts.models import Post
 from .models import Inbox
 from .serializers import InboxSerializer
 
-# https://stackoverflow.com/a/48159596
-import json
-from uuid import UUID
-
-class UUIDEncoder(json.JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, UUID):
-            # if the obj is uuid, we simply return the value of uuid
-            return obj.hex
-        return json.JSONEncoder.default(self, obj)
-
 # service/author/{AUTHOR_ID}/inbox/
 class InboxView(APIView):
     serializer_class = InboxSerializer

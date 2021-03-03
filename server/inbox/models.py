@@ -10,7 +10,7 @@ class Inbox(models.Model):
     type = "inbox"
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     items = ArrayField(models.JSONField(), blank=True, default=list, null=True)
-        
+
 # create Inbox object after Author is created and called save()
 @receiver(post_save, sender=Author)
 def my_handler(sender, instance, **kwargs):

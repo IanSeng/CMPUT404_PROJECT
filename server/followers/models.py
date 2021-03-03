@@ -8,7 +8,7 @@ class FriendRequest(models.Model):
     
     author = models.ForeignKey(mainModels.Author, on_delete=models.CASCADE, related_name='follower')
     follower = models.ForeignKey(mainModels.Author, on_delete=models.CASCADE, related_name='author')
-    
+
     class Meta:
         unique_together = ('author', 'follower',)
 
