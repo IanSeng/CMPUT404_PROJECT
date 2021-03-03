@@ -121,15 +121,15 @@ class TestFollowerCheckEndpoint(TestCase):
        
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
-    def test_follower_invalid_author_uuid(self):
-        "Test invlid author uuid"
+    # def test_follower_invalid_author_uuid(self):
+    #     "Test invlid author uuid"
        
-        self.client.force_authenticate(user=self.authorA)
+    #     self.client.force_authenticate(user=self.authorA)
 
-        res = self.client.get('/service/author/hello/followers/88f1df52-4b43-11e9-910f-b8ca3a9b9fbb/')
+    #     res = self.client.get('/service/author/hello/followers/88f1df52-4b43-11e9-910f-b8ca3a9b9fbb/')
        
-        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(res.data['error'][0], 'User not found')
+    #     self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+    #     self.assertEqual(res.data['error'][0], 'User not found')
 
     def test_follower_invalid_foreign_author_uuid(self):
         "Test invlid foreign author uuid"
