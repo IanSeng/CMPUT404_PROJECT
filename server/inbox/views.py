@@ -11,6 +11,17 @@ from posts.models import Post
 from .models import Inbox
 from .serializers import InboxSerializer
 
+# https://stackoverflow.com/a/48159596
+import json
+from uuid import UUID
+
+class UUIDEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, UUID):
+            # if the obj is uuid, we simply return the value of uuid
+            return obj.hex
+        return json.JSONEncoder.default(self, obj)
+
 # service/author/{AUTHOR_ID}/inbox/
 class InboxView(APIView):
     serializer_class = InboxSerializer
@@ -50,9 +61,10 @@ class InboxView(APIView):
             # data = serializers.serialize('json', [a_post])
             data = PostSerializer(a_post).data
             # replace author with serialized Author as it is None
-            data['author'] = AuthorProfileSerializer(a_post.author).data
+            #data['author'] = AuthorProfileSerializer(a_post.author).data
             inbox = get_object_or_404(Inbox, author=Author.objects
                                       .get(id=self.request.user.id))
+            data['categories'] = list(data['categories'])
             inbox.items.append(data)
             inbox.save()
             return Response(f'Shared {post_id} with {request_author_id}',

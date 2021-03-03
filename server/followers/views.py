@@ -10,18 +10,6 @@ from followers.serializers import FollowersSerializer, FollowersModificationSeri
 from .serializers import FriendSerializer
 import uuid
 
-# https://stackoverflow.com/a/48159596
-import json
-from uuid import UUID
-
-class UUIDEncoder(json.JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, UUID):
-            # if the obj is uuid, we simply return the value of uuid
-            return obj.hex
-        return json.JSONEncoder.default(self, obj)
-
-
 #<slug:id>/followers/
 class FollowersView(generics.RetrieveAPIView):
     serializer_class = FollowersSerializer
@@ -116,7 +104,7 @@ class FollowersModificationView(generics.RetrieveUpdateDestroyAPIView):
         if not friend_request:
             create_friend_request = FriendRequest.objects.create(follower=foreignAuthor, author=authorObj)
             friend_request_obj = FriendRequest.objects.get(follower=foreignAuthor, author=authorObj)
-            friend_request_text = json.dumps(FriendSerializer(friend_request_obj).data)
+            friend_request_text = FriendSerializer(friend_request_obj).data
             inbox = Inbox.objects.get(author=authorObj)
             inbox.items.append(friend_request_text)
             inbox.save()
